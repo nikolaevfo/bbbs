@@ -1,0 +1,44 @@
+.header {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 0 0;
+  width: 100%;
+  min-height: 60px;
+  background-color: $background;
+  max-width: 1920px;
+
+  z-index: 100;
+  // padding-top: 40px;
+  transition: 0.2s linear;
+}
+
+.header_displayed {
+  background-color: #fff;
+  border-radius: 0px 0px 30px 30px;
+}
+
+.header_outed {
+  transform: translateY(-100%);
+}
+
+@include atDesktop1279 {
+  .header {
+    min-height: 50px;
+  }
+}
+
+@include atDesktop1024 {
+  .header {
+    min-height: 40px;
+    // padding-top: 30px;
+  }
+}
+
+@include atMobile {
+  .header {
+    // padding-top: 15px;
+    min-height: 40px;
+  }
+}

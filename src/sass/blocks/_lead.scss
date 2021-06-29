@@ -1,0 +1,33 @@
+.lead {
+  padding-top: 147px;
+}
+
+.lead__text {
+  margin: 40px auto 0;
+  max-width: 1170px;
+  text-align: center;
+}
+
+@include atDesktop1440 {
+  .lead {
+    padding-top: 90px;
+  }
+  .lead__text {
+    max-width: 970px;
+  }
+}
+
+@include atDesktop1024 {
+  .lead {
+    padding-top: 80px;
+  }
+  .lead__text {
+    margin-top: 20px;
+  }
+}
+
+@include atMobile {
+  .lead {
+    padding-top: 60px;
+  }
+}
