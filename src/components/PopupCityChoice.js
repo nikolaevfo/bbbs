@@ -8,6 +8,8 @@ function PopupCityChoice({ isOpen, onClose, onChangeCurrentCityId, onChangeCurre
 
   function handleCityClick(e) {
     onChangeCurrentCityId(e.target.id);
+    localStorage.setItem('cityId', JSON.stringify(e.target.id));
+    localStorage.setItem('city', JSON.stringify(e.target.textContent));
     onChangeCurrentCity(e.target.textContent);
     onClose();
   }

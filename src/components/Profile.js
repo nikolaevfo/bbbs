@@ -13,6 +13,7 @@ function Profile({
   onChangeNarrative,
   profileCalendarCards,
   currentCity,
+  onSignOut,
 }) {
   // загрузка данных
   React.useEffect(() => {
@@ -36,6 +37,7 @@ function Profile({
         </button>
         <button
           type="button"
+          onClick={onSignOut}
           className="paragraph personal-area__user-link personal-area__user-link_type_exit"
         >
           Выйти
@@ -89,10 +91,6 @@ function Profile({
             onChangeNarrative={onChangeNarrative}
           />
         ))}
-        {/* <PostedStoryEditing
-          onDeleteClick={onDeleteStoryClick}
-          profileNarrativesCards={profileNarrativesCards}
-        /> */}
       </div>
     </section>
   );
@@ -108,6 +106,7 @@ Profile.defaultProps = {
   onChangeNarrative: undefined,
   profileCalendarCards: [],
   currentCity: '',
+  onSignOut: undefined,
 };
 
 Profile.propTypes = {
@@ -119,4 +118,5 @@ Profile.propTypes = {
   onChangeNarrative: PropTypes.func,
   profileCalendarCards: PropTypes.instanceOf(Array),
   currentCity: PropTypes.string,
+  onSignOut: PropTypes.func,
 };

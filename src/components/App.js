@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
@@ -42,13 +42,6 @@ function App() {
   const [currentCityId, setCurrentCityId] = useState(undefined);
   const [currentCity, setCurrentCity] = useState(undefined);
   const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
-
-  // city modal open on init=======================================================================
-  React.useEffect(() => {
-    if (isLoggedIn && !currentCityId) {
-      setCityChoicePopupOpen(true);
-    }
-  }, [isLoggedIn]);
 
   // Profile =====================================================================
   const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
@@ -93,7 +86,7 @@ function App() {
 
   const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined);
 
-  // const history = useHistory();
+  const history = useHistory();
 
   function handleDeleteStoryPopupClick(card) {
     setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
@@ -274,7 +267,9 @@ function App() {
       .login(userData)
       .then((res) => {
         setCurrentUser({ username: res.data.username, password: res.data.password });
-        localStorage.setItem('access', JSON.stringify(res.access));
+        localStorage.clear();
+        localStorage.setItem('access', JSON.stringify(res.data.access));
+        localStorage.setItem('username', JSON.stringify(res.data.username));
         setIsLoggedIn(true);
         setIsPopupCalendarSigninOpen(false);
       })
@@ -422,7 +417,7 @@ function App() {
 
   // signin=================================================================================
   function handelAppInit() {
-    if (isLoggedIn) {
+    if (localStorage.getItem('access')) {
       setIsPopupCalendarSigninOpen(false);
     } else {
       setIsPopupCalendarSigninOpen(true);
@@ -432,6 +427,34 @@ function App() {
   React.useEffect(() => {
     handelAppInit();
   }, [currentUser]);
+
+  // проверка авторизации при запуске==================================
+  React.useEffect(() => {
+    if (localStorage.getItem('access')) {
+      // api.ckeckToken(JSON.parse(localStorage.access));
+      setIsLoggedIn(true);
+      const localUsername = JSON.parse(localStorage.username);
+      setCurrentUser({ username: localUsername });
+    }
+    if (localStorage.getItem('city')) {
+      setCurrentCityId(JSON.parse(localStorage.cityId));
+      setCurrentCity(JSON.parse(localStorage.city));
+    }
+  }, []);
+
+  // signout=========================================
+  function handleSignOut() {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    history.push('/');
+  }
+
+  // city modal open on init=======================================================================
+  React.useEffect(() => {
+    if (isLoggedIn && !currentCityId) {
+      setCityChoicePopupOpen(true);
+    }
+  }, [isLoggedIn]);
 
   Modal.setAppElement('#root');
 
@@ -468,6 +491,7 @@ function App() {
               onChangeNarrative={handleChangeNarrative}
               profileCalendarCards={profileCalendarCards}
               currentCity={currentCity}
+              onSignOut={handleSignOut}
             />
           </Route>
           <Route exact path="/calendar">

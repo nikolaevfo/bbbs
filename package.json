@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios-mock-adapter": "^1.19.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
+    "chokidar": "^3.5.2",
     "date-fns": "^2.21.3",
     "lottie-web": "^5.7.8",
     "node-sass": "^5.0.0",

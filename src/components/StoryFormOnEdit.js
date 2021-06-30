@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import ImageUploader from './ImageUploader';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
 function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
+  const monthOfMeeting = format(new Date(card.date), 'MM', { locale: ru });
+  const dayNumberOfMeeting = format(new Date(card.date), 'dd', { locale: ru });
+  const yearOfMeeting = format(new Date(card.date), 'y', { locale: ru });
+
   const {
     register,
     handleSubmit,
@@ -73,6 +79,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
             // eslint-disable-next-line
             {...register('date', { required: true })}
             type="date"
+            value={`${yearOfMeeting}-${monthOfMeeting}-${dayNumberOfMeeting}`}
             placeholder="Дата&emsp;"
             className="personal-area__form-input"
           />
@@ -93,6 +100,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
                 // id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
                 onClick={onChangeGood}
+                checked
               />
               <img
                 className="personal-area__rate-icon"
