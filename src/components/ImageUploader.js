@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 /* eslint import/no-unresolved: [2, { ignore: ['react-images-uploading'] }] */
 import ImageUploading from 'react-images-uploading';
 
-function ImageUploader() {
+function ImageUploader({ onDouwnloadImage }) {
   const [images, setImages] = React.useState([]);
   const [isBtnInvisible, setBtnInvisible] = React.useState(false);
   const maxNumber = 69;
@@ -10,6 +11,8 @@ function ImageUploader() {
   function onChange(imageList) {
     setImages(imageList);
     setBtnInvisible(true);
+    console.log(imageList[0]);
+    onDouwnloadImage(imageList[0]);
   }
 
   return (
@@ -44,3 +47,11 @@ function ImageUploader() {
   );
 }
 export default ImageUploader;
+
+ImageUploader.defaultProps = {
+  onDouwnloadImage: undefined,
+};
+
+ImageUploader.propTypes = {
+  onDouwnloadImage: PropTypes.func,
+};

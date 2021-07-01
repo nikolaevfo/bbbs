@@ -167,6 +167,9 @@
 }
 
 @include atMobile {
+  .about {
+    padding-top: 80px;
+  }
   .about__us {
     grid-template-rows: 280px 1fr;
   }

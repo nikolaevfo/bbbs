@@ -598,12 +598,27 @@ function App() {
           onClose={closeDeleteStoryPopup}
           onDeleteProfileStory={handleDeleteProfileStory}
         />
-        <PopupCityChoice
+        <Modal
+          isOpen={isCityChoicePopupOpen}
+          onRequestClose={() => {
+            handlePopupCloseClick();
+          }}
+          shouldCloseOnOverlayClick
+          className="popup__modal"
+          overlayClassName="popup__overlay"
+        >
+          <PopupCityChoice
+            onClose={closeCityChoicePopup}
+            onChangeCurrentCityId={setCurrentCityId}
+            onChangeCurrentCity={setCurrentCity}
+          />
+        </Modal>
+        {/* <PopupCityChoice
           isOpen={isCityChoicePopupOpen}
           onClose={closeCityChoicePopup}
           onChangeCurrentCityId={setCurrentCityId}
           onChangeCurrentCity={setCurrentCity}
-        />
+        /> */}
         <Modal
           isOpen={isPopupCalendarSigninOpen}
           className="popup__modal"

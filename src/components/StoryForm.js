@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import ImageUploader from './ImageUploader';
 
-import imageOfNarrative1 from '../images/personal-area/lk.png';
+// import imageOfNarrative1 from '../images/personal-area/lk.png';
 
 function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
   const {
@@ -14,6 +14,12 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
   const [goodRateChecked, setGoodRateChecked] = React.useState(false);
   const [neutralRateChecked, setNeutralRateChecked] = React.useState(false);
   const [badRateChecked, setBadRateChecked] = React.useState(false);
+  const [storyImage, setStoryImage] = React.useState(undefined);
+
+  function handleDouwnloadImage(data) {
+    setStoryImage(data);
+  }
+
   function onChangeGood() {
     setNeutralRateChecked(false);
     setBadRateChecked(false);
@@ -45,7 +51,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
       description: data.story,
       date: data.date,
       name: 'Анастасии П.',
-      img: { imageOfNarrative1 },
+      img: storyImage,
       rating: rate,
     });
     onDeleteClick();
@@ -54,7 +60,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
   return (
     <div className="card-container card-container_type_personal-area">
       <div className="card personal-area__card personal-area__card_type_add-photo">
-        <ImageUploader />
+        <ImageUploader onDouwnloadImage={handleDouwnloadImage} />
       </div>
       <div className="card personal-area__card personal-area__card_type_content">
         <form

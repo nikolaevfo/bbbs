@@ -35,10 +35,15 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
     emojiLabelClassName =
       'personal-area__radio-phrase personal-area__radio-phrase_type_bad personal-area__radio-phrase_type_bad_posted';
   }
+
   return (
     <form className="card-container card-container_type_personal-area">
       <div className="card card_content_media">
-        <img src="./images/personal-area/lk.png" alt="Катя" className="personal-area__photo" />
+        <img
+          src={card.img.imageOfNarrative1 || card.img.data_url}
+          alt="Катя"
+          className="personal-area__photo"
+        />
       </div>
       <div className="card personal-area__card personal-area__date-container">
         <div className="personal-area__text-wrap">

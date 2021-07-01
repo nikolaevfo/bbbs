@@ -12,14 +12,14 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
   const dayNumberOfMeeting = format(new Date(card.date), 'dd', { locale: ru });
   const yearOfMeeting = format(new Date(card.date), 'y', { locale: ru });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isValid },
-  } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, formState, setValue } = useForm({ mode: 'onChange' });
   const [goodRateChecked, setGoodRateChecked] = React.useState(false);
   const [neutralRateChecked, setNeutralRateChecked] = React.useState(false);
   const [badRateChecked, setBadRateChecked] = React.useState(false);
+  const { errors } = formState;
+
+  const [isFormValid, setIsFormValid] = React.useState(true);
+
   function onChangeGood() {
     setNeutralRateChecked(false);
     setBadRateChecked(false);
@@ -57,6 +57,22 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
     setEditClicked(false);
   }
 
+  React.useEffect(() => {
+    if (errors.place || errors.date || errors.story) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [formState]);
+
+  React.useEffect(() => {
+    setValue('place', card.place);
+    setValue('date', `${yearOfMeeting}-${monthOfMeeting}-${dayNumberOfMeeting}`);
+    setValue('story', card.description);
+    onChangeGood();
+    document.getElementById('good-rate').checked = true;
+  }, []);
+
   return (
     <div className="card-container card-container_type_personal-area">
       <div className="card personal-area__card personal-area__card_type_add-photo">
@@ -72,14 +88,14 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
             // eslint-disable-next-line
             {...register('place', { required: true, minLength: 2, maxLength: 30 })}
             type="text"
-            defaultValue={card.place}
+            // defaultValue={card.place}
             className="personal-area__form-input"
           />
           <input
             // eslint-disable-next-line
             {...register('date', { required: true })}
             type="date"
-            value={`${yearOfMeeting}-${monthOfMeeting}-${dayNumberOfMeeting}`}
+            // value={`${yearOfMeeting}-${monthOfMeeting}-${dayNumberOfMeeting}`}
             placeholder="Дата&emsp;"
             className="personal-area__form-input"
           />
@@ -88,7 +104,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
             // eslint-disable-next-line
             {...register('story', { required: true, minLength: 2 })}
             className="personal-area__form-input personal-area__form-input_type_textarea"
-            defaultValue={card.description}
+            // defaultValue={card.description}
           />
           <div className="personal-area__rating">
             <div className="personal-area__radio-label">
@@ -97,10 +113,9 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
                 // eslint-disable-next-line
                 {...register('rate', { required: true })}
                 name="rate"
-                // id="good-rate"
+                id="good-rate"
                 className="personal-area__rate personal-area__rate_type_good"
                 onClick={onChangeGood}
-                checked
               />
               <img
                 className="personal-area__rate-icon"
@@ -125,7 +140,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
                 // eslint-disable-next-line
                 {...register('rate', { required: true })}
                 name="rate"
-                // id="neutral-rate"
+                id="neutral-rate"
                 onClick={onChangeNeutral}
                 className="personal-area__rate personal-area__rate_type_neutral"
               />
@@ -148,7 +163,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
                 // eslint-disable-next-line
                 {...register('rate', { required: true })}
                 name="rate"
-                // id="bad-rate"
+                id="bad-rate"
                 onClick={onChangeBad}
                 className="personal-area__rate personal-area__rate_type_bad"
               />
@@ -167,7 +182,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
             </div>
           </div>
           <div className="personal-area__buttons">
-            <button disabled={!isValid} className="button button__add-story" type="submit">
+            <button disabled={!isFormValid} className="button button__add-story" type="submit">
               Редактировать
             </button>
           </div>

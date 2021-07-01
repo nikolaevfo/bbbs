@@ -17,10 +17,16 @@
   padding: 0;
   border: 0;
   outline: none;
+  transition: 0.3s;
 
   &:first-of-type {
     margin-left: 0;
   }
+}
+
+.personal-area__user-link_type_city:hover,.personal-area__user-link_type_exit:hover{
+  cursor: pointer;
+  color: $darkGray;
 }
 .personal-area__user-link_type_city-text{
   margin-right: 10px;
