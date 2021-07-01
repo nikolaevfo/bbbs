@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { monthTextPadeg, dayNumber } from '../utils/toGetDate';
 
 function ProfileCalendarCard({ card }) {
-  const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
-  const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });
+  const monthOfMeeting = monthTextPadeg(card);
+  const dayNumberOfMeeting = dayNumber(card);
 
   return (
     <article className="personal-area__calendar-card">

@@ -1,26 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import toGetFreeSeatsText from '../utils/toGetFreeSeatsText';
+import {
+  monthText,
+  dayName,
+  dayNumber,
+  hourStart,
+  minuteStart,
+  hourEnd,
+  minuteEnd,
+} from '../utils/toGetDate';
 
 function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalendarCardClick }) {
-  const monthOfMeeting = format(new Date(card.startAt), 'LLLL', { locale: ru });
-  const dayNameOfMeeting = format(new Date(card.startAt), 'EEEE', { locale: ru });
-  const dayNumberOfMeeting = format(new Date(card.startAt), 'd', { locale: ru });
-  const hourStartOfMeeting = format(new Date(card.startAt), 'k', { locale: ru });
-  const minuteStartOfMeeting = format(new Date(card.startAt), 'mm', { locale: ru });
-  const hourEndOfMeeting = format(new Date(card.endAt), 'k', { locale: ru });
-  const minuteEndOfMeeting = format(new Date(card.endAt), 'mm', { locale: ru });
+  const monthOfMeeting = monthText(card);
+  const dayNameOfMeeting = dayName(card);
+  const dayNumberOfMeeting = dayNumber(card);
+  const hourStartOfMeeting = hourStart(card);
+  const minuteStartOfMeeting = minuteStart(card);
+  const hourEndOfMeeting = hourEnd(card);
+  const minuteEndOfMeeting = minuteEnd(card);
+
   const freeSeats = card.remainSeats || card.seats - card.takenSeats;
 
-  let freeSeatsText = '';
-  if (card.booked) {
-    freeSeatsText = '';
-  } else if (freeSeats > 0) {
-    freeSeatsText = `Осталось ${freeSeats} мест`;
-  } else {
-    freeSeatsText = 'Запись закрыта';
-  }
+  const freeSeatsText = toGetFreeSeatsText(card, freeSeats);
 
   let buttonSignText = '';
   if (card.booked) {

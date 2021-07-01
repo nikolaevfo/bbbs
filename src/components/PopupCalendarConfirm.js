@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import {
+  monthTextPadeg,
+  dayNumber,
+  hourStart,
+  minuteStart,
+  hourEnd,
+  minuteEnd,
+} from '../utils/toGetDate';
 
 function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClick, onCloseClick }) {
-  const monthOfMeeting = format(new Date(clickedCalendarCard.startAt), 'MMMM', { locale: ru });
-  const dayNumberOfMeeting = format(new Date(clickedCalendarCard.startAt), 'd', { locale: ru });
-  const hourStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'k', { locale: ru });
-  const minuteStartOfMeeting = format(new Date(clickedCalendarCard.startAt), 'mm', { locale: ru });
-  const hourEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'k', { locale: ru });
-  const minuteEndOfMeeting = format(new Date(clickedCalendarCard.endAt), 'mm', { locale: ru });
+  const monthOfMeeting = monthTextPadeg(clickedCalendarCard);
+  const dayNumberOfMeeting = dayNumber(clickedCalendarCard);
+  const hourStartOfMeeting = hourStart(clickedCalendarCard);
+  const minuteStartOfMeeting = minuteStart(clickedCalendarCard);
+  const hourEndOfMeeting = hourEnd(clickedCalendarCard);
+  const minuteEndOfMeeting = minuteEnd(clickedCalendarCard);
 
   function handleAppointCalendarPopupClick() {
     onSubmitAppointCalendarClick(clickedCalendarCard);

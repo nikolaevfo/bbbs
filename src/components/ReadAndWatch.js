@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import scrollToUp from '../hooks/scrollToUp';
 
 function ReadAndWatch() {
   // перемотка в начало страницы
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  scrollToUp();
 
   return (
     <main className="main">

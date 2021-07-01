@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CurrentContext } from '../contexts/CurrentContext';
+import scrollToUp from '../hooks/scrollToUp';
 
 import QuestionCard from './QuestionCard';
 
 function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
   // перемотка в начало страницы
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  scrollToUp();
 
   // загрузка данных
   React.useEffect(() => {

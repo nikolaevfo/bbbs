@@ -6,6 +6,8 @@ import whereToGoTagsList from './whereToGoTagsList';
 import profileNarrativesCards from './profileNarrativesCards';
 import MockedMainPageData from './mocks';
 
+// import loginMock from './handleMocks';
+
 const axios = require('axios');
 
 const MockAdapter = require('axios-mock-adapter');
@@ -25,6 +27,7 @@ class Api {
   }
 
   login(userData) {
+    // loginMock(userData, this.baseUrl);
     mock.onPost(`${this.baseUrl}/token`).reply(200, {
       username: userData.login,
       password: userData.password,

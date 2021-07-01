@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import { CurrentContext } from '../contexts/CurrentContext';
 
 import WhereToGoCard from './WhereToGoCard';
+import scrollToUp from '../hooks/scrollToUp';
 
 function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData }) {
   // перемотка в начало страницы
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  scrollToUp();
 
   React.useEffect(() => {
     onWhereToGoInit();

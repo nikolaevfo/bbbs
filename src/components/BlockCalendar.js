@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { parseJSON } from 'date-fns';
 
 function showTags(tags) {
   if (!tags) {

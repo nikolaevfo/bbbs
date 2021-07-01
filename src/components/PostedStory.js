@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
+import { year, monthText, dayNumber } from '../utils/toGetDate';
 
 function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
-  const monthOfMeeting = format(new Date(card.date), 'LLLL', { locale: ru });
-  const dayNumberOfMeeting = format(new Date(card.date), 'd', { locale: ru });
-  const yearOfMeeting = format(new Date(card.date), 'y', { locale: ru });
+  const yearOfMeeting = year(card);
+  const monthOfMeeting = monthText(card);
+  const dayNumberOfMeeting = dayNumber(card);
 
   function handleEdition() {
     setEditClicked(!isEditClicked);

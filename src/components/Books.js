@@ -1,10 +1,9 @@
 import React from 'react';
+import scrollToUp from '../hooks/scrollToUp';
 
 function Books() {
   // перемотка в начало страницы
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  scrollToUp();
 
   return (
     <main className="main">

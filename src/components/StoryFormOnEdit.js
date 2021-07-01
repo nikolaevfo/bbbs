@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 import ImageUploader from './ImageUploader';
+import { year, monthNumber, dayNumber } from '../utils/toGetDate';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
 function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
-  const monthOfMeeting = format(new Date(card.date), 'MM', { locale: ru });
-  const dayNumberOfMeeting = format(new Date(card.date), 'dd', { locale: ru });
-  const yearOfMeeting = format(new Date(card.date), 'y', { locale: ru });
+  const monthOfMeeting = monthNumber(card);
+  const dayNumberOfMeeting = dayNumber(card);
+  const yearOfMeeting = year(card);
 
   const { register, handleSubmit, formState, setValue } = useForm({ mode: 'onChange' });
   const [goodRateChecked, setGoodRateChecked] = React.useState(false);

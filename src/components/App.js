@@ -232,30 +232,6 @@ function App() {
         setMonthList(newMonthList);
       })
       .catch((err) => console.log(err));
-
-    // if (isLoggedIn) {
-    //   // получение карточек для зарегестрированного пользователя
-    //   api
-    //     .getCalendarCardsLoggedIn(access)
-    //     .then((res) => {
-    //       const cardsList = res.data.calendarCards;
-    //       setCalendarData(cardsList);
-    //       const newMonthList = toGetMonthListShorter(cardsList);
-    //       setMonthList(newMonthList);
-    //     })
-    //     .catch((err) => console.log(err));
-    // } else {
-    //   // получение карточек для незарегестрированного пользователя
-    //   api
-    //     .getCalendarCardsLoggedOut(access, currentCityId)
-    //     .then((res) => {
-    //       const cardsList = res.data.calendarCards;
-    //       setCalendarData(cardsList);
-    //       const newMonthList = toGetMonthListShorter(cardsList);
-    //       setMonthList(newMonthList);
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
   }
 
   // PopupCalendarSignin ===============================
@@ -271,10 +247,11 @@ function App() {
         setIsLoggedIn(true);
         setIsPopupCalendarSigninOpen(false);
       })
-      .catch(() => {
+      .catch((err) => {
         handlePopupCloseClick();
         setPopupCalendarWichWasOpen('isPopupCalendarSigninOpen');
         setIsPopupCalendarErrorOpen(true);
+        console.log(err);
       });
     setCityChoicePopupOpen(true);
   }
@@ -415,11 +392,7 @@ function App() {
 
   // signin=================================================================================
   function handelAppInit() {
-    if (localStorage.getItem('access')) {
-      setIsPopupCalendarSigninOpen(false);
-    } else {
-      setIsPopupCalendarSigninOpen(true);
-    }
+    setIsPopupCalendarSigninOpen(!localStorage.getItem('access'));
   }
 
   React.useEffect(() => {

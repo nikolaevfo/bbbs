@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 import { CurrentContext } from '../contexts/CurrentContext';
+import scrollToUp from '../hooks/scrollToUp';
+import { monthText } from '../utils/toGetDate';
 
 import CalendarCard from './CalendarCard';
 
@@ -15,9 +15,7 @@ function Calendar({
 }) {
   const context = React.useContext(CurrentContext);
   // перемотка в начало страницы
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  scrollToUp();
 
   // загрузка данных
   React.useEffect(() => {
@@ -27,13 +25,13 @@ function Calendar({
   const [cardsListFiltered, setCardsListFiltered] = useState([]);
   const [monthChecked, setMonthChecked] = useState('');
 
-  function getMonthName(card) {
-    return format(new Date(card.startAt), 'LLLL', { locale: ru });
-  }
+  // function getMonthName(card) {
+  //   return format(new Date(card.startAt), 'LLLL', { locale: ru });
+  // }
 
   function handleMonthElementClick(e) {
     setMonthChecked(e.target.id);
-    setCardsListFiltered(calendarData.filter((item) => getMonthName(item) === e.target.id));
+    setCardsListFiltered(calendarData.filter((item) => monthText(item) === e.target.id));
   }
   React.useEffect(() => {
     if (calendarData) {
