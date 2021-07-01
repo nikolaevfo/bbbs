@@ -45,7 +45,21 @@ class Api {
   }
 
   // calendar =======================================================
-  getCalendarCardsLoggedIn(access) {
+  getCalendarCards(access, currentCityId, isLoggedIn) {
+    if (isLoggedIn) {
+      mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
+        calendarCards: calendarCardsList,
+      });
+      return axios
+        .get(`${this.baseUrl}/afisha/events/`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${access}`,
+          },
+        })
+        .then(this.checkResponse);
+    }
     mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
       calendarCards: calendarCardsList,
     });
@@ -56,22 +70,7 @@ class Api {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,
         },
-      })
-      .then(this.checkResponse);
-  }
-
-  getCalendarCardsLoggedOut(access, guestCity) {
-    mock.onGet(`${this.baseUrl}/afisha/events/`).reply(200, {
-      calendarCards: calendarCardsList,
-    });
-    return axios
-      .get(`${this.baseUrl}/afisha/events/`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${access}`,
-        },
-        data: { city: guestCity },
+        data: { city: currentCityId },
       })
       .then(this.checkResponse);
   }

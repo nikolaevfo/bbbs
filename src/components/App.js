@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 import { Helmet } from 'react-helmet';
 import Modal from 'react-modal';
 import api from '../utils/api';
+
+import isBackScroll from '../utils/isBackScroll';
+import toGetMonthListShorter from '../utils/toGetMonthListShorter';
+
 import { CurrentContext } from '../contexts/CurrentContext';
 // import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
 
@@ -56,7 +58,7 @@ function App() {
       .catch((err) => console.log(err));
 
     api
-      .getCalendarCardsLoggedIn(access)
+      .getCalendarCards(access, currentCityId, isLoggedIn)
       .then((res) => {
         const cardsList = res.data.calendarCards;
         setProfileCalendarCards(cardsList);
@@ -155,10 +157,8 @@ function App() {
     });
   }
   // реализация появления меню при обратном скролле
-  let scrollPrev = 0;
-  function handleScroll() {
-    const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 100 && scrolled > scrollPrev) {
+  const handleScroll = () => {
+    if (isBackScroll()) {
       setHeaderClasses({
         ...headerClasses,
         headerOuted: 'header_outed',
@@ -169,9 +169,7 @@ function App() {
         headerOuted: '',
       });
     }
-    scrollPrev = scrolled;
-  }
-
+  };
   React.useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -224,40 +222,40 @@ function App() {
   }
 
   function handelCalendarInit() {
-    const toGetMonthListShorter = (arr) => {
-      const result = [];
-      for (let i = 0; i < arr.length; i += 1) {
-        const data = format(new Date(arr[i].startAt), 'LLLL', { locale: ru });
-        if (!result.includes(data)) {
-          result.push(data);
-        }
-      }
-      return result;
-    };
     const access = localStorage.getItem('access');
-    if (isLoggedIn) {
-      // получение карточек для зарегестрированного пользователя
-      api
-        .getCalendarCardsLoggedIn(access)
-        .then((res) => {
-          const cardsList = res.data.calendarCards;
-          setCalendarData(cardsList);
-          const newMonthList = toGetMonthListShorter(cardsList);
-          setMonthList(newMonthList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      // получение карточек для незарегестрированного пользователя
-      api
-        .getCalendarCardsLoggedOut(access, currentCityId)
-        .then((res) => {
-          const cardsList = res.data.calendarCards;
-          setCalendarData(cardsList);
-          const newMonthList = toGetMonthListShorter(cardsList);
-          setMonthList(newMonthList);
-        })
-        .catch((err) => console.log(err));
-    }
+    api
+      .getCalendarCards(access, currentCityId, isLoggedIn)
+      .then((res) => {
+        const cardsList = res.data.calendarCards;
+        setCalendarData(cardsList);
+        const newMonthList = toGetMonthListShorter(cardsList);
+        setMonthList(newMonthList);
+      })
+      .catch((err) => console.log(err));
+
+    // if (isLoggedIn) {
+    //   // получение карточек для зарегестрированного пользователя
+    //   api
+    //     .getCalendarCardsLoggedIn(access)
+    //     .then((res) => {
+    //       const cardsList = res.data.calendarCards;
+    //       setCalendarData(cardsList);
+    //       const newMonthList = toGetMonthListShorter(cardsList);
+    //       setMonthList(newMonthList);
+    //     })
+    //     .catch((err) => console.log(err));
+    // } else {
+    //   // получение карточек для незарегестрированного пользователя
+    //   api
+    //     .getCalendarCardsLoggedOut(access, currentCityId)
+    //     .then((res) => {
+    //       const cardsList = res.data.calendarCards;
+    //       setCalendarData(cardsList);
+    //       const newMonthList = toGetMonthListShorter(cardsList);
+    //       setMonthList(newMonthList);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
   }
 
   // PopupCalendarSignin ===============================
