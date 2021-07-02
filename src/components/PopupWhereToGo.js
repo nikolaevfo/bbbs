@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useFormWithValidation } from '../hooks/useForm';
 
 function PopupWhereToGo({ onCloseClick, onSubmit }) {
-  const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
+  const { values, handleChange, isValid, resetForm, setIsValid, errors } = useFormWithValidation();
 
   React.useEffect(() => {
     resetForm();
@@ -35,7 +35,11 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
         <input
           type="text"
           name="place"
-          className="popup__input popup__input_type_middle"
+          className={
+            errors.place
+              ? 'popup__input popup__input_type_middle popup__input_type_error'
+              : 'popup__input popup__input_type_middle'
+          }
           required
           placeholder="Название*"
           onChange={handleChange}
@@ -44,25 +48,59 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
         <input
           type="text"
           name="website"
-          className="popup__input popup__input_type_middle"
+          className={
+            errors.website
+              ? 'popup__input popup__input_type_middle popup__input_type_error'
+              : 'popup__input popup__input_type_middle'
+          }
           placeholder="Сайт"
           onChange={handleChange}
           minLength={2}
         />
       </div>
-      <input type="text" name="address" className="popup__input" required placeholder="Адрес*" />
+      <input
+        type="text"
+        name="address"
+        className={errors.address ? 'popup__input popup__input_type_error' : 'popup__input'}
+        required
+        onChange={handleChange}
+        minLength={2}
+        placeholder="Адрес*"
+      />
       <div className="popup__box-inputs radio">
-        <input
-          type="text"
-          name="boy"
-          id="boy"
-          className="popup__input popup__input_type_low popup__input_type_radio"
-          disabled
-          placeholder="Мальчик"
-          onChange={handleChange}
-        />
-        <input type="radio" className="radio__button-boy" name="sex" required />
-        <input
+        <label
+          htmlFor="boy"
+          className="popup__input popup__input_type_low popup__input_type_radio form__input recommendation__input recommendation__input_type_radio"
+        >
+          <input
+            type="radio"
+            id="boy"
+            name="sex"
+            value="boy"
+            className="popup__input-label"
+            required
+            onChange={handleChange}
+          />
+          <span className="popup__input-visible-label" />
+          Мальчик
+        </label>
+        <label
+          htmlFor="girl"
+          className="popup__input popup__input_type_low popup__input_type_radio form__input recommendation__input recommendation__input_type_radio"
+        >
+          <input
+            type="radio"
+            id="girl"
+            name="sex"
+            value="girl"
+            className="popup__input-label"
+            required
+            onChange={handleChange}
+          />
+          <span className="popup__input-visible-label" />
+          Девочка
+        </label>
+        {/* <input
           type="text"
           name="girl"
           id="girl"
@@ -71,7 +109,7 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
           placeholder="Девочка"
           onChange={handleChange}
         />
-        <input type="radio" className="radio__button-girl" name="sex" required />
+        <input type="radio" className="radio__button-girl" name="sex" required /> */}
         <input
           type="number"
           name="age"
@@ -84,14 +122,15 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
       <input
         type="text"
         name="type"
-        className="popup__input"
+        className={errors.type ? 'popup__input popup__input_type_error' : 'popup__input'}
         required
         placeholder="Тип отдыха*"
         onChange={handleChange}
         minLength={2}
       />
       <textarea
-        className="popup__textarea"
+        name="comment"
+        className={errors.comment ? 'popup__textarea popup__input_type_error' : 'popup__textarea'}
         required
         placeholder="Комментарий* Поделитесь впечатлениями о проведенном времени"
         onChange={handleChange}
