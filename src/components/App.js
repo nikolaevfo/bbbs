@@ -25,6 +25,7 @@ import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 import PopupCalendarSignin from './PopupCalendarSignin';
 import PopupCalendarError from './PopupCalendarError';
+import PopupWhereToGo from './PopupWhereToGo';
 import ReadAndWatch from './ReadAndWatch';
 import Dictionary from './Dictionary';
 import Video from './Video';
@@ -390,6 +391,21 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  const [isPopupWhereToGoOpen, setIsPopupWhereToGoOpen] = useState(false);
+
+  function handlePopupWhereToGoOpen() {
+    setIsPopupWhereToGoOpen(true);
+  }
+
+  function handlePopupWhereToGoClose() {
+    setIsPopupWhereToGoOpen(false);
+  }
+
+  function handlePopupWhereToGoSubmit() {
+    // TODO запрос к АПИ
+    handlePopupWhereToGoClose();
+  }
+
   // signin=================================================================================
   function handelAppInit() {
     setIsPopupCalendarSigninOpen(!localStorage.getItem('access'));
@@ -486,6 +502,7 @@ function App() {
               onWhereToGoInit={handleWhereToGoInit}
               whereToGoCardsData={whereToGoCardsData}
               whereToGoTagsData={whereToGoTagsData}
+              onPopupOpen={handlePopupWhereToGoOpen}
             />
           </Route>
 
@@ -584,12 +601,7 @@ function App() {
             onChangeCurrentCity={setCurrentCity}
           />
         </Modal>
-        {/* <PopupCityChoice
-          isOpen={isCityChoicePopupOpen}
-          onClose={closeCityChoicePopup}
-          onChangeCurrentCityId={setCurrentCityId}
-          onChangeCurrentCity={setCurrentCity}
-        /> */}
+
         <Modal
           isOpen={isPopupCalendarSigninOpen}
           className="popup__modal"
@@ -662,17 +674,20 @@ function App() {
           />
         </Modal>
 
-        {/* <Modal
-          isOpen={isCityChoicePopupOpen}
+        <Modal
+          isOpen={isPopupWhereToGoOpen}
           onRequestClose={() => {
-            handlePopupCloseClick();
+            handlePopupWhereToGoClose();
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCityChoice />
-        </Modal> */}
+          <PopupWhereToGo
+            onCloseClick={handlePopupWhereToGoClose}
+            onSubmit={handlePopupWhereToGoSubmit}
+          />
+        </Modal>
       </div>
     </CurrentContext.Provider>
   );

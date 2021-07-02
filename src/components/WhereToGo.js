@@ -6,7 +6,7 @@ import { CurrentContext } from '../contexts/CurrentContext';
 import WhereToGoCard from './WhereToGoCard';
 import scrollToUp from '../hooks/scrollToUp';
 
-function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData }) {
+function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onPopupOpen }) {
   // перемотка в начало страницы
   scrollToUp();
 
@@ -83,7 +83,7 @@ function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData }) {
           <div className="card place-card">
             <h2 className="section-title place-card__text">
               Если вы были в интересном месте и хотите порекомендовать его другим наставникам –
-              <button type="button" className="place-card__span-accent">
+              <button type="button" className="place-card__span-accent" onClick={onPopupOpen}>
                 заполните форму
               </button>
               , и мы добавим вашу рекомендацию.
@@ -135,12 +135,14 @@ WhereToGo.defaultProps = {
   onWhereToGoInit: undefined,
   whereToGoCardsData: [],
   whereToGoTagsData: [],
+  onPopupOpen: undefined,
 };
 
 WhereToGo.propTypes = {
   onWhereToGoInit: PropTypes.func,
   whereToGoCardsData: PropTypes.instanceOf(Array),
   whereToGoTagsData: PropTypes.instanceOf(Array),
+  onPopupOpen: PropTypes.func,
 };
 
 export default WhereToGo;
