@@ -1,11 +1,18 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImageUploading from 'react-images-uploading';
 
 import { useFormWithValidation } from '../hooks/useForm';
 
 function PopupWhereToGo({ onCloseClick, onSubmit }) {
   const { values, handleChange, isValid, resetForm, setIsValid, errors } = useFormWithValidation();
+  const [popupWhereToGoImage, setPopupWhereToGoImage] = React.useState([]);
+
+  function onChange(image) {
+    setPopupWhereToGoImage(image);
+    // setBtnInvisible(true);
+  }
 
   React.useEffect(() => {
     resetForm();
@@ -15,8 +22,14 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
   function handlerSubmitForm(e) {
     e.preventDefault();
     onSubmit({
-      login: values.login,
-      password: values.password,
+      text: values.text,
+      website: values.website,
+      address: values.address,
+      sex: values.sex,
+      age: values.age,
+      type: values.type,
+      comment: values.comment,
+      image: popupWhereToGoImage,
     });
   }
 
@@ -137,8 +150,32 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
         minLength={2}
       />
       <div className="popup__box-inputs">
-        <button className="button button_theme_light recommendation__add-button" type="button" />
-        <p className="recommendation__add-place">Добавить фото</p>
+        <ImageUploading
+          // multiple
+          value={popupWhereToGoImage}
+          onChange={onChange}
+          // maxNumber={maxNumber}
+          dataURLKey="data_url"
+        >
+          {({ onImageUpload }) => (
+            <>
+              <button
+                className="button button_theme_light recommendation__add-button"
+                type="button"
+                onClick={onImageUpload}
+              />
+              <p className="recommendation__add-place">Добавить фото</p>
+            </>
+          )}
+
+          {/* <button
+            className="button button_theme_light recommendation__add-button"
+            type="button"
+            onClick={onImageUpload}
+          />
+          <p className="recommendation__add-place">Добавить фото</p> */}
+        </ImageUploading>
+
         <button
           className="button button_theme_light recommendation__submit"
           type="submit"

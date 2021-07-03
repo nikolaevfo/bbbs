@@ -401,8 +401,9 @@ function App() {
     setIsPopupWhereToGoOpen(false);
   }
 
-  function handlePopupWhereToGoSubmit() {
+  function handlePopupWhereToGoSubmit(data) {
     // TODO запрос к АПИ
+    console.log(data);
     handlePopupWhereToGoClose();
   }
 
