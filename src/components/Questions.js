@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CurrentContext } from '../contexts/CurrentContext';
 import scrollToUp from '../hooks/scrollToUp';
+import { useFormWithValidation } from '../hooks/useForm';
 
 import QuestionCard from './QuestionCard';
 
-function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
+export default function Questions({ onQuestionsInit, questionsData, questionsTagsData, onSubmit }) {
   // перемотка в начало страницы
   scrollToUp();
+
+  const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
 
   // загрузка данных
   React.useEffect(() => {
@@ -34,6 +37,20 @@ function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
       );
       setQuestionsFitered(newArray);
     }
+  }
+
+  React.useEffect(() => {
+    resetForm();
+    setIsValid(false);
+  }, []);
+
+  function handlerSubmit(e) {
+    e.preventDefault();
+    onSubmit({
+      question: values.question,
+    });
+    resetForm();
+    setIsValid(false);
   }
 
   return (
@@ -79,7 +96,7 @@ function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
           <h2 className="section-title add-question__title">
             Если вы не нашли ответ на свой вопрос — напишите нам, и мы включим его в список
           </h2>
-          <form className="question-form" name="add-question">
+          <form className="question-form" name="add-question" onSubmit={handlerSubmit}>
             <fieldset className="question-form__add-question">
               <input
                 className="question-form__input"
@@ -87,12 +104,14 @@ function Questions({ onQuestionsInit, questionsData, questionsTagsData }) {
                 name="question"
                 placeholder="Введите вопрос"
                 required
+                minLength={2}
+                onChange={handleChange}
+                value={values.question || ''}
               />
               <button
                 className="button button_theme_light question-form__button"
                 type="submit"
-                name="submit"
-                disabled
+                disabled={!isValid}
               >
                 Отправить
               </button>
@@ -108,12 +127,12 @@ Questions.defaultProps = {
   onQuestionsInit: undefined,
   questionsData: [],
   questionsTagsData: [],
+  onSubmit: undefined,
 };
 
 Questions.propTypes = {
   onQuestionsInit: PropTypes.func,
   questionsData: PropTypes.instanceOf(Array),
   questionsTagsData: PropTypes.instanceOf(Array),
+  onSubmit: PropTypes.func,
 };
-
-export default Questions;

@@ -113,16 +113,6 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
           <span className="popup__input-visible-label" />
           Девочка
         </label>
-        {/* <input
-          type="text"
-          name="girl"
-          id="girl"
-          className="popup__input popup__input_type_low popup__input_type_radio"
-          disabled
-          placeholder="Девочка"
-          onChange={handleChange}
-        />
-        <input type="radio" className="radio__button-girl" name="sex" required /> */}
         <input
           type="number"
           name="age"
@@ -167,13 +157,6 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
               <p className="recommendation__add-place">Добавить фото</p>
             </>
           )}
-
-          {/* <button
-            className="button button_theme_light recommendation__add-button"
-            type="button"
-            onClick={onImageUpload}
-          />
-          <p className="recommendation__add-place">Добавить фото</p> */}
         </ImageUploading>
 
         <button

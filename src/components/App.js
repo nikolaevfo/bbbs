@@ -372,6 +372,11 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handlerSubmitQuestionsForm(data) {
+    // todo обращение к АПИ
+    console.log(data);
+  }
+
   // whereToGo ===============================================================================
   const [whereToGoCardsData, setWhereToGoCardsData] = useState([]);
   const [whereToGoTagsData, setWhereToGoTagsData] = useState([]);
@@ -515,6 +520,7 @@ function App() {
               onQuestionsInit={handleQuestionsInit}
               questionsData={questionsData}
               questionsTagsData={questionsTagsData}
+              onSubmit={handlerSubmitQuestionsForm}
             />
           </Route>
 
