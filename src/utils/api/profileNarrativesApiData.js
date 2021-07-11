@@ -1,4 +1,4 @@
-import imageOfNarrative1 from '../images/personal-area/lk.png';
+import imageOfNarrative1 from '../../images/personal-area/lk.png';
 
 const profileNarrativesCards = [
   {

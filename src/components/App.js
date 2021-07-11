@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Modal from 'react-modal';
-import api from '../utils/api';
+import api from '../utils/api/api';
 
 import isBackScroll from '../utils/isBackScroll';
 import toGetMonthListShorter from '../utils/toGetMonthListShorter';

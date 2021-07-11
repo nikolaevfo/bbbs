@@ -1,10 +1,10 @@
-import calendarCardsList from './calendarCardsList';
-import questionsCardsList from './questionsCardsList';
-import questionsTagsList from './questionsTagsList';
-import whereToGoCardsList from './whereToGoCardsList';
-import whereToGoTagsList from './whereToGoTagsList';
-import profileNarrativesCards from './profileNarrativesCards';
-import MockedMainPageData from './mocks';
+import calendarCardsList from './calendarApiData';
+import questionsCardsList from './questionsApiData';
+import questionsTagsList from './questionsTagsApiData';
+import whereToGoCardsList from './whereToGoApiData';
+import whereToGoTagsList from './whereToGoTagsApiData';
+import profileNarrativesCards from './profileNarrativesApiData';
+import MockedMainPageData from './mainPageApiData';
 
 // import loginMock from './handleMocks';
 

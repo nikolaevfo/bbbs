@@ -1,4 +1,4 @@
-import imageOfwhereToGo1 from '../images/where-to-go/img-xl.jpg';
+import imageOfwhereToGo1 from '../../images/where-to-go/img-xl.jpg';
 
 const whereToGoCardsList = [
   {
