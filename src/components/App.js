@@ -1,7 +1,14 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Modal from 'react-modal';
+
+import { connect } from 'react-redux';
+
+import { setMainPageDataRedux, setMainPageCalendarCardRedux } from '../redux/actions';
+
 import api from '../utils/api/api';
 
 import isBackScroll from '../utils/isBackScroll';
@@ -35,7 +42,7 @@ import Books from './Books';
 import Rights from './Rights';
 import Stories from './Stories';
 
-function App() {
+function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalendarCardRedux }) {
   // context
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -189,7 +196,9 @@ function App() {
       .getMainPageInfo(access)
       .then((response) => {
         setMainPageData(response.data);
+        setMainPageDataRedux(response.data);
         setMainPageCalendarCard(response.data.event);
+        setMainPageCalendarCardRedux(response.data.event);
       })
       .catch((err) => {
         console.log(`Ошибка при получении данных с сервера: ${err}`);
@@ -271,13 +280,15 @@ function App() {
 
   // записаться/отписаться от события
   function handleChangeAppoitnCalendar(card, bool) {
-    if (calendarData) {
+    if (history.location.pathname === '/calendar') {
       const newCardsArray = calendarData.slice(0);
       const ind = newCardsArray.indexOf(card);
       newCardsArray[ind].booked = bool;
       setCalendarData(newCardsArray);
-    } else {
+    } else if (history.location.pathname === '/') {
+      console.log(mainPageCalendarCardRedux);
       setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
+      setMainPageCalendarCardRedux({ ...mainPageCalendarCardRedux, booked: bool });
     }
   }
 
@@ -700,4 +711,16 @@ function App() {
   );
 }
 
-export default App;
+// eslint-disable-next-line arrow-body-style
+const mapStateToProps = (state) => {
+  return {
+    mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+  };
+};
+
+const mapDispatchToProps = {
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

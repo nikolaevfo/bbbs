@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+
 import { CurrentContext } from '../contexts/CurrentContext';
 import BlockAbout from './BlockAbout';
 // import BlockCalendar from './BlockCalendar';
@@ -18,8 +21,15 @@ function Main({
   mainPageCalendarCard,
   onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
+  // eslint-disable-next-line react/prop-types
+  mainPageDataRedux,
+  // eslint-disable-next-line react/prop-types
+  mainPageCalendarCardRedux,
 }) {
   const context = React.useContext(CurrentContext);
+
+  console.log(mainPageDataRedux);
+  console.log(mainPageCalendarCardRedux);
 
   return (
     <main className="main">
@@ -172,4 +182,12 @@ Main.defaultProps = {
   onAppointCalendarCardClick: () => {},
 };
 
-export default Main;
+// eslint-disable-next-line arrow-body-style
+const mapStateToProps = (state) => {
+  return {
+    mainPageDataRedux: state.mainPage.mainPageData,
+    mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+  };
+};
+
+export default connect(mapStateToProps, null)(Main);
