@@ -2,12 +2,8 @@ import { SET_MAIN_PAGE_DATA, SET_MAIN_PAGE_CALENDAR_CARD } from './types';
 
 /* eslint-disable import/prefer-default-export */
 const initialState = {
-  mainPageData: {
-    title: '111',
-  },
-  mainPageCalendarCard: {
-    title: '222',
-  },
+  mainPageData: {},
+  mainPageCalendarCard: {},
 };
 
 export const mainPageReducer = (state = initialState, action) => {

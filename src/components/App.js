@@ -30,7 +30,7 @@ import PopupDeleteStory from './PopupDeleteStory';
 import PopupCalendarDescription from './PopupCalendarDescription';
 import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
-import PopupCalendarSignin from './PopupCalendarSignin';
+import PopupSignin from './PopupSignin';
 import PopupCalendarError from './PopupCalendarError';
 import PopupWhereToGo from './PopupWhereToGo';
 import ReadAndWatch from './ReadAndWatch';
@@ -47,15 +47,15 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false);
-  const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false);
-  const [currentCityId, setCurrentCityId] = useState(undefined);
-  const [currentCity, setCurrentCity] = useState(undefined);
-  const [isPopupCalendarSigninOpen, setIsPopupCalendarSigninOpen] = useState(false);
+  const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
+  const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
+  const [currentCityId, setCurrentCityId] = useState(undefined); //+
+  const [currentCity, setCurrentCity] = useState(undefined); //+
+  const [isPopupSigninOpen, setisPopupSigninOpen] = useState(false); //+
 
   // Profile =====================================================================
-  const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]);
-  const [profileCalendarCards, setProfileCalendarCards] = React.useState([]);
+  const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]); //+
+  const [profileCalendarCards, setProfileCalendarCards] = React.useState([]); //+
   function handleProfileInit() {
     const access = localStorage.getItem('access');
     api
@@ -94,7 +94,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
     // todo должно быть обращение к апи
   }
 
-  const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined);
+  const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
 
   const history = useHistory();
 
@@ -187,8 +187,8 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   // header
 
   // main page=======================================================================================
-  const [mainPageData, setMainPageData] = useState({});
-  const [mainPageCalendarCard, setMainPageCalendarCard] = useState({});
+  const [mainPageData, setMainPageData] = useState({}); //+
+  const [mainPageCalendarCard, setMainPageCalendarCard] = useState({}); //+
 
   React.useEffect(() => {
     const access = localStorage.getItem('access');
@@ -207,24 +207,24 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   // main page
 
   // calendar===============================================================================
-  const [calendarData, setCalendarData] = useState(null);
-  const [monthList, setMonthList] = useState([]);
+  const [calendarData, setCalendarData] = useState(null); //+
+  const [monthList, setMonthList] = useState([]); //+
 
-  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false);
-  const [clickedCalendarCard, setClickedCalendarCard] = useState([]);
-  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false);
-  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false);
-  const [isPopupCalendarErrorOpen, setIsPopupCalendarErrorOpen] = useState(false);
+  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false); //+
+  const [clickedCalendarCard, setClickedCalendarCard] = useState([]); //+
+  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false); //+
+  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false); //+
+  const [isPopupCalendarErrorOpen, setIsPopupCalendarErrorOpen] = useState(false); //+
 
   // popupCalendarErrorText
-  const [popupCalendarErrorText, setPopupCalendarErrorText] = useState('');
+  const [popupCalendarErrorText, setPopupCalendarErrorText] = useState(''); //+
 
   // попап, который был открыт перед возникновением ошибки
-  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined);
+  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined); //+
 
   // close all popups================================
   function handlePopupCloseClick() {
-    setIsPopupCalendarSigninOpen(false);
+    setisPopupSigninOpen(false);
     setIsPopupCalendarDescriptionOpen(false);
     setIsPopupCalendarConfirmOpen(false);
     setIsPopupCalendarDoneOpen(false);
@@ -255,11 +255,11 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         localStorage.setItem('access', JSON.stringify(res.data.access));
         localStorage.setItem('username', JSON.stringify(res.data.username));
         setIsLoggedIn(true);
-        setIsPopupCalendarSigninOpen(false);
+        setisPopupSigninOpen(false);
       })
       .catch((err) => {
         handlePopupCloseClick();
-        setPopupCalendarWichWasOpen('isPopupCalendarSigninOpen');
+        setPopupCalendarWichWasOpen('isPopupSigninOpen');
         setIsPopupCalendarErrorOpen(true);
         console.log(err);
       });
@@ -357,16 +357,16 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
     } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
       setIsPopupCalendarErrorOpen(false);
       setIsPopupCalendarConfirmOpen(true);
-    } else if (popupCalendarWichWasOpen === 'isPopupCalendarSigninOpen') {
+    } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
       setIsPopupCalendarErrorOpen(false);
-      setIsPopupCalendarSigninOpen(true);
+      setisPopupSigninOpen(true);
     }
     setIsPopupCalendarErrorOpen(false);
   }
 
   // Questions =============================================================================
-  const [questionsData, setQuestionsData] = useState([]);
-  const [questionsTagsData, setQuestionsTagsData] = useState([]);
+  const [questionsData, setQuestionsData] = useState([]); //+
+  const [questionsTagsData, setQuestionsTagsData] = useState([]); //+
   function handleQuestionsInit() {
     api
       .getQuestionsCards()
@@ -389,8 +389,8 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   }
 
   // whereToGo ===============================================================================
-  const [whereToGoCardsData, setWhereToGoCardsData] = useState([]);
-  const [whereToGoTagsData, setWhereToGoTagsData] = useState([]);
+  const [whereToGoCardsData, setWhereToGoCardsData] = useState([]); //+
+  const [whereToGoTagsData, setWhereToGoTagsData] = useState([]); //+
   function handleWhereToGoInit() {
     api
       .whereToGoCards()
@@ -407,7 +407,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
       .catch((err) => console.log(err));
   }
 
-  const [isPopupWhereToGoOpen, setIsPopupWhereToGoOpen] = useState(false);
+  const [isPopupWhereToGoOpen, setIsPopupWhereToGoOpen] = useState(false); //+
 
   function handlePopupWhereToGoOpen() {
     setIsPopupWhereToGoOpen(true);
@@ -425,7 +425,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
 
   // signin=================================================================================
   function handelAppInit() {
-    setIsPopupCalendarSigninOpen(!localStorage.getItem('access'));
+    setisPopupSigninOpen(!localStorage.getItem('access'));
   }
 
   React.useEffect(() => {
@@ -621,11 +621,11 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         </Modal>
 
         <Modal
-          isOpen={isPopupCalendarSigninOpen}
+          isOpen={isPopupSigninOpen}
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarSignin
+          <PopupSignin
             onCloseClick={handlePopupCalendarSigninCloseClick}
             onSubmit={handlePopupCalendarSigninLoggedIn}
           />

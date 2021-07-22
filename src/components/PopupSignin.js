@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../hooks/useForm';
 
-function PopupCalendarSignin({ onCloseClick, onSubmit }) {
+function PopupSignin({ onCloseClick, onSubmit }) {
   const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
 
   React.useEffect(() => {
@@ -65,14 +65,14 @@ function PopupCalendarSignin({ onCloseClick, onSubmit }) {
   );
 }
 
-PopupCalendarSignin.defaultProps = {
+PopupSignin.defaultProps = {
   onCloseClick: undefined,
   onSubmit: undefined,
 };
 
-PopupCalendarSignin.propTypes = {
+PopupSignin.propTypes = {
   onCloseClick: PropTypes.func,
   onSubmit: PropTypes.func,
 };
 
-export default PopupCalendarSignin;
+export default PopupSignin;
