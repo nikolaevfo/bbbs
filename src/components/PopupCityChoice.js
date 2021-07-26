@@ -1,17 +1,37 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import { NavLink, useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function PopupCityChoice({ onClose, onChangeCurrentCityId, onChangeCurrentCity }) {
+import {
+  // setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+} from '../redux/actions';
+
+function PopupCityChoice({
+  // onClose,
+  // onChangeCurrentCityId,
+  // onChangeCurrentCity,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+}) {
   // const location = useLocation();
   // const currentPath = location.pathname;
 
   function handleCityClick(e) {
-    onChangeCurrentCityId(e.target.id);
+    // onChangeCurrentCityId(e.target.id);
     localStorage.setItem('cityId', JSON.stringify(e.target.id));
     localStorage.setItem('city', JSON.stringify(e.target.textContent));
-    onChangeCurrentCity(e.target.textContent);
-    onClose();
+    // onChangeCurrentCity(e.target.textContent);
+    setCurrentCityIdRedux(e.target.id);
+    setCurrentCityRedux(e.target.textContent);
+    setCityChoicePopupOpenRedux(false);
   }
 
   return (
@@ -92,18 +112,32 @@ function PopupCityChoice({ onClose, onChangeCurrentCityId, onChangeCurrentCity }
   );
 }
 
-export default PopupCityChoice;
-
 PopupCityChoice.defaultProps = {
   // isOpen: false,
-  onClose: undefined,
-  onChangeCurrentCityId: undefined,
-  onChangeCurrentCity: undefined,
+  // onClose: undefined,
+  // onChangeCurrentCityId: undefined,
+  // onChangeCurrentCity: undefined,
 };
 
 PopupCityChoice.propTypes = {
   // isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onChangeCurrentCityId: PropTypes.func,
-  onChangeCurrentCity: PropTypes.func,
+  // onClose: PropTypes.func,
+  // onChangeCurrentCityId: PropTypes.func,
+  // onChangeCurrentCity: PropTypes.func,
 };
+
+// const mapStateToProps = (state) => ({
+//   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
+//   currentCityIdRedux: state.app.currentCityId,
+// });
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  // setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+};
+
+export default connect(null, mapDispatchToProps)(PopupCityChoice);

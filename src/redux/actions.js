@@ -5,18 +5,19 @@ import {
   SET_CHECKED_TO_DELETE_PROFILE_STORY,
   SET_CITY_CHOICE_POPUP_OPEN,
   SET_CLICKED_CALENDAR_CARD,
+  SET_POPUP_ERROR_TEXT,
+  SET_IS_POPUP_ERROR_OPEN,
   SET_CURRENT_CITY,
   SET_CURRENT_CITY_ID,
   SET_DELETE_STORY_POPUP_OPEN,
   SET_IS_POPUP_CALENDAR_CONFIRM_OPEN,
   SET_IS_POPUP_CALENDAR_DESCRIPTION_OPEN,
   SET_IS_POPUP_CALENDAR_DONE_OPEN,
-  SET_IS_POPUP_CALENDAR_ERROR_OPEN,
   SET_IS_POPUP_SIGNIN_OPEN,
   SET_IS_POPUP_WHERE_TO_GO_OPEN,
   SET_MAIN_PAGE_CALENDAR_CARD,
   SET_MAIN_PAGE_DATA,
-  SET_POPUP_CALENDAR_ERROR_TEXT,
+  // SET_POPUP_CALENDAR_ERROR_TEXT,
   SET_POPUP_CALENDAR_WICH_WAS_OPEN,
   SET_PROFILE_CALENDAR_CARDS,
   SET_PROFILE_NARRATIVES_CARDS,
@@ -48,6 +49,24 @@ export function setCurrentCityRedux(data) {
 export function setisPopupSigninOpenRedux(data) {
   return {
     type: SET_IS_POPUP_SIGNIN_OPEN,
+    payload: data,
+  };
+}
+export function setPopupErrorTextRedux(data) {
+  return {
+    type: SET_POPUP_ERROR_TEXT,
+    payload: data,
+  };
+}
+export function setIsLoggedInRedux(data) {
+  return {
+    type: SET_IS_LOGGED_IN,
+    payload: data,
+  };
+}
+export function setCurrentUserRedux(data) {
+  return {
+    type: SET_CURRENT_USER,
     payload: data,
   };
 }
@@ -130,18 +149,18 @@ export function setIsPopupCalendarDoneOpenRedux(data) {
     payload: data,
   };
 }
-export function setIsPopupCalendarErrorOpenRedux(data) {
+export function setIsPopupErrorOpenRedux(data) {
   return {
     type: SET_IS_POPUP_CALENDAR_ERROR_OPEN,
     payload: data,
   };
 }
-export function setPopupCalendarErrorTextRedux(data) {
-  return {
-    type: SET_POPUP_CALENDAR_ERROR_TEXT,
-    payload: data,
-  };
-}
+// export function setPopupErrorTextRedux(data) {
+//   return {
+//     type: SET_POPUP_CALENDAR_ERROR_TEXT,
+//     payload: data,
+//   };
+// }
 export function setPopupCalendarWichWasOpenRedux(data) {
   return {
     type: SET_POPUP_CALENDAR_WICH_WAS_OPEN,

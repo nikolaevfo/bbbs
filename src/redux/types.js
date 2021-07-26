@@ -13,6 +13,18 @@ export const SET_CURRENT_CITY = 'APP/SET_CURRENT_CITY';
 // setisPopupSigninOpen
 export const SET_IS_POPUP_SIGNIN_OPEN = 'APP/SET_IS_POPUP_SIGNIN_OPEN';
 
+// setPopupErrorText;
+export const SET_POPUP_ERROR_TEXT = 'QUESTIONS/SET_POPUP_ERROR_TEXT';
+
+// setIsPopupErrorOpen;
+export const SET_IS_POPUP_ERROR_OPEN = 'CALENDAR/SET_IS_POPUP_CALENDAR_ERROR_OPEN';
+
+// setIsLoggedIn;
+export const SET_IS_LOGGED_IN = 'QUESTIONS/SET_IS_LOGGED_IN';
+
+// setCurrentUser;
+export const SET_CURRENT_USER = 'QUESTIONS/SET_CURRENT_USER';
+
 // MAINPAGE ======================================================================================
 export const SET_MAIN_PAGE_DATA = 'MAIN/SET_MAIN_PAGE_DATA';
 export const SET_MAIN_PAGE_CALENDAR_CARD = 'MAIN/SET_MAIN_PAGE_CALENDAR_CARD';
@@ -50,10 +62,7 @@ export const SET_IS_POPUP_CALENDAR_CONFIRM_OPEN = 'CALENDAR/SET_IS_POPUP_CALENDA
 // setIsPopupCalendarDoneOpen;
 export const SET_IS_POPUP_CALENDAR_DONE_OPEN = 'CALENDAR/SET_IS_POPUP_CALENDAR_DONE_OPEN';
 
-// setIsPopupCalendarErrorOpen;
-export const SET_IS_POPUP_CALENDAR_ERROR_OPEN = 'CALENDAR/SET_IS_POPUP_CALENDAR_ERROR_OPEN';
-
-// setPopupCalendarErrorText;
+// setPopupErrorText;
 export const SET_POPUP_CALENDAR_ERROR_TEXT = 'CALENDAR/SET_POPUP_CALENDAR_ERROR_TEXT';
 
 // setPopupCalendarWichWasOpen;

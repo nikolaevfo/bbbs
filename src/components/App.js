@@ -1,3 +1,4 @@
+/* eslint-disable import/named */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
@@ -7,7 +8,21 @@ import Modal from 'react-modal';
 
 import { connect } from 'react-redux';
 
-import { setMainPageDataRedux, setMainPageCalendarCardRedux } from '../redux/actions';
+import {
+  // setCityChoicePopupOpenRedux,
+  // setCurrentCityIdRedux,
+  // setCurrentCityRedux,
+  // setisPopupSigninOpenRedux,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+  setisPopupSigninOpenRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
+  //
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
+} from '../redux/actions';
 
 import api from '../utils/api/api';
 
@@ -25,13 +40,13 @@ import Profile from './Profile';
 import About from './About';
 import WhereToGo from './WhereToGo';
 import Questions from './Questions';
-import PopupCityChoice from './PopupCityChoice';
 import PopupDeleteStory from './PopupDeleteStory';
+import PopupCityChoice from './PopupCityChoice';
 import PopupCalendarDescription from './PopupCalendarDescription';
 import PopupCalendarConfirm from './PopupCalendarConfirm';
 import PopupCalendarDone from './PopupCalendarDone';
 import PopupSignin from './PopupSignin';
-import PopupCalendarError from './PopupCalendarError';
+import PopupError from './PopupError';
 import PopupWhereToGo from './PopupWhereToGo';
 import ReadAndWatch from './ReadAndWatch';
 import Dictionary from './Dictionary';
@@ -42,16 +57,39 @@ import Books from './Books';
 import Rights from './Rights';
 import Stories from './Stories';
 
-function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalendarCardRedux }) {
+function App({
+  // app
+  currentCityIdRedux,
+  isCityChoicePopupOpenRedux,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+  isPopupSigninOpenRedux,
+  setisPopupSigninOpenRedux,
+  isLoggedInRedux,
+  currentUserRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
+  // main
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
+  mainPageCalendarCardRedux,
+  // profile
+  isDeleteStoryPopupOpenRedux,
+}) {
   // context
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [currentUser, setCurrentUser] = useState({});
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = isLoggedInRedux;
+  const currentUser = currentUserRedux;
 
-  const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
+  // const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
   const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
-  const [currentCityId, setCurrentCityId] = useState(undefined); //+
-  const [currentCity, setCurrentCity] = useState(undefined); //+
-  const [isPopupSigninOpen, setisPopupSigninOpen] = useState(false); //+
+  // const [currentCityId, setCurrentCityId] = useState(undefined); //+
+  // const [currentCity, setCurrentCity] = useState(undefined); //+
+  // const [isPopupSigninOpen, setisPopupSigninOpen] = useState(false); //+
+
+  const currentCityId = currentCityIdRedux;
 
   // Profile =====================================================================
   const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]); //+
@@ -94,38 +132,38 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
     // todo должно быть обращение к апи
   }
 
-  const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
+  // const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
 
   const history = useHistory();
 
-  function handleDeleteStoryPopupClick(card) {
-    setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
-    setCheckedToDeleteProfileStory(card);
-  }
+  // function handleDeleteStoryPopupClick(card) {
+  //   setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
+  //   setCheckedToDeleteProfileStory(card);
+  // }
 
   function handleCityChoicePopupClick() {
     setCityChoicePopupOpen(!isCityChoicePopupOpen);
   }
 
-  function closeDeleteStoryPopup() {
-    setDeleteStoryPopupOpen(false);
-  }
+  // function closeDeleteStoryPopup() {
+  //   setDeleteStoryPopupOpen(false);
+  // }
 
-  function closeCityChoicePopup() {
-    setCityChoicePopupOpen(false);
-  }
+  // function closeCityChoicePopup() {
+  //   setCityChoicePopupOpen(false);
+  // }
 
-  function handleDeleteProfileStory() {
-    const newArray = [];
-    profileNarrativesCards.forEach((item) => {
-      if (item.id !== checkedToDeleteProfileStory.id) {
-        newArray.push(item);
-      }
-    });
-    setProfileNarrativesCards(newArray);
-    closeDeleteStoryPopup();
-    // todo должно быть обращение к апи
-  }
+  // function handleDeleteProfileStory() {
+  //   const newArray = [];
+  //   profileNarrativesCards.forEach((item) => {
+  //     if (item.id !== checkedToDeleteProfileStoryRedux.id) {
+  //       newArray.push(item);
+  //     }
+  //   });
+  //   setProfileNarrativesCards(newArray);
+  //   closeDeleteStoryPopup();
+  //   // todo должно быть обращение к апи
+  // }
 
   // header======================================================================================
   const [headerClasses, setHeaderClasses] = useState({
@@ -187,17 +225,17 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   // header
 
   // main page=======================================================================================
-  const [mainPageData, setMainPageData] = useState({}); //+
-  const [mainPageCalendarCard, setMainPageCalendarCard] = useState({}); //+
+  // const [mainPageData, setMainPageData] = useState({}); //+
+  // const [mainPageCalendarCard, setMainPageCalendarCard] = useState({}); //+
 
   React.useEffect(() => {
     const access = localStorage.getItem('access');
     api
       .getMainPageInfo(access)
       .then((response) => {
-        setMainPageData(response.data);
+        // setMainPageData(response.data);
         setMainPageDataRedux(response.data);
-        setMainPageCalendarCard(response.data.event);
+        // setMainPageCalendarCard(response.data.event);
         setMainPageCalendarCardRedux(response.data.event);
       })
       .catch((err) => {
@@ -214,21 +252,21 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   const [clickedCalendarCard, setClickedCalendarCard] = useState([]); //+
   const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false); //+
   const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false); //+
-  const [isPopupCalendarErrorOpen, setIsPopupCalendarErrorOpen] = useState(false); //+
+  const [isPopupErrorOpen, setIsPopupErrorOpen] = useState(false); //+
 
-  // popupCalendarErrorText
-  const [popupCalendarErrorText, setPopupCalendarErrorText] = useState(''); //+
+  // popupErrorText
+  const [popupErrorText, setPopupErrorText] = useState(''); //+
 
   // попап, который был открыт перед возникновением ошибки
   const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined); //+
 
   // close all popups================================
   function handlePopupCloseClick() {
-    setisPopupSigninOpen(false);
+    setisPopupSigninOpenRedux(false);
     setIsPopupCalendarDescriptionOpen(false);
     setIsPopupCalendarConfirmOpen(false);
     setIsPopupCalendarDoneOpen(false);
-    setCityChoicePopupOpen(false);
+    setCityChoicePopupOpenRedux(false);
   }
 
   function handelCalendarInit() {
@@ -245,31 +283,32 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   }
 
   // PopupCalendarSignin ===============================
-  function handlePopupCalendarSigninLoggedIn(userData) {
-    setPopupCalendarErrorText('Что-то пошло не так, войти снова');
-    api
-      .login(userData)
-      .then((res) => {
-        setCurrentUser({ username: res.data.username, password: res.data.password });
-        localStorage.clear();
-        localStorage.setItem('access', JSON.stringify(res.data.access));
-        localStorage.setItem('username', JSON.stringify(res.data.username));
-        setIsLoggedIn(true);
-        setisPopupSigninOpen(false);
-      })
-      .catch((err) => {
-        handlePopupCloseClick();
-        setPopupCalendarWichWasOpen('isPopupSigninOpen');
-        setIsPopupCalendarErrorOpen(true);
-        console.log(err);
-      });
-    setCityChoicePopupOpen(true);
-  }
-  function handlePopupCalendarSigninCloseClick() {
-    handlePopupCloseClick();
-    setCityChoicePopupOpen(true);
-    // history.push('/');
-  }
+  // function handlePopupCalendarSigninLoggedIn(userData) {
+  //   setPopupErrorText('Что-то пошло не так, войти снова');
+  //   api
+  //     .login(userData)
+  //     .then((res) => {
+  //       setCurrentUser({ username: res.data.username, password: res.data.password });
+  //       localStorage.clear();
+  //       localStorage.setItem('access', JSON.stringify(res.data.access));
+  //       localStorage.setItem('username', JSON.stringify(res.data.username));
+  //       setIsLoggedIn(true);
+  //       setisPopupSigninOpenRedux(false);
+  //     })
+  //     .catch((err) => {
+  //       handlePopupCloseClick();
+  //       setPopupCalendarWichWasOpen('isPopupSigninOpen');
+  //       setIsPopupErrorOpen(true);
+  //       console.log(err);
+  //     });
+  //   setCityChoicePopupOpenRedux(true);
+  // }
+
+  // function handlePopupCalendarSigninCloseClick() {
+  //   handlePopupCloseClick();
+  //   setCityChoicePopupOpenRedux(true);
+  //   // history.push('/');
+  // }
 
   // PopupCalendarDescription===========================
 
@@ -287,7 +326,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
       setCalendarData(newCardsArray);
     } else if (history.location.pathname === '/') {
       console.log(mainPageCalendarCardRedux);
-      setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
+      // setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
       setMainPageCalendarCardRedux({ ...mainPageCalendarCardRedux, booked: bool });
     }
   }
@@ -295,7 +334,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   // подтверждение или отписка на основной странице
   function handleCalendarAppointBtnClick(card) {
     const access = localStorage.getItem('access');
-    setPopupCalendarErrorText('Что-то пошло не так, попробуйте записаться снова');
+    setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
     if (!card.booked) {
       setClickedCalendarCard(card);
       setIsPopupCalendarConfirmOpen(true);
@@ -306,7 +345,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
           // console.log(res);
         })
         .catch(() => {
-          setIsPopupCalendarErrorOpen(true);
+          setIsPopupErrorOpen(true);
         });
       handleChangeAppoitnCalendar(card, false);
     }
@@ -320,7 +359,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
       setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
     }
     const access = localStorage.getItem('access');
-    setPopupCalendarErrorText('Что-то пошло не так, попробуйте записаться снова');
+    setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
     if (!card.booked) {
       api
         .appointToEvent(access, card.id)
@@ -329,7 +368,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         })
         .catch(() => {
           handlePopupCloseClick();
-          setIsPopupCalendarErrorOpen(true);
+          setIsPopupErrorOpen(true);
         });
       handleChangeAppoitnCalendar(card, true);
       handlePopupCloseClick();
@@ -342,26 +381,26 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         })
         .catch(() => {
           handlePopupCloseClick();
-          setIsPopupCalendarErrorOpen(true);
+          setIsPopupErrorOpen(true);
         });
       handleChangeAppoitnCalendar(card, false);
       handlePopupCloseClick();
     }
   }
 
-  // popupCalendarError
-  function handlePopupCalendarErrorClose() {
+  // popupError
+  function handlePopupErrorClose() {
     if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
-      setIsPopupCalendarErrorOpen(false);
+      setIsPopupErrorOpen(false);
       setIsPopupCalendarDescriptionOpen(true);
     } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
-      setIsPopupCalendarErrorOpen(false);
+      setIsPopupErrorOpen(false);
       setIsPopupCalendarConfirmOpen(true);
     } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
-      setIsPopupCalendarErrorOpen(false);
-      setisPopupSigninOpen(true);
+      setIsPopupErrorOpen(false);
+      setisPopupSigninOpenRedux(true);
     }
-    setIsPopupCalendarErrorOpen(false);
+    setIsPopupErrorOpen(false);
   }
 
   // Questions =============================================================================
@@ -425,7 +464,7 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
 
   // signin=================================================================================
   function handelAppInit() {
-    setisPopupSigninOpen(!localStorage.getItem('access'));
+    setisPopupSigninOpenRedux(!localStorage.getItem('access'));
   }
 
   React.useEffect(() => {
@@ -436,34 +475,34 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
   React.useEffect(() => {
     if (localStorage.getItem('access')) {
       // api.ckeckToken(JSON.parse(localStorage.access));
-      setIsLoggedIn(true);
+      setIsLoggedInRedux(true);
       const localUsername = JSON.parse(localStorage.username);
-      setCurrentUser({ username: localUsername });
+      setCurrentUserRedux({ username: localUsername });
     }
     if (localStorage.getItem('city')) {
-      setCurrentCityId(JSON.parse(localStorage.cityId));
-      setCurrentCity(JSON.parse(localStorage.city));
+      setCurrentCityIdRedux(JSON.parse(localStorage.cityId));
+      setCurrentCityRedux(JSON.parse(localStorage.city));
     }
   }, []);
 
   // signout=========================================
   function handleSignOut() {
     localStorage.clear();
-    setIsLoggedIn(false);
+    setIsLoggedInRedux(false);
     history.push('/');
   }
 
   // city modal open on init=======================================================================
   React.useEffect(() => {
     if (isLoggedIn && !currentCityId) {
-      setCityChoicePopupOpen(true);
+      setCityChoicePopupOpenRedux(true);
     }
   }, [isLoggedIn]);
 
   Modal.setAppElement('#root');
 
   return (
-    <CurrentContext.Provider value={{ currentUser, isLoggedIn }}>
+    <CurrentContext.Provider value={{}}>
       <div className="page">
         <Header
           headerClasses={headerClasses}
@@ -476,8 +515,8 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
               <title>Главная</title>
             </Helmet>
             <Main
-              mainPageData={mainPageData}
-              mainPageCalendarCard={mainPageCalendarCard}
+              // mainPageData={mainPageData}
+              // mainPageCalendarCard={mainPageCalendarCard}
               onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
               onAppointCalendarCardClick={handleCalendarAppointBtnClick}
             />
@@ -487,14 +526,14 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
               <title>Профиль</title>
             </Helmet>
             <Profile
-              onDeleteStoryClick={handleDeleteStoryPopupClick}
+              // onDeleteStoryClick={handleDeleteStoryPopupClick}
               onCityChoiceClick={handleCityChoicePopupClick}
               onProfileInit={handleProfileInit}
               profileNarrativesCards={profileNarrativesCards}
               onAddNarrative={handleAddNarrative}
               onChangeNarrative={handleChangeNarrative}
               profileCalendarCards={profileCalendarCards}
-              currentCity={currentCity}
+              // currentCity={currentCity}
               onSignOut={handleSignOut}
             />
           </Route>
@@ -600,34 +639,36 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         </Switch>
         <Footer />
         <PopupDeleteStory
-          isOpen={isDeleteStoryPopupOpen}
-          onClose={closeDeleteStoryPopup}
-          onDeleteProfileStory={handleDeleteProfileStory}
+          isOpen={isDeleteStoryPopupOpenRedux}
+          // onClose={closeDeleteStoryPopup}
+          // onDeleteProfileStory={handleDeleteProfileStory}
         />
         <Modal
-          isOpen={isCityChoicePopupOpen}
+          isOpen={isCityChoicePopupOpenRedux}
           onRequestClose={() => {
-            handlePopupCloseClick();
+            setCityChoicePopupOpenRedux(false);
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
           <PopupCityChoice
-            onClose={closeCityChoicePopup}
-            onChangeCurrentCityId={setCurrentCityId}
-            onChangeCurrentCity={setCurrentCity}
+          // onClose={() => {
+          //   setCityChoicePopupOpenRedux(false);
+          // }}
+          // onChangeCurrentCityId={setCurrentCityId}
+          // onChangeCurrentCity={setCurrentCity}
           />
         </Modal>
 
         <Modal
-          isOpen={isPopupSigninOpen}
+          isOpen={isPopupSigninOpenRedux}
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
           <PopupSignin
-            onCloseClick={handlePopupCalendarSigninCloseClick}
-            onSubmit={handlePopupCalendarSigninLoggedIn}
+          // onCloseClick={handlePopupCalendarSigninCloseClick}
+          // onSubmit={handlePopupCalendarSigninLoggedIn}
           />
         </Modal>
         <Modal
@@ -678,18 +719,15 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
         </Modal>
 
         <Modal
-          isOpen={isPopupCalendarErrorOpen}
+          isOpen={isPopupErrorOpen}
           onRequestClose={() => {
-            handlePopupCalendarErrorClose();
+            handlePopupErrorClose();
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarError
-            onCloseClick={handlePopupCalendarErrorClose}
-            text={popupCalendarErrorText}
-          />
+          <PopupError onCloseClick={handlePopupErrorClose} text={popupErrorText} />
         </Modal>
 
         <Modal
@@ -714,13 +752,30 @@ function App({ setMainPageDataRedux, setMainPageCalendarCardRedux, mainPageCalen
 // eslint-disable-next-line arrow-body-style
 const mapStateToProps = (state) => {
   return {
+    isCityChoicePopupOpenRedux: state.app.isCityChoicePopupOpen,
+    currentCityIdRedux: state.app.currentCityId,
+    isPopupSigninOpenRedux: state.app.isPopupSigninOpen,
+    isLoggedInRedux: state.app.isLoggedIn,
+    currentUserRedux: state.app.currentUser,
+    //
     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+    //
+    isDeleteStoryPopupOpenRedux: state.profile.isDeleteStoryPopupOpen,
   };
 };
 
 const mapDispatchToProps = {
+  // setCityChoicePopupOpenRedux,
+  // setCurrentCityIdRedux,
+  // setCurrentCityRedux,
+  setisPopupSigninOpenRedux,
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,
+  setCityChoicePopupOpenRedux,
+  setCurrentCityIdRedux,
+  setCurrentCityRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

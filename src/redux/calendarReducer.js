@@ -5,7 +5,6 @@ import {
   SET_IS_POPUP_CALENDAR_CONFIRM_OPEN,
   SET_IS_POPUP_CALENDAR_DESCRIPTION_OPEN,
   SET_IS_POPUP_CALENDAR_DONE_OPEN,
-  SET_IS_POPUP_CALENDAR_ERROR_OPEN,
   SET_POPUP_CALENDAR_ERROR_TEXT,
   SET_POPUP_CALENDAR_WICH_WAS_OPEN,
 } from './types';
@@ -18,8 +17,8 @@ const initialState = {
   clickedCalendarCard: [],
   isPopupCalendarConfirmOpen: false,
   isPopupCalendarDoneOpen: false,
-  isPopupCalendarErrorOpen: false,
-  popupCalendarErrorText: '',
+  isPopupErrorOpen: false,
+  popupErrorText: '',
   popupCalendarWichWasOpen: undefined,
 };
 
@@ -37,10 +36,8 @@ export const calendarReducer = (state = initialState, action) => {
       return { ...state, isPopupCalendarConfirmOpen: action.payload };
     case SET_IS_POPUP_CALENDAR_DONE_OPEN:
       return { ...state, isPopupCalendarDoneOpen: action.payload };
-    case SET_IS_POPUP_CALENDAR_ERROR_OPEN:
-      return { ...state, isPopupCalendarErrorOpen: action.payload };
     case SET_POPUP_CALENDAR_ERROR_TEXT:
-      return { ...state, popupCalendarErrorText: action.payload };
+      return { ...state, popupErrorText: action.payload };
     case SET_POPUP_CALENDAR_WICH_WAS_OPEN:
       return { ...state, popupCalendarWichWasOpen: action.payload };
     default:

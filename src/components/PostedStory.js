@@ -1,8 +1,23 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { year, monthText, dayNumber } from '../utils/toGetDate';
 
-function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
+import {
+  setDeleteStoryPopupOpenRedux,
+  setCheckedToDeleteProfileStoryRedux,
+} from '../redux/actions';
+
+function PostedStory({
+  // onDeleteClick,
+  isEditClicked,
+  setEditClicked,
+  card,
+  setDeleteStoryPopupOpenRedux,
+  setCheckedToDeleteProfileStoryRedux,
+}) {
   const yearOfMeeting = year(card);
   const monthOfMeeting = monthText(card);
   const dayNumberOfMeeting = dayNumber(card);
@@ -12,7 +27,10 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
   }
 
   function handleDeleteClick() {
-    onDeleteClick(card);
+    // onDeleteClick(card);
+    setDeleteStoryPopupOpenRedux(true);
+    setCheckedToDeleteProfileStoryRedux(card);
+    console.log(card);
   }
 
   let imgEmoji = './images/personal-area/good.svg';
@@ -95,10 +113,9 @@ function PostedStory({ onDeleteClick, isEditClicked, setEditClicked, card }) {
     </form>
   );
 }
-export default PostedStory;
 
 PostedStory.defaultProps = {
-  onDeleteClick: undefined,
+  // onDeleteClick: undefined,
   isEditClicked: undefined,
   setEditClicked: undefined,
   card: {},
@@ -107,10 +124,25 @@ PostedStory.defaultProps = {
 };
 
 PostedStory.propTypes = {
-  onDeleteClick: PropTypes.func,
+  // onDeleteClick: PropTypes.func,
   isEditClicked: PropTypes.bool,
   setEditClicked: PropTypes.func,
   card: PropTypes.instanceOf(Object),
   // mainText: PropTypes.string,
   // place: PropTypes.string,
 };
+
+// eslint-disable-next-line arrow-body-style
+// const mapStateToProps = (state) => {
+//   return {
+//     isPopupSigninOpenRedux: state.app.isPopupSigninOpen,
+//     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+//   };
+// };
+
+const mapDispatchToProps = {
+  setDeleteStoryPopupOpenRedux,
+  setCheckedToDeleteProfileStoryRedux,
+};
+
+export default connect(null, mapDispatchToProps)(PostedStory);

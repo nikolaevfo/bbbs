@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PopupCalendarError({ onCloseClick, text }) {
+function PopupError({ onCloseClick, text }) {
   return (
     <form className="popup__container popup__container_type_error">
       <button
@@ -24,14 +24,14 @@ function PopupCalendarError({ onCloseClick, text }) {
   );
 }
 
-PopupCalendarError.defaultProps = {
+PopupError.defaultProps = {
   onCloseClick: undefined,
   text: '',
 };
 
-PopupCalendarError.propTypes = {
+PopupError.propTypes = {
   onCloseClick: PropTypes.func,
   text: PropTypes.string,
 };
 
-export default PopupCalendarError;
+export default PopupError;
