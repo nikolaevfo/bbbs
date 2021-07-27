@@ -6,7 +6,7 @@ import StoryFormOnEdit from './StoryFormOnEdit';
 function PostedStoryEditing({
   // onDeleteClick,
   card,
-  onChangeNarrative,
+  // onChangeNarrative,
 }) {
   const [isEditClicked, setEditClicked] = React.useState(false);
 
@@ -14,7 +14,7 @@ function PostedStoryEditing({
     return (
       <StoryFormOnEdit
         card={card}
-        onChangeNarrative={onChangeNarrative}
+        // onChangeNarrative={onChangeNarrative}
         setEditClicked={setEditClicked}
         // mainText={mainText}
         // setMainText={setMainText}
@@ -39,12 +39,12 @@ export default PostedStoryEditing;
 
 PostedStoryEditing.defaultProps = {
   // onDeleteClick: undefined,
-  onChangeNarrative: undefined,
+  // onChangeNarrative: undefined,
   card: {},
 };
 
 PostedStoryEditing.propTypes = {
   // onDeleteClick: PropTypes.func,
-  onChangeNarrative: PropTypes.func,
+  // onChangeNarrative: PropTypes.func,
   card: PropTypes.instanceOf(Object),
 };

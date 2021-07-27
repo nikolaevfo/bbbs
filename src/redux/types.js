@@ -14,16 +14,19 @@ export const SET_CURRENT_CITY = 'APP/SET_CURRENT_CITY';
 export const SET_IS_POPUP_SIGNIN_OPEN = 'APP/SET_IS_POPUP_SIGNIN_OPEN';
 
 // setPopupErrorText;
-export const SET_POPUP_ERROR_TEXT = 'QUESTIONS/SET_POPUP_ERROR_TEXT';
+export const SET_POPUP_ERROR_TEXT = 'APP/SET_POPUP_ERROR_TEXT';
 
 // setIsPopupErrorOpen;
-export const SET_IS_POPUP_ERROR_OPEN = 'CALENDAR/SET_IS_POPUP_CALENDAR_ERROR_OPEN';
+export const SET_IS_POPUP_ERROR_OPEN = 'APP/SET_IS_POPUP_CALENDAR_ERROR_OPEN';
 
 // setIsLoggedIn;
-export const SET_IS_LOGGED_IN = 'QUESTIONS/SET_IS_LOGGED_IN';
+export const SET_IS_LOGGED_IN = 'APP/SET_IS_LOGGED_IN';
 
 // setCurrentUser;
-export const SET_CURRENT_USER = 'QUESTIONS/SET_CURRENT_USER';
+export const SET_CURRENT_USER = 'APP/SET_CURRENT_USER';
+
+// setPopupCalendarWichWasOpen
+export const SET_POPUP_WICH_WAS_OPEN = 'APP/SET_POPUP_WICH_WAS_OPEN';
 
 // MAINPAGE ======================================================================================
 export const SET_MAIN_PAGE_DATA = 'MAIN/SET_MAIN_PAGE_DATA';
@@ -41,6 +44,9 @@ export const SET_PROFILE_CALENDAR_CARDS = 'PROFILE/SET_PROFILE_CALENDAR_CARDS';
 
 // setCheckedToDeleteProfileStory
 export const SET_CHECKED_TO_DELETE_PROFILE_STORY = 'PROFILE/SET_CHECKED_TO_DELETE_PROFILE_STORY';
+
+// setIsStoryFormRedactOpen
+export const SET_IS_STORY_FORM_REDACT_OPEN = 'PROFILE/SET_IS_STORY_FORM_REDACT_OPEN';
 
 // CALENDAR ======================================================================================
 // setCalendarData;

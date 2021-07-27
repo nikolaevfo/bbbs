@@ -10,15 +10,23 @@ import { useFormWithValidation } from '../hooks/useForm';
 import api from '../utils/api/api';
 
 import {
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   setCityChoicePopupOpenRedux,
   setPopupErrorTextRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
+  setPopupWichWasOpenRedux,
+  setIsPopupErrorOpenRedux,
 } from '../redux/actions';
 
 function PopupSignin({
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   setCityChoicePopupOpenRedux,
   setPopupErrorTextRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
+  setPopupWichWasOpenRedux,
+  setIsPopupErrorOpenRedux,
 }) {
   const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
 
@@ -27,39 +35,43 @@ function PopupSignin({
     setIsValid(false);
   }, []);
 
-  function handlePopupCalendarSigninLoggedIn(userData) {
+  function handlePopupCalendarSigninLoggedIn(e) {
+    e.preventDefault();
     setPopupErrorTextRedux('Что-то пошло не так, войти снова');
     api
-      .login(userData)
+      .login({
+        login: values.login,
+        password: values.password,
+      })
       .then((res) => {
-        setCurrentUser({ username: res.data.username, password: res.data.password });
+        setCurrentUserRedux({ username: res.data.username, password: res.data.password });
         localStorage.clear();
         localStorage.setItem('access', JSON.stringify(res.data.access));
         localStorage.setItem('username', JSON.stringify(res.data.username));
-        setIsLoggedIn(true);
-        setisPopupSigninOpenRedux(false);
+        setIsLoggedInRedux(true);
+        setIsPopupSigninOpenRedux(false);
       })
       .catch((err) => {
-        handlePopupCloseClick();
-        setPopupCalendarWichWasOpen('isPopupSigninOpen');
-        setIsPopupErrorOpen(true);
+        setIsPopupSigninOpenRedux(false);
+        setPopupWichWasOpenRedux('isPopupSigninOpen');
+        setIsPopupErrorOpenRedux(true);
         console.log(err);
       });
     setCityChoicePopupOpenRedux(true);
   }
 
   function handleCloseClick() {
-    setisPopupSigninOpenRedux(false);
+    setIsPopupSigninOpenRedux(false);
     setCityChoicePopupOpenRedux(true);
   }
 
-  function handlerSubmitForm(e) {
-    e.preventDefault();
-    onSubmit({
-      login: values.login,
-      password: values.password,
-    });
-  }
+  // function handlerSubmitForm(e) {
+  //   e.preventDefault();
+  //   onSubmit({
+  //     login: values.login,
+  //     password: values.password,
+  //   });
+  // }
   return (
     // <div className="popup popup_type_sign-in popup_opened">
     <form
@@ -126,9 +138,13 @@ PopupSignin.propTypes = {
 // });
 
 const mapDispatchToProps = {
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   setCityChoicePopupOpenRedux,
   setPopupErrorTextRedux,
+  setIsLoggedInRedux,
+  setCurrentUserRedux,
+  setPopupWichWasOpenRedux,
+  setIsPopupErrorOpenRedux,
 };
 
 export default connect(null, mapDispatchToProps)(PopupSignin);

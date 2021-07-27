@@ -1,11 +1,28 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+
 import ImageUploader from './ImageUploader';
+
+import {
+  setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  setIsStoryFormRedactOpenRedux,
+} from '../redux/actions';
 
 // import imageOfNarrative1 from '../images/personal-area/lk.png';
 
-function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
+function StoryForm({
+  // profileNarrativesCards,
+  // onAddNarrative,
+  setIsStoryFormRedactOpenRedux,
+  profileNarrativesCardsRedux,
+  setProfileNarrativesCardsRedux,
+}) {
   const {
     register,
     handleSubmit,
@@ -38,6 +55,13 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
     setBadRateChecked(true);
   }
 
+  function onAddNarrative(data) {
+    const newArray = profileNarrativesCardsRedux.slice();
+    newArray.push(data);
+    setProfileNarrativesCardsRedux(newArray);
+    // todo должно быть обращение к апи
+  }
+
   const onSubmit = (data) => {
     let rate = 'good';
     if (neutralRateChecked) {
@@ -46,7 +70,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
       rate = 'bad';
     }
     onAddNarrative({
-      id: profileNarrativesCards.length + 1,
+      id: profileNarrativesCardsRedux.length + 1,
       place: data.place,
       description: data.story,
       date: data.date,
@@ -54,7 +78,7 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
       img: storyImage,
       rating: rate,
     });
-    onDeleteClick();
+    setIsStoryFormRedactOpenRedux(false);
   };
 
   return (
@@ -166,7 +190,11 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
             </div>
           </div>
           <div className="personal-area__buttons">
-            <button type="button" className="button personal-area__delete" onClick={onDeleteClick}>
+            <button
+              type="button"
+              className="button personal-area__delete"
+              onClick={() => setIsStoryFormRedactOpenRedux(false)}
+            >
               Удалить
             </button>
             <button disabled={!isValid} className="button button__add-story" type="submit">
@@ -178,16 +206,34 @@ function StoryForm({ profileNarrativesCards, onAddNarrative, onDeleteClick }) {
     </div>
   );
 }
-export default StoryForm;
 
 StoryForm.defaultProps = {
-  profileNarrativesCards: [],
-  onAddNarrative: undefined,
-  onDeleteClick: undefined,
+  // profileNarrativesCards: [],
+  // onAddNarrative: undefined,
+  // onDeleteClick: undefined,
 };
 
 StoryForm.propTypes = {
-  profileNarrativesCards: PropTypes.instanceOf(Array),
-  onAddNarrative: PropTypes.func,
-  onDeleteClick: PropTypes.func,
+  // profileNarrativesCards: PropTypes.instanceOf(Array),
+  // onAddNarrative: PropTypes.func,
+  // onDeleteClick: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({
+  profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
+  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
+  isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
+  // currentCityIdRedux: state.app.currentCityId,
+  // currentCityRedux: state.app.currentCity,
+  // isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  setIsStoryFormRedactOpenRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoryForm);

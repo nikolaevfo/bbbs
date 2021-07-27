@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import { CurrentContext } from '../contexts/CurrentContext';
+// import { CurrentContext } from '../contexts/CurrentContext';
 import BlockAbout from './BlockAbout';
 // import BlockCalendar from './BlockCalendar';
 import BlockStory from './BlockStory';
@@ -19,12 +20,11 @@ import CalendarCard from './CalendarCard';
 function Main({
   onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
-  // eslint-disable-next-line react/prop-types
   mainPageDataRedux,
-  // eslint-disable-next-line react/prop-types
   mainPageCalendarCardRedux,
+  isLoggedInRedux,
 }) {
-  const context = React.useContext(CurrentContext);
+  // const context = React.useContext(CurrentContext);
 
   const mainPageData = mainPageDataRedux;
   const mainPageCalendarCard = mainPageCalendarCardRedux;
@@ -32,7 +32,7 @@ function Main({
   return (
     <main className="main">
       <BlockLead>
-        {context.isLoggedIn ? (
+        {isLoggedInRedux ? (
           mainPageCalendarCard.id && (
             <CalendarCard
               key={mainPageCalendarCard.id}
@@ -86,6 +86,7 @@ const mapStateToProps = (state) => {
   return {
     mainPageDataRedux: state.mainPage.mainPageData,
     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+    isLoggedInRedux: state.app.isLoggedIn,
   };
 };
 

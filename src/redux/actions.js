@@ -5,6 +5,9 @@ import {
   SET_CHECKED_TO_DELETE_PROFILE_STORY,
   SET_CITY_CHOICE_POPUP_OPEN,
   SET_CLICKED_CALENDAR_CARD,
+  SET_POPUP_WICH_WAS_OPEN,
+  SET_IS_LOGGED_IN,
+  SET_CURRENT_USER,
   SET_POPUP_ERROR_TEXT,
   SET_IS_POPUP_ERROR_OPEN,
   SET_CURRENT_CITY,
@@ -25,6 +28,7 @@ import {
   SET_QUESTIONS_TAGS_DATA,
   SET_WHERE_TO_GO_CARDS_DATA,
   SET_WHERE_TO_GO_TAGS_DATA,
+  SET_IS_STORY_FORM_REDACT_OPEN,
 } from './types';
 
 // APP ========================================================================
@@ -46,7 +50,7 @@ export function setCurrentCityRedux(data) {
     payload: data,
   };
 }
-export function setisPopupSigninOpenRedux(data) {
+export function setIsPopupSigninOpenRedux(data) {
   return {
     type: SET_IS_POPUP_SIGNIN_OPEN,
     payload: data,
@@ -55,6 +59,12 @@ export function setisPopupSigninOpenRedux(data) {
 export function setPopupErrorTextRedux(data) {
   return {
     type: SET_POPUP_ERROR_TEXT,
+    payload: data,
+  };
+}
+export function setIsPopupErrorOpenRedux(data) {
+  return {
+    type: SET_IS_POPUP_ERROR_OPEN,
     payload: data,
   };
 }
@@ -67,6 +77,12 @@ export function setIsLoggedInRedux(data) {
 export function setCurrentUserRedux(data) {
   return {
     type: SET_CURRENT_USER,
+    payload: data,
+  };
+}
+export function setPopupWichWasOpenRedux(data) {
+  return {
+    type: SET_POPUP_WICH_WAS_OPEN,
     payload: data,
   };
 }
@@ -111,6 +127,12 @@ export function setCheckedToDeleteProfileStoryRedux(data) {
     payload: data,
   };
 }
+export function setIsStoryFormRedactOpenRedux(data) {
+  return {
+    type: SET_IS_STORY_FORM_REDACT_OPEN,
+    payload: data,
+  };
+}
 
 // CALENDAR =========================================================================
 export function setCalendarDataRedux(data) {
@@ -146,12 +168,6 @@ export function setIsPopupCalendarConfirmOpenRedux(data) {
 export function setIsPopupCalendarDoneOpenRedux(data) {
   return {
     type: SET_IS_POPUP_CALENDAR_DONE_OPEN,
-    payload: data,
-  };
-}
-export function setIsPopupErrorOpenRedux(data) {
-  return {
-    type: SET_IS_POPUP_CALENDAR_ERROR_OPEN,
     payload: data,
   };
 }

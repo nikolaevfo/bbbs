@@ -1,12 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import StoryForm from './StoryForm';
 import PostedStoryEditing from './PostedStoryEditing';
 import ProfileCalendarCard from './ProfileCalendarCard';
-import { CurrentContext } from '../contexts/CurrentContext';
+// import { CurrentContext } from '../contexts/CurrentContext';
 
 import api from '../utils/api/api';
 
@@ -14,30 +15,37 @@ import {
   setProfileNarrativesCardsRedux,
   setProfileCalendarCardsRedux,
   setCityChoicePopupOpenRedux,
+  setIsStoryFormRedactOpenRedux,
+  setIsLoggedInRedux,
 } from '../redux/actions';
 
 function Profile({
   // onDeleteStoryClick,
   // onCityChoiceClick,
   // onProfileInit,
-  profileNarrativesCards,
-  onAddNarrative,
-  onChangeNarrative,
-  profileCalendarCards,
+  // profileNarrativesCards,
+  // onAddNarrative,
+  // onChangeNarrative,
+  // profileCalendarCards,
   // currentCity,
-  onSignOut,
+  // onSignOut,
   profileNarrativesCardsRedux,
   setProfileNarrativesCardsRedux,
   setProfileCalendarCardsRedux,
+  profileCalendarCardsRedux,
   currentCityIdRedux,
   currentCityRedux,
   setCityChoicePopupOpenRedux,
+  isLoggedInRedux,
+  setIsStoryFormRedactOpenRedux,
+  isStoryFormRedactOpenRedux,
+  setIsLoggedInRedux,
 }) {
-  const context = React.useContext(CurrentContext);
+  // const context = React.useContext(CurrentContext);
+  const isLoggedIn = isLoggedInRedux;
 
   // загрузка данных
   React.useEffect(() => {
-    const { isLoggedIn } = context;
     const access = localStorage.getItem('access');
     api
       .getProfileNarratives(access)
@@ -55,10 +63,18 @@ function Profile({
       .catch((err) => console.log(err));
   }, []);
 
-  const [showStoryForm, setShowStoryForm] = useState(false);
+  // const [showStoryForm, setShowStoryForm] = useState(false);
 
   function handleCityChoiceClick() {
     setCityChoicePopupOpenRedux(true);
+  }
+
+  const history = useHistory();
+
+  function handleSignOut() {
+    localStorage.clear();
+    setIsLoggedInRedux(false);
+    history.push('/');
   }
 
   return (
@@ -76,14 +92,14 @@ function Profile({
         </button>
         <button
           type="button"
-          onClick={onSignOut}
+          onClick={handleSignOut}
           className="paragraph personal-area__user-link personal-area__user-link_type_exit"
         >
           Выйти
         </button>
       </div>
       <div className="personal-area__sign-up">
-        {profileCalendarCards.length > 0 ? (
+        {profileCalendarCardsRedux.length > 0 ? (
           <h2 className="section-title personal-area__title personal-area__title_type_sign-up">
             Вы записаны на мероприятия:
           </h2>
@@ -92,9 +108,9 @@ function Profile({
             У вас нет записи на мероприятия
           </h2>
         )}
-        {profileCalendarCards.length > 0 && (
+        {profileCalendarCardsRedux.length > 0 && (
           <div className="personal-area__calendar-wrapper">
-            {profileCalendarCards.map((item) => (
+            {profileCalendarCardsRedux.map((item) => (
               <ProfileCalendarCard card={item} key={item.id} />
             ))}
           </div>
@@ -104,22 +120,22 @@ function Profile({
         <h2 className="section-title personal-area__title">
           Составьте историю вашей дружбы с младшим. Эта страница доступна только вам.
         </h2>
-        {!showStoryForm && (
+        {!isStoryFormRedactOpenRedux && (
           <div className="personal-area__add-meeting">
             <button
               className="personal-area__add-meeting-button"
               type="button"
               aria-label="addStory"
-              onClick={() => setShowStoryForm(true)}
+              onClick={() => setIsStoryFormRedactOpenRedux(true)}
             />
             <p className="caption personal-area__meeting-caption">Добавить встречу</p>
           </div>
         )}
-        {showStoryForm && (
+        {isStoryFormRedactOpenRedux && (
           <StoryForm
-            profileNarrativesCards={profileNarrativesCards}
-            onAddNarrative={onAddNarrative}
-            onDeleteClick={() => setShowStoryForm(false)}
+          // profileNarrativesCards={profileNarrativesCards}
+          // onAddNarrative={onAddNarrative}
+          // onDeleteClick={() => setIsStoryFormRedactOpenRedux(false)}
           />
         )}
         {profileNarrativesCardsRedux.map((item) => (
@@ -127,7 +143,7 @@ function Profile({
             key={item.id}
             // onDeleteClick={onDeleteStoryClick}
             card={item}
-            onChangeNarrative={onChangeNarrative}
+            // onChangeNarrative={onChangeNarrative}
           />
         ))}
       </div>
@@ -139,30 +155,33 @@ Profile.defaultProps = {
   // onDeleteStoryClick: undefined,
   // onCityChoiceClick: undefined,
   // onProfileInit: undefined,
-  profileNarrativesCards: [],
-  onAddNarrative: undefined,
-  onChangeNarrative: undefined,
-  profileCalendarCards: [],
+  // profileNarrativesCards: [],
+  // onAddNarrative: undefined,
+  // onChangeNarrative: undefined,
+  // profileCalendarCards: [],
   // currentCity: '',
-  onSignOut: undefined,
+  // onSignOut: undefined,
 };
 
 Profile.propTypes = {
   // onDeleteStoryClick: PropTypes.func,
   // onCityChoiceClick: PropTypes.func,
   // onProfileInit: PropTypes.func,
-  profileNarrativesCards: PropTypes.instanceOf(Array),
-  onAddNarrative: PropTypes.func,
-  onChangeNarrative: PropTypes.func,
-  profileCalendarCards: PropTypes.instanceOf(Array),
+  // profileNarrativesCards: PropTypes.instanceOf(Array),
+  // onAddNarrative: PropTypes.func,
+  // onChangeNarrative: PropTypes.func,
+  // profileCalendarCards: PropTypes.instanceOf(Array),
   // currentCity: PropTypes.string,
-  onSignOut: PropTypes.func,
+  // onSignOut: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
+  profileCalendarCardsRedux: state.profile.profileCalendarCards,
+  isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
   currentCityIdRedux: state.app.currentCityId,
   currentCityRedux: state.app.currentCity,
+  isLoggedInRedux: state.app.isLoggedIn,
 });
 
 const mapDispatchToProps = {
@@ -170,6 +189,8 @@ const mapDispatchToProps = {
   setProfileNarrativesCardsRedux,
   setProfileCalendarCardsRedux,
   setCityChoicePopupOpenRedux,
+  setIsStoryFormRedactOpenRedux,
+  setIsLoggedInRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

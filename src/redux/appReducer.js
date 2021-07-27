@@ -8,6 +8,7 @@ import {
   SET_IS_LOGGED_IN,
   SET_CURRENT_USER,
   SET_IS_POPUP_ERROR_OPEN,
+  SET_POPUP_WICH_WAS_OPEN,
 } from './types';
 
 /* eslint-disable import/prefer-default-export */
@@ -19,6 +20,7 @@ const initialState = {
   popupErrorText: '',
   currentUser: {},
   isLoggedIn: false,
+  popupWichWasOpen: '',
 };
 
 export const appReducer = (state = initialState, action) => {
@@ -39,6 +41,8 @@ export const appReducer = (state = initialState, action) => {
       return { ...state, currentUser: action.payload };
     case SET_IS_POPUP_ERROR_OPEN:
       return { ...state, isPopupErrorOpen: action.payload };
+    case SET_POPUP_WICH_WAS_OPEN:
+      return { ...state, popupWichWasOpen: action.payload };
     default:
       return state;
   }

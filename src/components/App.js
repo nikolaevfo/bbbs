@@ -12,11 +12,10 @@ import {
   // setCityChoicePopupOpenRedux,
   // setCurrentCityIdRedux,
   // setCurrentCityRedux,
-  // setisPopupSigninOpenRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   setIsLoggedInRedux,
   setCurrentUserRedux,
   //
@@ -65,7 +64,7 @@ function App({
   setCurrentCityIdRedux,
   setCurrentCityRedux,
   isPopupSigninOpenRedux,
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   isLoggedInRedux,
   currentUserRedux,
   setIsLoggedInRedux,
@@ -84,7 +83,7 @@ function App({
   const currentUser = currentUserRedux;
 
   // const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
-  const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
+  // const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
   // const [currentCityId, setCurrentCityId] = useState(undefined); //+
   // const [currentCity, setCurrentCity] = useState(undefined); //+
   // const [isPopupSigninOpen, setisPopupSigninOpen] = useState(false); //+
@@ -92,45 +91,45 @@ function App({
   const currentCityId = currentCityIdRedux;
 
   // Profile =====================================================================
-  const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]); //+
-  const [profileCalendarCards, setProfileCalendarCards] = React.useState([]); //+
-  function handleProfileInit() {
-    const access = localStorage.getItem('access');
-    api
-      .getProfileNarratives(access)
-      .then((res) => {
-        setProfileNarrativesCards(res.data);
-      })
-      .catch((err) => console.log(err));
+  // const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]); //+
+  // const [profileCalendarCards] = React.useState([]); //+
+  // function handleProfileInit() {
+  //   const access = localStorage.getItem('access');
+  //   api
+  //     .getProfileNarratives(access)
+  //     .then((res) => {
+  //       setProfileNarrativesCards(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
 
-    api
-      .getCalendarCards(access, currentCityId, isLoggedIn)
-      .then((res) => {
-        const cardsList = res.data.calendarCards;
-        setProfileCalendarCards(cardsList);
-      })
-      .catch((err) => console.log(err));
-  }
+  //   api
+  //     .getCalendarCards(access, currentCityId, isLoggedIn)
+  //     .then((res) => {
+  //       const cardsList = res.data.calendarCards;
+  //       setProfileCalendarCards(cardsList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
-  function handleAddNarrative(data) {
-    const newArray = profileNarrativesCards.slice();
-    newArray.push(data);
-    setProfileNarrativesCards(newArray);
-    // todo должно быть обращение к апи
-  }
+  // function handleAddNarrative(data) {
+  //   const newArray = profileNarrativesCards.slice();
+  //   newArray.push(data);
+  //   setProfileNarrativesCards(newArray);
+  //   // todo должно быть обращение к апи
+  // }
 
-  function handleChangeNarrative(data) {
-    const newArray = [];
-    profileNarrativesCards.forEach((item) => {
-      if (item.id !== data.id) {
-        newArray.push(item);
-      } else {
-        newArray.push(data);
-      }
-    });
-    setProfileNarrativesCards(newArray);
-    // todo должно быть обращение к апи
-  }
+  // function handleChangeNarrative(data) {
+  //   const newArray = [];
+  //   profileNarrativesCards.forEach((item) => {
+  //     if (item.id !== data.id) {
+  //       newArray.push(item);
+  //     } else {
+  //       newArray.push(data);
+  //     }
+  //   });
+  //   setProfileNarrativesCards(newArray);
+  //   // todo должно быть обращение к апи
+  // }
 
   // const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
 
@@ -141,9 +140,9 @@ function App({
   //   setCheckedToDeleteProfileStory(card);
   // }
 
-  function handleCityChoicePopupClick() {
-    setCityChoicePopupOpen(!isCityChoicePopupOpen);
-  }
+  // function handleCityChoicePopupClick() {
+  //   setCityChoicePopupOpen(!isCityChoicePopupOpen);
+  // }
 
   // function closeDeleteStoryPopup() {
   //   setDeleteStoryPopupOpen(false);
@@ -262,7 +261,7 @@ function App({
 
   // close all popups================================
   function handlePopupCloseClick() {
-    setisPopupSigninOpenRedux(false);
+    setIsPopupSigninOpenRedux(false);
     setIsPopupCalendarDescriptionOpen(false);
     setIsPopupCalendarConfirmOpen(false);
     setIsPopupCalendarDoneOpen(false);
@@ -398,7 +397,7 @@ function App({
       setIsPopupCalendarConfirmOpen(true);
     } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
       setIsPopupErrorOpen(false);
-      setisPopupSigninOpenRedux(true);
+      setIsPopupSigninOpenRedux(true);
     }
     setIsPopupErrorOpen(false);
   }
@@ -464,7 +463,7 @@ function App({
 
   // signin=================================================================================
   function handelAppInit() {
-    setisPopupSigninOpenRedux(!localStorage.getItem('access'));
+    setIsPopupSigninOpenRedux(!localStorage.getItem('access'));
   }
 
   React.useEffect(() => {
@@ -486,11 +485,11 @@ function App({
   }, []);
 
   // signout=========================================
-  function handleSignOut() {
-    localStorage.clear();
-    setIsLoggedInRedux(false);
-    history.push('/');
-  }
+  // function handleSignOut() {
+  //   localStorage.clear();
+  //   setIsLoggedInRedux(false);
+  //   history.push('/');
+  // }
 
   // city modal open on init=======================================================================
   React.useEffect(() => {
@@ -526,15 +525,15 @@ function App({
               <title>Профиль</title>
             </Helmet>
             <Profile
-              // onDeleteStoryClick={handleDeleteStoryPopupClick}
-              onCityChoiceClick={handleCityChoicePopupClick}
-              onProfileInit={handleProfileInit}
-              profileNarrativesCards={profileNarrativesCards}
-              onAddNarrative={handleAddNarrative}
-              onChangeNarrative={handleChangeNarrative}
-              profileCalendarCards={profileCalendarCards}
-              // currentCity={currentCity}
-              onSignOut={handleSignOut}
+            // onDeleteStoryClick={handleDeleteStoryPopupClick}
+            // onCityChoiceClick={handleCityChoicePopupClick}
+            // onProfileInit={handleProfileInit}
+            // profileNarrativesCards={profileNarrativesCards}
+            // onAddNarrative={handleAddNarrative}
+            // onChangeNarrative={handleChangeNarrative}
+            // profileCalendarCards={profileCalendarCards}
+            // currentCity={currentCity}
+            // onSignOut={handleSignOut}
             />
           </Route>
           <Route exact path="/calendar">
@@ -768,7 +767,7 @@ const mapDispatchToProps = {
   // setCityChoicePopupOpenRedux,
   // setCurrentCityIdRedux,
   // setCurrentCityRedux,
-  setisPopupSigninOpenRedux,
+  setIsPopupSigninOpenRedux,
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,
   setCityChoicePopupOpenRedux,

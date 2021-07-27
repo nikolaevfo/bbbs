@@ -5,8 +5,8 @@ import {
   SET_IS_POPUP_CALENDAR_CONFIRM_OPEN,
   SET_IS_POPUP_CALENDAR_DESCRIPTION_OPEN,
   SET_IS_POPUP_CALENDAR_DONE_OPEN,
-  SET_POPUP_CALENDAR_ERROR_TEXT,
-  SET_POPUP_CALENDAR_WICH_WAS_OPEN,
+  // SET_POPUP_CALENDAR_ERROR_TEXT,
+  // SET_POPUP_CALENDAR_WICH_WAS_OPEN,
 } from './types';
 
 /* eslint-disable import/prefer-default-export */
@@ -18,8 +18,8 @@ const initialState = {
   isPopupCalendarConfirmOpen: false,
   isPopupCalendarDoneOpen: false,
   isPopupErrorOpen: false,
-  popupErrorText: '',
-  popupCalendarWichWasOpen: undefined,
+  // popupErrorText: '',
+  // popupCalendarWichWasOpen: undefined,
 };
 
 export const calendarReducer = (state = initialState, action) => {
@@ -36,10 +36,10 @@ export const calendarReducer = (state = initialState, action) => {
       return { ...state, isPopupCalendarConfirmOpen: action.payload };
     case SET_IS_POPUP_CALENDAR_DONE_OPEN:
       return { ...state, isPopupCalendarDoneOpen: action.payload };
-    case SET_POPUP_CALENDAR_ERROR_TEXT:
-      return { ...state, popupErrorText: action.payload };
-    case SET_POPUP_CALENDAR_WICH_WAS_OPEN:
-      return { ...state, popupCalendarWichWasOpen: action.payload };
+    // case SET_POPUP_CALENDAR_ERROR_TEXT:
+    //   return { ...state, popupErrorText: action.payload };
+    // case SET_POPUP_CALENDAR_WICH_WAS_OPEN:
+    //   return { ...state, popupCalendarWichWasOpen: action.payload };
     default:
       return state;
   }

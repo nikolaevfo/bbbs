@@ -1,12 +1,27 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 import ImageUploader from './ImageUploader';
 import { year, monthNumber, dayNumber } from '../utils/toGetDate';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
-function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
+import {
+  setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  // setIsStoryFormRedactOpenRedux,
+} from '../redux/actions';
+
+function StoryFormOnEdit({
+  card,
+  setEditClicked,
+  profileNarrativesCardsRedux,
+  setProfileNarrativesCardsRedux,
+}) {
   const monthOfMeeting = monthNumber(card);
   const dayNumberOfMeeting = dayNumber(card);
   const yearOfMeeting = year(card);
@@ -37,6 +52,19 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
     setBadRateChecked(true);
   }
 
+  function handleChangeNarrative(data) {
+    const newArray = [];
+    profileNarrativesCardsRedux.forEach((item) => {
+      if (item.id !== data.id) {
+        newArray.push(item);
+      } else {
+        newArray.push(data);
+      }
+    });
+    setProfileNarrativesCardsRedux(newArray);
+    // todo должно быть обращение к апи
+  }
+
   function onSubmit(data) {
     let rate = 'good';
     if (neutralRateChecked) {
@@ -44,7 +72,7 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
     } else if (badRateChecked) {
       rate = 'bad';
     }
-    onChangeNarrative({
+    handleChangeNarrative({
       id: card.id,
       place: data.place,
       description: data.story,
@@ -190,16 +218,34 @@ function StoryFormOnEdit({ card, onChangeNarrative, setEditClicked }) {
     </div>
   );
 }
-export default StoryFormOnEdit;
 
 StoryFormOnEdit.defaultProps = {
   card: {},
-  onChangeNarrative: undefined,
+  // onChangeNarrative: undefined,
   setEditClicked: undefined,
 };
 
 StoryFormOnEdit.propTypes = {
   card: PropTypes.instanceOf(Object),
-  onChangeNarrative: PropTypes.func,
+  // onChangeNarrative: PropTypes.func,
   setEditClicked: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({
+  profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
+  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
+  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
+  // currentCityIdRedux: state.app.currentCityId,
+  // currentCityRedux: state.app.currentCity,
+  // isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  // setIsStoryFormRedactOpenRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoryFormOnEdit);
