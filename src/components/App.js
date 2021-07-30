@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/named */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
@@ -21,6 +22,9 @@ import {
   //
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,
+  //
+  setIsPopupCalendarDescriptionOpenRedux,
+  setIsPopupCalendarConfirmOpenRedux,
 } from '../redux/actions';
 
 import api from '../utils/api/api';
@@ -75,6 +79,11 @@ function App({
   mainPageCalendarCardRedux,
   // profile
   isDeleteStoryPopupOpenRedux,
+  //
+  isPopupCalendarDescriptionOpenRedux,
+  isPopupCalendarConfirmOpenRedux,
+  isPopupCalendarDoneOpenRedux,
+  isPopupErrorOpenRedux,
 }) {
   // context
   // const [currentUser, setCurrentUser] = useState({});
@@ -262,8 +271,8 @@ function App({
   // close all popups================================
   function handlePopupCloseClick() {
     setIsPopupSigninOpenRedux(false);
-    setIsPopupCalendarDescriptionOpen(false);
-    setIsPopupCalendarConfirmOpen(false);
+    setIsPopupCalendarDescriptionOpenRedux(false);
+    setIsPopupCalendarConfirmOpenRedux(false);
     setIsPopupCalendarDoneOpen(false);
     setCityChoicePopupOpenRedux(false);
   }
@@ -671,9 +680,9 @@ function App({
           />
         </Modal>
         <Modal
-          isOpen={isPopupCalendarDescriptionOpen}
+          isOpen={isPopupCalendarDescriptionOpenRedux}
           onRequestClose={() => {
-            handlePopupCloseClick();
+            setIsPopupCalendarDescriptionOpenRedux(false);
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
@@ -687,18 +696,18 @@ function App({
         </Modal>
 
         <Modal
-          isOpen={isPopupCalendarConfirmOpen}
+          isOpen={isPopupCalendarConfirmOpenRedux}
           onRequestClose={() => {
-            handlePopupCloseClick();
+            setIsPopupCalendarConfirmOpenRedux(false);
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
           <PopupCalendarConfirm
-            clickedCalendarCard={clickedCalendarCard}
-            onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-            onCloseClick={handlePopupCloseClick}
+          // clickedCalendarCard={clickedCalendarCard}
+          // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+          // onCloseClick={handlePopupCloseClick}
           />
         </Modal>
 
@@ -718,7 +727,7 @@ function App({
         </Modal>
 
         <Modal
-          isOpen={isPopupErrorOpen}
+          isOpen={isPopupErrorOpenRedux}
           onRequestClose={() => {
             handlePopupErrorClose();
           }}
@@ -760,6 +769,12 @@ const mapStateToProps = (state) => {
     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
     //
     isDeleteStoryPopupOpenRedux: state.profile.isDeleteStoryPopupOpen,
+    //
+    isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
+    clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
+    isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
+    isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
+    isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
   };
 };
 
@@ -768,13 +783,17 @@ const mapDispatchToProps = {
   // setCurrentCityIdRedux,
   // setCurrentCityRedux,
   setIsPopupSigninOpenRedux,
-  setMainPageDataRedux,
-  setMainPageCalendarCardRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,
   setIsLoggedInRedux,
   setCurrentUserRedux,
+  //
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
+  //
+  setIsPopupCalendarDescriptionOpenRedux,
+  setIsPopupCalendarConfirmOpenRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,4 +1,8 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toGetFreeSeatsText from '../utils/toGetFreeSeatsText';
 import {
@@ -11,7 +15,49 @@ import {
   minuteEnd,
 } from '../utils/toGetDate';
 
-function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalendarCardClick }) {
+import {
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+} from '../redux/actions';
+
+import api from '../utils/api/api';
+
+function CalendarCard({
+  card,
+  id,
+  // onOpenCalendarDescriptionPopup,
+  // onAppointCalendarCardClick,
+  //
+  calendarDataRedux,
+  monthListRedux,
+  isPopupCalendarDescriptionOpenRedux,
+  clickedCalendarCardRedux,
+  isPopupCalendarConfirmOpenRedux,
+  isPopupCalendarDoneOpenRedux,
+  isPopupErrorOpenRedux,
+  currentCityIdRedux,
+  currentUserRedux,
+  isLoggedInRedux,
+  //
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+}) {
   const monthOfMeeting = monthText(card);
   const dayNameOfMeeting = dayName(card);
   const dayNumberOfMeeting = dayNumber(card);
@@ -32,10 +78,32 @@ function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalen
   }
 
   function handleOpenCalendarCardClick() {
-    onOpenCalendarDescriptionPopup(card);
+    // onOpenCalendarDescriptionPopup(card);
+    setIsPopupCalendarDescriptionOpenRedux(true);
+    setClickedCalendarCardRedux(card);
   }
   function handleAppointCalendarCardClick() {
-    onAppointCalendarCardClick(card);
+    // onAppointCalendarCardClick(card);
+    const access = localStorage.getItem('access');
+    setPopupErrorTextRedux('Что-то пошло не так, попробуйте записаться снова');
+    if (!card.booked) {
+      setClickedCalendarCardRedux(card);
+      setIsPopupCalendarConfirmOpenRedux(true);
+    } else {
+      api
+        .deleteAppointToEvent(access, card.id)
+        .then(() => {
+          // console.log(res);
+        })
+        .catch(() => {
+          setIsPopupErrorOpenRedux(true);
+        });
+      // handleChangeAppoitnCalendarRedux(card, false);
+      const newCardsArray = calendarDataRedux.slice(0);
+      const ind = newCardsArray.indexOf(card);
+      newCardsArray[ind].booked = false;
+      setCalendarDataRedux(newCardsArray);
+    }
   }
   return (
     <article className={`calendar ${card.booked ? 'calendar_selected' : ''}`} id={id}>
@@ -89,15 +157,49 @@ function CalendarCard({ card, id, onOpenCalendarDescriptionPopup, onAppointCalen
 CalendarCard.defaultProps = {
   card: {},
   id: undefined,
-  onOpenCalendarDescriptionPopup: undefined,
-  onAppointCalendarCardClick: undefined,
+  // onOpenCalendarDescriptionPopup: undefined,
+  // onAppointCalendarCardClick: undefined,
 };
 
 CalendarCard.propTypes = {
   card: PropTypes.instanceOf(Object),
   id: PropTypes.number,
-  onOpenCalendarDescriptionPopup: PropTypes.func,
-  onAppointCalendarCardClick: PropTypes.func,
+  // onOpenCalendarDescriptionPopup: PropTypes.func,
+  // onAppointCalendarCardClick: PropTypes.func,
 };
 
-export default CalendarCard;
+const mapStateToProps = (state) => ({
+  calendarDataRedux: state.calendar.calendarData,
+  monthListRedux: state.calendar.monthList,
+  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
+  clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
+  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
+  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
+  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
+  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
+  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
+  // currentCityRedux: state.app.currentCity,
+  currentCityIdRedux: state.app.currentCityId,
+  currentUserRedux: state.app.currentUser,
+  isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  // setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  // setIsStoryFormRedactOpenRedux,
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarCard);

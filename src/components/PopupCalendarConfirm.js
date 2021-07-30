@@ -1,5 +1,9 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import {
   monthTextPadeg,
   dayNumber,
@@ -9,16 +13,74 @@ import {
   minuteEnd,
 } from '../utils/toGetDate';
 
-function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClick, onCloseClick }) {
-  const monthOfMeeting = monthTextPadeg(clickedCalendarCard);
-  const dayNumberOfMeeting = dayNumber(clickedCalendarCard);
-  const hourStartOfMeeting = hourStart(clickedCalendarCard);
-  const minuteStartOfMeeting = minuteStart(clickedCalendarCard);
-  const hourEndOfMeeting = hourEnd(clickedCalendarCard);
-  const minuteEndOfMeeting = minuteEnd(clickedCalendarCard);
+import {
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+} from '../redux/actions';
+
+import api from '../utils/api/api';
+
+function PopupCalendarConfirm({
+  // clickedCalendarCard,
+  // onSubmitAppointCalendarClick,
+  // onCloseClick,
+  calendarDataRedux,
+  monthListRedux,
+  isPopupCalendarDescriptionOpenRedux,
+  clickedCalendarCardRedux,
+  isPopupCalendarConfirmOpenRedux,
+  isPopupCalendarDoneOpenRedux,
+  isPopupErrorOpenRedux,
+  currentCityIdRedux,
+  currentUserRedux,
+  isLoggedInRedux,
+  //
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+}) {
+  const monthOfMeeting = monthTextPadeg(clickedCalendarCardRedux);
+  const dayNumberOfMeeting = dayNumber(clickedCalendarCardRedux);
+  const hourStartOfMeeting = hourStart(clickedCalendarCardRedux);
+  const minuteStartOfMeeting = minuteStart(clickedCalendarCardRedux);
+  const hourEndOfMeeting = hourEnd(clickedCalendarCardRedux);
+  const minuteEndOfMeeting = minuteEnd(clickedCalendarCardRedux);
 
   function handleAppointCalendarPopupClick() {
-    onSubmitAppointCalendarClick(clickedCalendarCard);
+    // onSubmitAppointCalendarClick(clickedCalendarCardRedux);
+    setPopupCalendarWichWasOpenRedux('isPopupCalendarConfirmOpen');
+    setPopupErrorTextRedux('Что-то пошло не так, попробуйте записаться снова');
+    const access = localStorage.getItem('access');
+    api
+      .appointToEvent(access, clickedCalendarCardRedux.id)
+      .then(() => {
+        // console.log(res);
+      })
+      .catch(() => {
+        setIsPopupCalendarConfirmOpenRedux(false);
+        setIsPopupErrorOpenRedux(true);
+      });
+    // todo вынести в функцию
+    const newCardsArray = calendarDataRedux.slice(0);
+    const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+    newCardsArray[ind].booked = true;
+    setCalendarDataRedux(newCardsArray);
+    setIsPopupCalendarConfirmOpenRedux(false);
   }
 
   return (
@@ -27,11 +89,11 @@ function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClic
         className="popup__close popup__cancel"
         type="button"
         aria-label="Close"
-        onClick={onCloseClick}
+        onClick={() => setIsPopupCalendarConfirmOpenRedux(false)}
       />
       <h2 className="section-title calendar__title_type_popup calendar__title_type_confirmation">
         {`Подтвердить запись на мероприятие
-        ${clickedCalendarCard.title}
+        ${clickedCalendarCardRedux.title}
         ${dayNumberOfMeeting} ${' '}
         ${monthOfMeeting}${' '}с${' '}${hourStartOfMeeting}:${minuteStartOfMeeting}–
         ${hourEndOfMeeting}:${minuteEndOfMeeting}`}
@@ -44,7 +106,11 @@ function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClic
         >
           Подтвердить запись
         </button>
-        <button className="button popup__cancel" type="button" onClick={onCloseClick}>
+        <button
+          className="button popup__cancel"
+          type="button"
+          onClick={() => setIsPopupCalendarConfirmOpenRedux(false)}
+        >
           Отменить
         </button>
       </div>
@@ -53,9 +119,9 @@ function PopupCalendarConfirm({ clickedCalendarCard, onSubmitAppointCalendarClic
 }
 
 PopupCalendarConfirm.defaultProps = {
-  clickedCalendarCard: {},
-  onSubmitAppointCalendarClick: undefined,
-  onCloseClick: undefined,
+  // clickedCalendarCard: {},
+  // onSubmitAppointCalendarClick: undefined,
+  // onCloseClick: undefined,
   // onCloseClick: undefined,
   // onSubmit: undefined,
   // isFormValid: true,
@@ -63,13 +129,38 @@ PopupCalendarConfirm.defaultProps = {
 };
 
 PopupCalendarConfirm.propTypes = {
-  clickedCalendarCard: PropTypes.instanceOf(Object),
-  onSubmitAppointCalendarClick: PropTypes.func,
-  onCloseClick: PropTypes.func,
+  // clickedCalendarCard: PropTypes.instanceOf(Object),
+  // onSubmitAppointCalendarClick: PropTypes.func,
+  // onCloseClick: PropTypes.func,
   // onCloseClick: PropTypes.func,
   // onSubmit: PropTypes.func,
   // isFormValid: PropTypes.bool,
   // handleChange: PropTypes.func,
 };
 
-export default PopupCalendarConfirm;
+const mapStateToProps = (state) => ({
+  calendarDataRedux: state.calendar.calendarData,
+  monthListRedux: state.calendar.monthList,
+  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
+  clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
+  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
+  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
+  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
+  currentCityIdRedux: state.app.currentCityId,
+  currentUserRedux: state.app.currentUser,
+  isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PopupCalendarConfirm);
