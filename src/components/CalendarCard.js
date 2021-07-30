@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import toGetFreeSeatsText from '../utils/toGetFreeSeatsText';
 import {
@@ -26,6 +27,8 @@ import {
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
 } from '../redux/actions';
 
 import api from '../utils/api/api';
@@ -57,6 +60,9 @@ function CalendarCard({
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  mainPageCalendarCardRedux,
+  setMainPageCalendarCardRedux,
 }) {
   const monthOfMeeting = monthText(card);
   const dayNameOfMeeting = dayName(card);
@@ -69,6 +75,8 @@ function CalendarCard({
   const freeSeats = card.remainSeats || card.seats - card.takenSeats;
 
   const freeSeatsText = toGetFreeSeatsText(card, freeSeats);
+
+  const history = useHistory();
 
   let buttonSignText = '';
   if (card.booked) {
@@ -99,10 +107,17 @@ function CalendarCard({
           setIsPopupErrorOpenRedux(true);
         });
       // handleChangeAppoitnCalendarRedux(card, false);
-      const newCardsArray = calendarDataRedux.slice(0);
-      const ind = newCardsArray.indexOf(card);
-      newCardsArray[ind].booked = false;
-      setCalendarDataRedux(newCardsArray);
+
+      if (history.location.pathname === '/') {
+        const newCard = { ...mainPageCalendarCardRedux };
+        newCard.booked = false;
+        setMainPageCalendarCardRedux(newCard);
+      } else {
+        const newCardsArray = calendarDataRedux.slice(0);
+        const ind = newCardsArray.indexOf(card);
+        newCardsArray[ind].booked = false;
+        setCalendarDataRedux(newCardsArray);
+      }
     }
   }
   return (
@@ -182,6 +197,8 @@ const mapStateToProps = (state) => ({
   currentCityIdRedux: state.app.currentCityId,
   currentUserRedux: state.app.currentUser,
   isLoggedInRedux: state.app.isLoggedIn,
+  //
+  mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
@@ -200,6 +217,8 @@ const mapDispatchToProps = {
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarCard);

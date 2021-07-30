@@ -84,6 +84,8 @@ function App({
   isPopupCalendarConfirmOpenRedux,
   isPopupCalendarDoneOpenRedux,
   isPopupErrorOpenRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setIsPopupCalendarConfirmOpenRedux,
 }) {
   // context
   // const [currentUser, setCurrentUser] = useState({});
@@ -270,6 +272,7 @@ function App({
 
   // close all popups================================
   function handlePopupCloseClick() {
+    console.log('close');
     setIsPopupSigninOpenRedux(false);
     setIsPopupCalendarDescriptionOpenRedux(false);
     setIsPopupCalendarConfirmOpenRedux(false);
@@ -315,7 +318,7 @@ function App({
   // function handlePopupCalendarSigninCloseClick() {
   //   handlePopupCloseClick();
   //   setCityChoicePopupOpenRedux(true);
-  //   // history.push('/');
+  //   history.push('/');
   // }
 
   // PopupCalendarDescription===========================
@@ -697,9 +700,7 @@ function App({
 
         <Modal
           isOpen={isPopupCalendarConfirmOpenRedux}
-          onRequestClose={() => {
-            setIsPopupCalendarConfirmOpenRedux(false);
-          }}
+          onRequestClose={() => setIsPopupCalendarConfirmOpenRedux(false)}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"

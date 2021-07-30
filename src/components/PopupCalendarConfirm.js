@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import {
   monthTextPadeg,
@@ -24,6 +25,8 @@ import {
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
 } from '../redux/actions';
 
 import api from '../utils/api/api';
@@ -53,6 +56,9 @@ function PopupCalendarConfirm({
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  mainPageCalendarCardRedux,
+  setMainPageCalendarCardRedux,
 }) {
   const monthOfMeeting = monthTextPadeg(clickedCalendarCardRedux);
   const dayNumberOfMeeting = dayNumber(clickedCalendarCardRedux);
@@ -60,6 +66,8 @@ function PopupCalendarConfirm({
   const minuteStartOfMeeting = minuteStart(clickedCalendarCardRedux);
   const hourEndOfMeeting = hourEnd(clickedCalendarCardRedux);
   const minuteEndOfMeeting = minuteEnd(clickedCalendarCardRedux);
+
+  const history = useHistory();
 
   function handleAppointCalendarPopupClick() {
     // onSubmitAppointCalendarClick(clickedCalendarCardRedux);
@@ -75,12 +83,19 @@ function PopupCalendarConfirm({
         setIsPopupCalendarConfirmOpenRedux(false);
         setIsPopupErrorOpenRedux(true);
       });
-    // todo вынести в функцию
-    const newCardsArray = calendarDataRedux.slice(0);
-    const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
-    newCardsArray[ind].booked = true;
-    setCalendarDataRedux(newCardsArray);
-    setIsPopupCalendarConfirmOpenRedux(false);
+
+    if (history.location.pathname === '/') {
+      const newCard = { ...mainPageCalendarCardRedux };
+      newCard.booked = true;
+      setMainPageCalendarCardRedux(newCard);
+      setIsPopupCalendarConfirmOpenRedux(false);
+    } else {
+      const newCardsArray = calendarDataRedux.slice(0);
+      const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+      newCardsArray[ind].booked = true;
+      setCalendarDataRedux(newCardsArray);
+      setIsPopupCalendarConfirmOpenRedux(false);
+    }
   }
 
   return (
@@ -149,6 +164,8 @@ const mapStateToProps = (state) => ({
   currentCityIdRedux: state.app.currentCityId,
   currentUserRedux: state.app.currentUser,
   isLoggedInRedux: state.app.isLoggedIn,
+  //
+  mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
@@ -162,5 +179,7 @@ const mapDispatchToProps = {
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(PopupCalendarConfirm);
