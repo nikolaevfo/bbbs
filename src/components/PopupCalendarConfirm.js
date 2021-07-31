@@ -96,6 +96,7 @@ function PopupCalendarConfirm({
       setCalendarDataRedux(newCardsArray);
       setIsPopupCalendarConfirmOpenRedux(false);
     }
+    setIsPopupCalendarDoneOpenRedux(true);
   }
 
   return (

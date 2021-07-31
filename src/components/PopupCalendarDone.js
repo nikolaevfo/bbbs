@@ -1,5 +1,8 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import {
   monthTextPadeg,
   dayNumber,
@@ -9,13 +12,33 @@ import {
   minuteEnd,
 } from '../utils/toGetDate';
 
-function PopupCalendarDone({ clickedCalendarCard, onCloseClick }) {
-  const monthOfMeeting = monthTextPadeg(clickedCalendarCard);
-  const dayNumberOfMeeting = dayNumber(clickedCalendarCard);
-  const hourStartOfMeeting = hourStart(clickedCalendarCard);
-  const minuteStartOfMeeting = minuteStart(clickedCalendarCard);
-  const hourEndOfMeeting = hourEnd(clickedCalendarCard);
-  const minuteEndOfMeeting = minuteEnd(clickedCalendarCard);
+import {
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
+} from '../redux/actions';
+
+function PopupCalendarDone({
+  // clickedCalendarCard,
+  // onCloseClick
+  clickedCalendarCardRedux,
+  setIsPopupCalendarDoneOpenRedux,
+}) {
+  const monthOfMeeting = monthTextPadeg(clickedCalendarCardRedux);
+  const dayNumberOfMeeting = dayNumber(clickedCalendarCardRedux);
+  const hourStartOfMeeting = hourStart(clickedCalendarCardRedux);
+  const minuteStartOfMeeting = minuteStart(clickedCalendarCardRedux);
+  const hourEndOfMeeting = hourEnd(clickedCalendarCardRedux);
+  const minuteEndOfMeeting = minuteEnd(clickedCalendarCardRedux);
 
   return (
     <form className="popup__container popup__container_type_done">
@@ -24,11 +47,11 @@ function PopupCalendarDone({ clickedCalendarCard, onCloseClick }) {
         className="popup__close popup__cancel"
         type="button"
         aria-label="Close"
-        onClick={onCloseClick}
+        onClick={() => setIsPopupCalendarDoneOpenRedux(false)}
       />
       <h2 className="section-title calendar__title_type_popup calendar__title_type_popup-done ">
         {`Вы записаны на мероприятие
-        ${clickedCalendarCard.title}
+        ${clickedCalendarCardRedux.title}
         ${dayNumberOfMeeting} ${' '}
         ${monthOfMeeting}${' '}с${' '}${hourStartOfMeeting}:${minuteStartOfMeeting}–
         ${hourEndOfMeeting}:${minuteEndOfMeeting}`}
@@ -36,7 +59,11 @@ function PopupCalendarDone({ clickedCalendarCard, onCloseClick }) {
       <h2 className="section-title calendar__title_type_popup calendar__title_type_popup-done">
         Если у вас не получится прийти — отмените, пожалуйста, запись.
       </h2>
-      <button className="button calendar__back popup__cancel" type="button" onClick={onCloseClick}>
+      <button
+        className="button calendar__back popup__cancel"
+        type="button"
+        onClick={() => setIsPopupCalendarDoneOpenRedux(false)}
+      >
         Вернуться к календарю
       </button>
     </form>
@@ -44,13 +71,51 @@ function PopupCalendarDone({ clickedCalendarCard, onCloseClick }) {
 }
 
 PopupCalendarDone.defaultProps = {
-  clickedCalendarCard: {},
-  onCloseClick: undefined,
+  // clickedCalendarCard: {},
+  // onCloseClick: undefined,
 };
 
 PopupCalendarDone.propTypes = {
-  clickedCalendarCard: PropTypes.instanceOf(Object),
-  onCloseClick: PropTypes.func,
+  // clickedCalendarCard: PropTypes.instanceOf(Object),
+  // onCloseClick: PropTypes.func,
 };
 
-export default PopupCalendarDone;
+const mapStateToProps = (state) => ({
+  calendarDataRedux: state.calendar.calendarData,
+  monthListRedux: state.calendar.monthList,
+  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
+  clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
+  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
+  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
+  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
+  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
+  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
+  // currentCityRedux: state.app.currentCity,
+  currentCityIdRedux: state.app.currentCityId,
+  currentUserRedux: state.app.currentUser,
+  isLoggedInRedux: state.app.isLoggedIn,
+  //
+  mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
+});
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  // setProfileNarrativesCardsRedux,
+  // setProfileCalendarCardsRedux,
+  // setCityChoicePopupOpenRedux,
+  // setIsStoryFormRedactOpenRedux,
+  setIsLoggedInRedux,
+  setPopupErrorTextRedux,
+  setIsPopupErrorOpenRedux,
+  setCalendarDataRedux,
+  setMonthListRedux,
+  setIsPopupCalendarDescriptionOpenRedux,
+  setClickedCalendarCardRedux,
+  setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
+  //
+  setMainPageCalendarCardRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopupCalendarDone);

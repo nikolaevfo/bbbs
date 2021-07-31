@@ -17,6 +17,7 @@ import {
   setCurrentUserRedux,
   setPopupWichWasOpenRedux,
   setIsPopupErrorOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
 } from '../redux/actions';
 
 function PopupSignin({
@@ -27,6 +28,7 @@ function PopupSignin({
   setCurrentUserRedux,
   setPopupWichWasOpenRedux,
   setIsPopupErrorOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
 }) {
   const { values, handleChange, isValid, resetForm, setIsValid } = useFormWithValidation();
 
@@ -37,7 +39,8 @@ function PopupSignin({
 
   function handlePopupCalendarSigninLoggedIn(e) {
     e.preventDefault();
-    setPopupErrorTextRedux('Что-то пошло не так, войти снова');
+    setPopupCalendarWichWasOpenRedux('isPopupSigninOpen');
+    setPopupErrorTextRedux('Что-то пошло не так, попробуйте войти снова');
     api
       .login({
         login: values.login,
@@ -145,6 +148,7 @@ const mapDispatchToProps = {
   setCurrentUserRedux,
   setPopupWichWasOpenRedux,
   setIsPopupErrorOpenRedux,
+  setPopupCalendarWichWasOpenRedux,
 };
 
 export default connect(null, mapDispatchToProps)(PopupSignin);

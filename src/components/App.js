@@ -25,6 +25,7 @@ import {
   //
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
 } from '../redux/actions';
 
 import api from '../utils/api/api';
@@ -93,6 +94,8 @@ function App({
   const isLoggedIn = isLoggedInRedux;
   const currentUser = currentUserRedux;
 
+  // const history = useHistory();
+
   // const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
   // const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
   // const [currentCityId, setCurrentCityId] = useState(undefined); //+
@@ -143,8 +146,6 @@ function App({
   // }
 
   // const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
-
-  const history = useHistory();
 
   // function handleDeleteStoryPopupClick(card) {
   //   setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
@@ -238,60 +239,59 @@ function App({
   // const [mainPageData, setMainPageData] = useState({}); //+
   // const [mainPageCalendarCard, setMainPageCalendarCard] = useState({}); //+
 
-  React.useEffect(() => {
-    const access = localStorage.getItem('access');
-    api
-      .getMainPageInfo(access)
-      .then((response) => {
-        // setMainPageData(response.data);
-        setMainPageDataRedux(response.data);
-        // setMainPageCalendarCard(response.data.event);
-        setMainPageCalendarCardRedux(response.data.event);
-      })
-      .catch((err) => {
-        console.log(`Ошибка при получении данных с сервера: ${err}`);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   const access = localStorage.getItem('access');
+  //   api
+  //     .getMainPageInfo(access)
+  //     .then((response) => {
+  //       // setMainPageData(response.data);
+  //       setMainPageDataRedux(response.data);
+  //       // setMainPageCalendarCard(response.data.event);
+  //       setMainPageCalendarCardRedux(response.data.event);
+  //     })
+  //     .catch((err) => {
+  //       console.log(`Ошибка при получении данных с сервера: ${err}`);
+  //     });
+  // }, []);
   // main page
 
   // calendar===============================================================================
-  const [calendarData, setCalendarData] = useState(null); //+
-  const [monthList, setMonthList] = useState([]); //+
+  // const [calendarData, setCalendarData] = useState(null); //+
+  // const [monthList, setMonthList] = useState([]); //+
 
-  const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false); //+
-  const [clickedCalendarCard, setClickedCalendarCard] = useState([]); //+
-  const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false); //+
-  const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false); //+
-  const [isPopupErrorOpen, setIsPopupErrorOpen] = useState(false); //+
+  // const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false); //+
+  // const [clickedCalendarCard, setClickedCalendarCard] = useState([]); //+
+  // const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false); //+
+  // const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false); //+
+  // const [isPopupErrorOpen, setIsPopupErrorOpen] = useState(false); //+
 
   // popupErrorText
-  const [popupErrorText, setPopupErrorText] = useState(''); //+
+  // const [popupErrorText, setPopupErrorText] = useState(''); //+
 
   // попап, который был открыт перед возникновением ошибки
-  const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined); //+
+  // const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined); //+
 
   // close all popups================================
-  function handlePopupCloseClick() {
-    console.log('close');
-    setIsPopupSigninOpenRedux(false);
-    setIsPopupCalendarDescriptionOpenRedux(false);
-    setIsPopupCalendarConfirmOpenRedux(false);
-    setIsPopupCalendarDoneOpen(false);
-    setCityChoicePopupOpenRedux(false);
-  }
+  // function handlePopupCloseClick() {
+  //   setIsPopupSigninOpenRedux(false);
+  //   setIsPopupCalendarDescriptionOpenRedux(false);
+  //   setIsPopupCalendarConfirmOpenRedux(false);
+  //   setIsPopupCalendarDoneOpenRedux(false);
+  //   setCityChoicePopupOpenRedux(false);
+  // }
 
-  function handelCalendarInit() {
-    const access = localStorage.getItem('access');
-    api
-      .getCalendarCards(access, currentCityId, isLoggedIn)
-      .then((res) => {
-        const cardsList = res.data.calendarCards;
-        setCalendarData(cardsList);
-        const newMonthList = toGetMonthListShorter(cardsList);
-        setMonthList(newMonthList);
-      })
-      .catch((err) => console.log(err));
-  }
+  // function handelCalendarInit() {
+  //   const access = localStorage.getItem('access');
+  //   api
+  //     .getCalendarCards(access, currentCityId, isLoggedIn)
+  //     .then((res) => {
+  //       const cardsList = res.data.calendarCards;
+  //       setCalendarData(cardsList);
+  //       const newMonthList = toGetMonthListShorter(cardsList);
+  //       setMonthList(newMonthList);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   // PopupCalendarSignin ===============================
   // function handlePopupCalendarSigninLoggedIn(userData) {
@@ -323,95 +323,95 @@ function App({
 
   // PopupCalendarDescription===========================
 
-  function handleOpenCalendarDescriptionPopup(card) {
-    setClickedCalendarCard(card);
-    setIsPopupCalendarDescriptionOpen(true);
-  }
+  // function handleOpenCalendarDescriptionPopup(card) {
+  //   setClickedCalendarCard(card);
+  //   setIsPopupCalendarDescriptionOpen(true);
+  // }
 
   // записаться/отписаться от события
-  function handleChangeAppoitnCalendar(card, bool) {
-    if (history.location.pathname === '/calendar') {
-      const newCardsArray = calendarData.slice(0);
-      const ind = newCardsArray.indexOf(card);
-      newCardsArray[ind].booked = bool;
-      setCalendarData(newCardsArray);
-    } else if (history.location.pathname === '/') {
-      console.log(mainPageCalendarCardRedux);
-      // setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
-      setMainPageCalendarCardRedux({ ...mainPageCalendarCardRedux, booked: bool });
-    }
-  }
+  // function handleChangeAppoitnCalendar(card, bool) {
+  //   if (history.location.pathname === '/calendar') {
+  //     const newCardsArray = calendarData.slice(0);
+  //     const ind = newCardsArray.indexOf(card);
+  //     newCardsArray[ind].booked = bool;
+  //     setCalendarData(newCardsArray);
+  //   } else if (history.location.pathname === '/') {
+  //     console.log(mainPageCalendarCardRedux);
+  //     // setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
+  //     setMainPageCalendarCardRedux({ ...mainPageCalendarCardRedux, booked: bool });
+  //   }
+  // }
 
   // подтверждение или отписка на основной странице
-  function handleCalendarAppointBtnClick(card) {
-    const access = localStorage.getItem('access');
-    setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
-    if (!card.booked) {
-      setClickedCalendarCard(card);
-      setIsPopupCalendarConfirmOpen(true);
-    } else {
-      api
-        .deleteAppointToEvent(access, card.id)
-        .then(() => {
-          // console.log(res);
-        })
-        .catch(() => {
-          setIsPopupErrorOpen(true);
-        });
-      handleChangeAppoitnCalendar(card, false);
-    }
-  }
+  // function handleCalendarAppointBtnClick(card) {
+  //   const access = localStorage.getItem('access');
+  //   setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
+  //   if (!card.booked) {
+  //     setClickedCalendarCard(card);
+  //     setIsPopupCalendarConfirmOpen(true);
+  //   } else {
+  //     api
+  //       .deleteAppointToEvent(access, card.id)
+  //       .then(() => {
+  //         // console.log(res);
+  //       })
+  //       .catch(() => {
+  //         setIsPopupErrorOpen(true);
+  //       });
+  //     handleChangeAppoitnCalendar(card, false);
+  //   }
+  // }
 
   // подтверждение или запись в попапе
-  function handleSubmitAppointCalendarClick(card) {
-    if (isPopupCalendarDescriptionOpen) {
-      setPopupCalendarWichWasOpen('isPopupCalendarDescriptionOpen');
-    } else if (isPopupCalendarConfirmOpen) {
-      setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
-    }
-    const access = localStorage.getItem('access');
-    setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
-    if (!card.booked) {
-      api
-        .appointToEvent(access, card.id)
-        .then(() => {
-          // console.log(res);
-        })
-        .catch(() => {
-          handlePopupCloseClick();
-          setIsPopupErrorOpen(true);
-        });
-      handleChangeAppoitnCalendar(card, true);
-      handlePopupCloseClick();
-      setIsPopupCalendarDoneOpen(true);
-    } else {
-      api
-        .deleteAppointToEvent(access, card.id)
-        .then(() => {
-          // console.log(res);
-        })
-        .catch(() => {
-          handlePopupCloseClick();
-          setIsPopupErrorOpen(true);
-        });
-      handleChangeAppoitnCalendar(card, false);
-      handlePopupCloseClick();
-    }
-  }
+  // function handleSubmitAppointCalendarClick(card) {
+  //   if (isPopupCalendarDescriptionOpen) {
+  //     setPopupCalendarWichWasOpen('isPopupCalendarDescriptionOpen');
+  //   } else if (isPopupCalendarConfirmOpen) {
+  //     setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
+  //   }
+  //   const access = localStorage.getItem('access');
+  //   setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
+  //   if (!card.booked) {
+  //     api
+  //       .appointToEvent(access, card.id)
+  //       .then(() => {
+  //         // console.log(res);
+  //       })
+  //       .catch(() => {
+  //         handlePopupCloseClick();
+  //         setIsPopupErrorOpen(true);
+  //       });
+  //     handleChangeAppoitnCalendar(card, true);
+  //     handlePopupCloseClick();
+  //     setIsPopupCalendarDoneOpen(true);
+  //   } else {
+  //     api
+  //       .deleteAppointToEvent(access, card.id)
+  //       .then(() => {
+  //         // console.log(res);
+  //       })
+  //       .catch(() => {
+  //         handlePopupCloseClick();
+  //         setIsPopupErrorOpen(true);
+  //       });
+  //     handleChangeAppoitnCalendar(card, false);
+  //     handlePopupCloseClick();
+  //   }
+  // }
 
   // popupError
   function handlePopupErrorClose() {
-    if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
-      setIsPopupErrorOpen(false);
-      setIsPopupCalendarDescriptionOpen(true);
-    } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
-      setIsPopupErrorOpen(false);
-      setIsPopupCalendarConfirmOpen(true);
-    } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
-      setIsPopupErrorOpen(false);
-      setIsPopupSigninOpenRedux(true);
-    }
-    setIsPopupErrorOpen(false);
+    // if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
+    //   setIsPopupErrorOpen(false);
+    //   setIsPopupCalendarDescriptionOpen(true);
+    // } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
+    //   setIsPopupErrorOpen(false);
+    //   setIsPopupCalendarConfirmOpen(true);
+    // } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
+    //   setIsPopupErrorOpen(false);
+    //   setIsPopupSigninOpenRedux(true);
+    // }
+    // setIsPopupErrorOpen(false);
   }
 
   // Questions =============================================================================
@@ -496,13 +496,6 @@ function App({
     }
   }, []);
 
-  // signout=========================================
-  // function handleSignOut() {
-  //   localStorage.clear();
-  //   setIsLoggedInRedux(false);
-  //   history.push('/');
-  // }
-
   // city modal open on init=======================================================================
   React.useEffect(() => {
     if (isLoggedIn && !currentCityId) {
@@ -526,10 +519,10 @@ function App({
               <title>Главная</title>
             </Helmet>
             <Main
-              // mainPageData={mainPageData}
-              // mainPageCalendarCard={mainPageCalendarCard}
-              onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-              onAppointCalendarCardClick={handleCalendarAppointBtnClick}
+            // mainPageData={mainPageData}
+            // mainPageCalendarCard={mainPageCalendarCard}
+            // onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
+            // onAppointCalendarCardClick={handleCalendarAppointBtnClick}
             />
           </Route>
           <Route exact path="/profile">
@@ -553,11 +546,11 @@ function App({
               <title>Календарь</title>
             </Helmet>
             <Calendar
-              onCalendarInit={handelCalendarInit}
-              calendarData={calendarData}
-              onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-              onAppointCalendarClick={handleCalendarAppointBtnClick}
-              monthList={monthList}
+            // onCalendarInit={handelCalendarInit}
+            // calendarData={calendarData}
+            // onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
+            // onAppointCalendarClick={handleCalendarAppointBtnClick}
+            // monthList={monthList}
             />
           </Route>
 
@@ -692,9 +685,9 @@ function App({
           overlayClassName="popup__overlay"
         >
           <PopupCalendarDescription
-            clickedCalendarCard={clickedCalendarCard}
-            onCloseClick={handlePopupCloseClick}
-            onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
+          // clickedCalendarCard={clickedCalendarCard}
+          // onCloseClick={handlePopupCloseClick}
+          // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
           />
         </Modal>
 
@@ -713,17 +706,17 @@ function App({
         </Modal>
 
         <Modal
-          isOpen={isPopupCalendarDoneOpen}
+          isOpen={isPopupCalendarDoneOpenRedux}
           onRequestClose={() => {
-            handlePopupCloseClick();
+            setIsPopupCalendarDoneOpenRedux(false);
           }}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
           <PopupCalendarDone
-            clickedCalendarCard={clickedCalendarCard}
-            onCloseClick={handlePopupCloseClick}
+          // clickedCalendarCard={clickedCalendarCard}
+          // onCloseClick={handlePopupCloseClick}
           />
         </Modal>
 
@@ -736,7 +729,10 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupError onCloseClick={handlePopupErrorClose} text={popupErrorText} />
+          <PopupError
+            onCloseClick={handlePopupErrorClose}
+            // text={popupErrorText}
+          />
         </Modal>
 
         <Modal
@@ -795,6 +791,7 @@ const mapDispatchToProps = {
   //
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
+  setIsPopupCalendarDoneOpenRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
