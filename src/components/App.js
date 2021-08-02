@@ -10,9 +10,6 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 
 import {
-  // setCityChoicePopupOpenRedux,
-  // setCurrentCityIdRedux,
-  // setCurrentCityRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,
@@ -26,12 +23,14 @@ import {
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
+  //
+  setIsPopupWhereToGoOpenRedux,
 } from '../redux/actions';
 
-import api from '../utils/api/api';
+// import api from '../utils/api/api';
 
 import isBackScroll from '../utils/isBackScroll';
-import toGetMonthListShorter from '../utils/toGetMonthListShorter';
+// import toGetMonthListShorter from '../utils/toGetMonthListShorter';
 
 import { CurrentContext } from '../contexts/CurrentContext';
 // import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
@@ -87,20 +86,13 @@ function App({
   isPopupErrorOpenRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
+  //
+  isPopupWhereToGoOpenRedux,
+  setIsPopupWhereToGoOpenRedux,
 }) {
   // context
-  // const [currentUser, setCurrentUser] = useState({});
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isLoggedIn = isLoggedInRedux;
   const currentUser = currentUserRedux;
-
-  // const history = useHistory();
-
-  // const [isDeleteStoryPopupOpen, setDeleteStoryPopupOpen] = React.useState(false); //+
-  // const [isCityChoicePopupOpen, setCityChoicePopupOpen] = React.useState(false); //+
-  // const [currentCityId, setCurrentCityId] = useState(undefined); //+
-  // const [currentCity, setCurrentCity] = useState(undefined); //+
-  // const [isPopupSigninOpen, setisPopupSigninOpen] = useState(false); //+
 
   const currentCityId = currentCityIdRedux;
 
@@ -178,43 +170,6 @@ function App({
     // setIsPopupErrorOpen(false);
   }
 
-  // Questions =============================================================================
-
-  // whereToGo ===============================================================================
-  const [whereToGoCardsData, setWhereToGoCardsData] = useState([]); //+
-  const [whereToGoTagsData, setWhereToGoTagsData] = useState([]); //+
-  function handleWhereToGoInit() {
-    api
-      .whereToGoCards()
-      .then((res) => {
-        setWhereToGoCardsData(res.data.whereToGoCards);
-      })
-      .catch((err) => console.log(err));
-
-    api
-      .whereToGoTags()
-      .then((res) => {
-        setWhereToGoTagsData(res.data.whereToGoTags);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  const [isPopupWhereToGoOpen, setIsPopupWhereToGoOpen] = useState(false); //+
-
-  function handlePopupWhereToGoOpen() {
-    setIsPopupWhereToGoOpen(true);
-  }
-
-  function handlePopupWhereToGoClose() {
-    setIsPopupWhereToGoOpen(false);
-  }
-
-  function handlePopupWhereToGoSubmit(data) {
-    // TODO запрос к АПИ
-    console.log(data);
-    handlePopupWhereToGoClose();
-  }
-
   // signin=================================================================================
   function handelAppInit() {
     setIsPopupSigninOpenRedux(!localStorage.getItem('access'));
@@ -260,64 +215,33 @@ function App({
             <Helmet>
               <title>Главная</title>
             </Helmet>
-            <Main
-            // mainPageData={mainPageData}
-            // mainPageCalendarCard={mainPageCalendarCard}
-            // onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-            // onAppointCalendarCardClick={handleCalendarAppointBtnClick}
-            />
+            <Main />
           </Route>
           <Route exact path="/profile">
             <Helmet>
               <title>Профиль</title>
             </Helmet>
-            <Profile
-            // onDeleteStoryClick={handleDeleteStoryPopupClick}
-            // onCityChoiceClick={handleCityChoicePopupClick}
-            // onProfileInit={handleProfileInit}
-            // profileNarrativesCards={profileNarrativesCards}
-            // onAddNarrative={handleAddNarrative}
-            // onChangeNarrative={handleChangeNarrative}
-            // profileCalendarCards={profileCalendarCards}
-            // currentCity={currentCity}
-            // onSignOut={handleSignOut}
-            />
+            <Profile />
           </Route>
           <Route exact path="/calendar">
             <Helmet>
               <title>Календарь</title>
             </Helmet>
-            <Calendar
-            // onCalendarInit={handelCalendarInit}
-            // calendarData={calendarData}
-            // onOpenCalendarDescriptionPopup={handleOpenCalendarDescriptionPopup}
-            // onAppointCalendarClick={handleCalendarAppointBtnClick}
-            // monthList={monthList}
-            />
+            <Calendar />
           </Route>
 
           <Route exact path="/place">
             <Helmet>
               <title>Куда пойти</title>
             </Helmet>
-            <WhereToGo
-              onWhereToGoInit={handleWhereToGoInit}
-              whereToGoCardsData={whereToGoCardsData}
-              whereToGoTagsData={whereToGoTagsData}
-              onPopupOpen={handlePopupWhereToGoOpen}
-            />
+            <WhereToGo />
           </Route>
 
           <Route exact path="/questions">
             <Helmet>
               <title>Ответы на вопросы</title>
             </Helmet>
-            <Questions
-            // onQuestionsInit={handleQuestionsInit}
-            // questionsData={questionsData}
-            // questionsTagsData={questionsTagsData}
-            // onSubmit={handlerSubmitQuestionsForm}
-            />
+            <Questions />
           </Route>
 
           <Route exact path="/read-and-watch">
@@ -384,11 +308,7 @@ function App({
           </Route>
         </Switch>
         <Footer />
-        <PopupDeleteStory
-          isOpen={isDeleteStoryPopupOpenRedux}
-          // onClose={closeDeleteStoryPopup}
-          // onDeleteProfileStory={handleDeleteProfileStory}
-        />
+        <PopupDeleteStory isOpen={isDeleteStoryPopupOpenRedux} />
         <Modal
           isOpen={isCityChoicePopupOpenRedux}
           onRequestClose={() => {
@@ -398,13 +318,7 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCityChoice
-          // onClose={() => {
-          //   setCityChoicePopupOpenRedux(false);
-          // }}
-          // onChangeCurrentCityId={setCurrentCityId}
-          // onChangeCurrentCity={setCurrentCity}
-          />
+          <PopupCityChoice />
         </Modal>
 
         <Modal
@@ -412,10 +326,7 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupSignin
-          // onCloseClick={handlePopupCalendarSigninCloseClick}
-          // onSubmit={handlePopupCalendarSigninLoggedIn}
-          />
+          <PopupSignin />
         </Modal>
         <Modal
           isOpen={isPopupCalendarDescriptionOpenRedux}
@@ -426,11 +337,7 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarDescription
-          // clickedCalendarCard={clickedCalendarCard}
-          // onCloseClick={handlePopupCloseClick}
-          // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-          />
+          <PopupCalendarDescription />
         </Modal>
 
         <Modal
@@ -440,11 +347,7 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarConfirm
-          // clickedCalendarCard={clickedCalendarCard}
-          // onSubmitAppointCalendarClick={handleSubmitAppointCalendarClick}
-          // onCloseClick={handlePopupCloseClick}
-          />
+          <PopupCalendarConfirm />
         </Modal>
 
         <Modal
@@ -456,10 +359,7 @@ function App({
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupCalendarDone
-          // clickedCalendarCard={clickedCalendarCard}
-          // onCloseClick={handlePopupCloseClick}
-          />
+          <PopupCalendarDone />
         </Modal>
 
         <Modal
@@ -478,18 +378,13 @@ function App({
         </Modal>
 
         <Modal
-          isOpen={isPopupWhereToGoOpen}
-          onRequestClose={() => {
-            handlePopupWhereToGoClose();
-          }}
+          isOpen={isPopupWhereToGoOpenRedux}
+          onRequestClose={() => setIsPopupWhereToGoOpenRedux(false)}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupWhereToGo
-            onCloseClick={handlePopupWhereToGoClose}
-            onSubmit={handlePopupWhereToGoSubmit}
-          />
+          <PopupWhereToGo />
         </Modal>
       </div>
     </CurrentContext.Provider>
@@ -514,13 +409,12 @@ const mapStateToProps = (state) => {
     isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
     isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
     isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
+    //
+    isPopupWhereToGoOpenRedux: state.place.isPopupWhereToGoOpen,
   };
 };
 
 const mapDispatchToProps = {
-  // setCityChoicePopupOpenRedux,
-  // setCurrentCityIdRedux,
-  // setCurrentCityRedux,
   setIsPopupSigninOpenRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
@@ -534,6 +428,8 @@ const mapDispatchToProps = {
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
+  //
+  setIsPopupWhereToGoOpenRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

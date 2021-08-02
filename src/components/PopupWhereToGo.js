@@ -1,11 +1,20 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 import ImageUploading from 'react-images-uploading';
 
 import { useFormWithValidation } from '../hooks/useForm';
 
-function PopupWhereToGo({ onCloseClick, onSubmit }) {
+import { setIsPopupWhereToGoOpenRedux } from '../redux/actions';
+
+function PopupWhereToGo({
+  // onCloseClick,
+  // onSubmit,
+  setIsPopupWhereToGoOpenRedux,
+}) {
   const { values, handleChange, isValid, resetForm, setIsValid, errors } = useFormWithValidation();
   const [popupWhereToGoImage, setPopupWhereToGoImage] = React.useState([]);
 
@@ -21,7 +30,8 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
 
   function handlerSubmitForm(e) {
     e.preventDefault();
-    onSubmit({
+    // todo Запрос к апи
+    console.log({
       text: values.text,
       website: values.website,
       address: values.address,
@@ -31,6 +41,7 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
       comment: values.comment,
       image: popupWhereToGoImage,
     });
+    setIsPopupWhereToGoOpenRedux(false);
   }
 
   return (
@@ -39,7 +50,11 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
       noValidate
       onSubmit={handlerSubmitForm}
     >
-      <button className="popup__close popup__cancel" type="button" onClick={onCloseClick} />
+      <button
+        className="popup__close popup__cancel"
+        type="button"
+        onClick={() => setIsPopupWhereToGoOpenRedux(false)}
+      />
       <legend className="section-title recommendation__popup-title">
         Если вы были в интересном месте и хотите порекомендовать его другим наставникам – заполните
         форму, и мы добавим вашу рекомендацию.
@@ -172,15 +187,17 @@ function PopupWhereToGo({ onCloseClick, onSubmit }) {
 }
 
 PopupWhereToGo.defaultProps = {
-  // clickedCalendarCard: {},
-  onCloseClick: undefined,
-  onSubmit: undefined,
+  // onCloseClick: undefined,
+  // onSubmit: undefined,
 };
 
 PopupWhereToGo.propTypes = {
-  // clickedCalendarCard: PropTypes.instanceOf(Object),
-  onCloseClick: PropTypes.func,
-  onSubmit: PropTypes.func,
+  // onCloseClick: PropTypes.func,
+  // onSubmit: PropTypes.func,
 };
 
-export default PopupWhereToGo;
+const mapDispatchToProps = {
+  setIsPopupWhereToGoOpenRedux,
+};
+
+export default connect(null, mapDispatchToProps)(PopupWhereToGo);

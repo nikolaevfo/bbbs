@@ -174,19 +174,12 @@ Questions.propTypes = {
 const mapStateToProps = (state) => ({
   questionsDataRedux: state.questions.questionsData,
   questionsTagsDataRedux: state.questions.questionsTagsData,
-  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityIdRedux: state.app.currentCityId,
-  // currentCityRedux: state.app.currentCity,
   isLoggedInRedux: state.app.isLoggedIn,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
   setQuestionsDataRedux,
   setQuestionsTagsDataRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
-  // setIsLoggedInRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

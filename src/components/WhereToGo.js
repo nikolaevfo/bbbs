@@ -1,20 +1,51 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { CurrentContext } from '../contexts/CurrentContext';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { CurrentContext } from '../contexts/CurrentContext';
 
 import WhereToGoCard from './WhereToGoCard';
 import scrollToUp from '../hooks/scrollToUp';
 
-function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onPopupOpen }) {
+import {
+  setWhereToGoCardsDataRedux,
+  setWhereToGoTagsDataRedux,
+  setIsPopupWhereToGoOpenRedux,
+} from '../redux/actions';
+
+import api from '../utils/api/api';
+
+function WhereToGo({
+  setWhereToGoCardsDataRedux,
+  setWhereToGoTagsDataRedux,
+  setIsPopupWhereToGoOpenRedux,
+  whereToGoCardsDataRedux,
+  whereToGoTagsDataRedux,
+  // isPopupWhereToGoOpenRedux,
+  isLoggedInRedux,
+}) {
   // перемотка в начало страницы
   scrollToUp();
 
   React.useEffect(() => {
-    onWhereToGoInit();
+    api
+      .whereToGoCards()
+      .then((res) => {
+        setWhereToGoCardsDataRedux(res.data.whereToGoCards);
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .whereToGoTags()
+      .then((res) => {
+        setWhereToGoTagsDataRedux(res.data.whereToGoTags);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
-  const context = React.useContext(CurrentContext);
+  // const context = React.useContext(CurrentContext);
 
   const [tagChecked, setTagChecked] = useState('Все');
   const [whereToGoCardsWithoutMainCard, setWhereToGoCardsWithoutMainCard] = useState([]);
@@ -23,11 +54,11 @@ function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onP
 
   // установка главной карточки
   React.useEffect(() => {
-    setMainCard(whereToGoCardsData.find((item) => item.choosingByMentor));
-  }, [whereToGoCardsData]);
+    setMainCard(whereToGoCardsDataRedux.find((item) => item.choosingByMentor));
+  }, [whereToGoCardsDataRedux]);
 
   React.useEffect(() => {
-    const newArray = whereToGoCardsData.filter((item) => item.id !== mainCard.id);
+    const newArray = whereToGoCardsDataRedux.filter((item) => item.id !== mainCard.id);
     setWhereToGoCardsWithoutMainCard(newArray);
   }, [mainCard]);
 
@@ -64,7 +95,7 @@ function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onP
                 Все
               </button>
             </li>
-            {whereToGoTagsData.map((item) => (
+            {whereToGoTagsDataRedux.map((item) => (
               <li className="tags__list-item" key={item}>
                 <button
                   className={`button tags__button ${item === tagChecked && 'tags__button_active'}`}
@@ -79,11 +110,15 @@ function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onP
           </ul>
         </div>
 
-        {context.isLoggedIn && (
+        {isLoggedInRedux && (
           <div className="card place-card">
             <h2 className="section-title place-card__text">
               Если вы были в интересном месте и хотите порекомендовать его другим наставникам –
-              <button type="button" className="place-card__span-accent" onClick={onPopupOpen}>
+              <button
+                type="button"
+                className="place-card__span-accent"
+                onClick={() => setIsPopupWhereToGoOpenRedux(true)}
+              >
                 заполните форму
               </button>
               , и мы добавим вашу рекомендацию.
@@ -132,17 +167,30 @@ function WhereToGo({ onWhereToGoInit, whereToGoCardsData, whereToGoTagsData, onP
 }
 
 WhereToGo.defaultProps = {
-  onWhereToGoInit: undefined,
-  whereToGoCardsData: [],
-  whereToGoTagsData: [],
-  onPopupOpen: undefined,
+  // onWhereToGoInit: undefined,
+  // whereToGoCardsData: [],
+  // whereToGoTagsData: [],
+  // onPopupOpen: undefined,
 };
 
 WhereToGo.propTypes = {
-  onWhereToGoInit: PropTypes.func,
-  whereToGoCardsData: PropTypes.instanceOf(Array),
-  whereToGoTagsData: PropTypes.instanceOf(Array),
-  onPopupOpen: PropTypes.func,
+  // onWhereToGoInit: PropTypes.func,
+  // whereToGoCardsData: PropTypes.instanceOf(Array),
+  // whereToGoTagsData: PropTypes.instanceOf(Array),
+  // onPopupOpen: PropTypes.func,
 };
 
-export default WhereToGo;
+const mapStateToProps = (state) => ({
+  whereToGoCardsDataRedux: state.place.whereToGoCardsData,
+  whereToGoTagsDataRedux: state.place.whereToGoTagsData,
+  // isPopupWhereToGoOpenRedux: state.place.isPopupWhereToGoOpen,
+  isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  setWhereToGoCardsDataRedux,
+  setWhereToGoTagsDataRedux,
+  setIsPopupWhereToGoOpenRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WhereToGo);
