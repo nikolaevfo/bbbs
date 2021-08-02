@@ -16,6 +16,7 @@ import {
   setIsPopupSigninOpenRedux,
   setIsLoggedInRedux,
   setCurrentUserRedux,
+  setIsPopupErrorOpenRedux,
   //
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,
@@ -73,6 +74,8 @@ function App({
   currentUserRedux,
   setIsLoggedInRedux,
   setCurrentUserRedux,
+  isPopupErrorOpenRedux,
+  setIsPopupErrorOpenRedux,
   // main
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,
@@ -83,7 +86,6 @@ function App({
   isPopupCalendarDescriptionOpenRedux,
   isPopupCalendarConfirmOpenRedux,
   isPopupCalendarDoneOpenRedux,
-  isPopupErrorOpenRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarConfirmOpenRedux,
   //
@@ -364,17 +366,12 @@ function App({
 
         <Modal
           isOpen={isPopupErrorOpenRedux}
-          onRequestClose={() => {
-            handlePopupErrorClose();
-          }}
+          onRequestClose={() => setIsPopupErrorOpenRedux(false)}
           shouldCloseOnOverlayClick
           className="popup__modal"
           overlayClassName="popup__overlay"
         >
-          <PopupError
-            onCloseClick={handlePopupErrorClose}
-            // text={popupErrorText}
-          />
+          <PopupError />
         </Modal>
 
         <Modal
@@ -399,6 +396,7 @@ const mapStateToProps = (state) => {
     isPopupSigninOpenRedux: state.app.isPopupSigninOpen,
     isLoggedInRedux: state.app.isLoggedIn,
     currentUserRedux: state.app.currentUser,
+    isPopupErrorOpenRedux: state.app.isPopupErrorOpen,
     //
     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
     //
@@ -408,7 +406,7 @@ const mapStateToProps = (state) => {
     clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
     isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
     isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-    isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
+    // isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
     //
     isPopupWhereToGoOpenRedux: state.place.isPopupWhereToGoOpen,
   };
@@ -421,6 +419,7 @@ const mapDispatchToProps = {
   setCurrentCityRedux,
   setIsLoggedInRedux,
   setCurrentUserRedux,
+  setIsPopupErrorOpenRedux,
   //
   setMainPageDataRedux,
   setMainPageCalendarCardRedux,

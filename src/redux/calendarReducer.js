@@ -17,7 +17,7 @@ const initialState = {
   clickedCalendarCard: [],
   isPopupCalendarConfirmOpen: false,
   isPopupCalendarDoneOpen: false,
-  isPopupErrorOpen: false,
+  // isPopupErrorOpen: false,
   // popupErrorText: '',
   // popupCalendarWichWasOpen: undefined,
 };
