@@ -104,78 +104,6 @@ function App({
 
   const currentCityId = currentCityIdRedux;
 
-  // Profile =====================================================================
-  // const [profileNarrativesCards, setProfileNarrativesCards] = React.useState([]); //+
-  // const [profileCalendarCards] = React.useState([]); //+
-  // function handleProfileInit() {
-  //   const access = localStorage.getItem('access');
-  //   api
-  //     .getProfileNarratives(access)
-  //     .then((res) => {
-  //       setProfileNarrativesCards(res.data);
-  //     })
-  //     .catch((err) => console.log(err));
-
-  //   api
-  //     .getCalendarCards(access, currentCityId, isLoggedIn)
-  //     .then((res) => {
-  //       const cardsList = res.data.calendarCards;
-  //       setProfileCalendarCards(cardsList);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
-
-  // function handleAddNarrative(data) {
-  //   const newArray = profileNarrativesCards.slice();
-  //   newArray.push(data);
-  //   setProfileNarrativesCards(newArray);
-  //   // todo должно быть обращение к апи
-  // }
-
-  // function handleChangeNarrative(data) {
-  //   const newArray = [];
-  //   profileNarrativesCards.forEach((item) => {
-  //     if (item.id !== data.id) {
-  //       newArray.push(item);
-  //     } else {
-  //       newArray.push(data);
-  //     }
-  //   });
-  //   setProfileNarrativesCards(newArray);
-  //   // todo должно быть обращение к апи
-  // }
-
-  // const [checkedToDeleteProfileStory, setCheckedToDeleteProfileStory] = React.useState(undefined); //+
-
-  // function handleDeleteStoryPopupClick(card) {
-  //   setDeleteStoryPopupOpen(!isDeleteStoryPopupOpen);
-  //   setCheckedToDeleteProfileStory(card);
-  // }
-
-  // function handleCityChoicePopupClick() {
-  //   setCityChoicePopupOpen(!isCityChoicePopupOpen);
-  // }
-
-  // function closeDeleteStoryPopup() {
-  //   setDeleteStoryPopupOpen(false);
-  // }
-
-  // function closeCityChoicePopup() {
-  //   setCityChoicePopupOpen(false);
-  // }
-
-  // function handleDeleteProfileStory() {
-  //   const newArray = [];
-  //   profileNarrativesCards.forEach((item) => {
-  //     if (item.id !== checkedToDeleteProfileStoryRedux.id) {
-  //       newArray.push(item);
-  //     }
-  //   });
-  //   setProfileNarrativesCards(newArray);
-  //   closeDeleteStoryPopup();
-  //   // todo должно быть обращение к апи
-  // }
-
   // header======================================================================================
   const [headerClasses, setHeaderClasses] = useState({
     header: '',
@@ -235,170 +163,6 @@ function App({
   }, []);
   // header
 
-  // main page=======================================================================================
-  // const [mainPageData, setMainPageData] = useState({}); //+
-  // const [mainPageCalendarCard, setMainPageCalendarCard] = useState({}); //+
-
-  // React.useEffect(() => {
-  //   const access = localStorage.getItem('access');
-  //   api
-  //     .getMainPageInfo(access)
-  //     .then((response) => {
-  //       // setMainPageData(response.data);
-  //       setMainPageDataRedux(response.data);
-  //       // setMainPageCalendarCard(response.data.event);
-  //       setMainPageCalendarCardRedux(response.data.event);
-  //     })
-  //     .catch((err) => {
-  //       console.log(`Ошибка при получении данных с сервера: ${err}`);
-  //     });
-  // }, []);
-  // main page
-
-  // calendar===============================================================================
-  // const [calendarData, setCalendarData] = useState(null); //+
-  // const [monthList, setMonthList] = useState([]); //+
-
-  // const [isPopupCalendarDescriptionOpen, setIsPopupCalendarDescriptionOpen] = useState(false); //+
-  // const [clickedCalendarCard, setClickedCalendarCard] = useState([]); //+
-  // const [isPopupCalendarConfirmOpen, setIsPopupCalendarConfirmOpen] = useState(false); //+
-  // const [isPopupCalendarDoneOpen, setIsPopupCalendarDoneOpen] = useState(false); //+
-  // const [isPopupErrorOpen, setIsPopupErrorOpen] = useState(false); //+
-
-  // popupErrorText
-  // const [popupErrorText, setPopupErrorText] = useState(''); //+
-
-  // попап, который был открыт перед возникновением ошибки
-  // const [popupCalendarWichWasOpen, setPopupCalendarWichWasOpen] = useState(undefined); //+
-
-  // close all popups================================
-  // function handlePopupCloseClick() {
-  //   setIsPopupSigninOpenRedux(false);
-  //   setIsPopupCalendarDescriptionOpenRedux(false);
-  //   setIsPopupCalendarConfirmOpenRedux(false);
-  //   setIsPopupCalendarDoneOpenRedux(false);
-  //   setCityChoicePopupOpenRedux(false);
-  // }
-
-  // function handelCalendarInit() {
-  //   const access = localStorage.getItem('access');
-  //   api
-  //     .getCalendarCards(access, currentCityId, isLoggedIn)
-  //     .then((res) => {
-  //       const cardsList = res.data.calendarCards;
-  //       setCalendarData(cardsList);
-  //       const newMonthList = toGetMonthListShorter(cardsList);
-  //       setMonthList(newMonthList);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
-
-  // PopupCalendarSignin ===============================
-  // function handlePopupCalendarSigninLoggedIn(userData) {
-  //   setPopupErrorText('Что-то пошло не так, войти снова');
-  //   api
-  //     .login(userData)
-  //     .then((res) => {
-  //       setCurrentUser({ username: res.data.username, password: res.data.password });
-  //       localStorage.clear();
-  //       localStorage.setItem('access', JSON.stringify(res.data.access));
-  //       localStorage.setItem('username', JSON.stringify(res.data.username));
-  //       setIsLoggedIn(true);
-  //       setisPopupSigninOpenRedux(false);
-  //     })
-  //     .catch((err) => {
-  //       handlePopupCloseClick();
-  //       setPopupCalendarWichWasOpen('isPopupSigninOpen');
-  //       setIsPopupErrorOpen(true);
-  //       console.log(err);
-  //     });
-  //   setCityChoicePopupOpenRedux(true);
-  // }
-
-  // function handlePopupCalendarSigninCloseClick() {
-  //   handlePopupCloseClick();
-  //   setCityChoicePopupOpenRedux(true);
-  //   history.push('/');
-  // }
-
-  // PopupCalendarDescription===========================
-
-  // function handleOpenCalendarDescriptionPopup(card) {
-  //   setClickedCalendarCard(card);
-  //   setIsPopupCalendarDescriptionOpen(true);
-  // }
-
-  // записаться/отписаться от события
-  // function handleChangeAppoitnCalendar(card, bool) {
-  //   if (history.location.pathname === '/calendar') {
-  //     const newCardsArray = calendarData.slice(0);
-  //     const ind = newCardsArray.indexOf(card);
-  //     newCardsArray[ind].booked = bool;
-  //     setCalendarData(newCardsArray);
-  //   } else if (history.location.pathname === '/') {
-  //     console.log(mainPageCalendarCardRedux);
-  //     // setMainPageCalendarCard({ ...mainPageCalendarCard, booked: bool });
-  //     setMainPageCalendarCardRedux({ ...mainPageCalendarCardRedux, booked: bool });
-  //   }
-  // }
-
-  // подтверждение или отписка на основной странице
-  // function handleCalendarAppointBtnClick(card) {
-  //   const access = localStorage.getItem('access');
-  //   setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
-  //   if (!card.booked) {
-  //     setClickedCalendarCard(card);
-  //     setIsPopupCalendarConfirmOpen(true);
-  //   } else {
-  //     api
-  //       .deleteAppointToEvent(access, card.id)
-  //       .then(() => {
-  //         // console.log(res);
-  //       })
-  //       .catch(() => {
-  //         setIsPopupErrorOpen(true);
-  //       });
-  //     handleChangeAppoitnCalendar(card, false);
-  //   }
-  // }
-
-  // подтверждение или запись в попапе
-  // function handleSubmitAppointCalendarClick(card) {
-  //   if (isPopupCalendarDescriptionOpen) {
-  //     setPopupCalendarWichWasOpen('isPopupCalendarDescriptionOpen');
-  //   } else if (isPopupCalendarConfirmOpen) {
-  //     setPopupCalendarWichWasOpen('isPopupCalendarConfirmOpen');
-  //   }
-  //   const access = localStorage.getItem('access');
-  //   setPopupErrorText('Что-то пошло не так, попробуйте записаться снова');
-  //   if (!card.booked) {
-  //     api
-  //       .appointToEvent(access, card.id)
-  //       .then(() => {
-  //         // console.log(res);
-  //       })
-  //       .catch(() => {
-  //         handlePopupCloseClick();
-  //         setIsPopupErrorOpen(true);
-  //       });
-  //     handleChangeAppoitnCalendar(card, true);
-  //     handlePopupCloseClick();
-  //     setIsPopupCalendarDoneOpen(true);
-  //   } else {
-  //     api
-  //       .deleteAppointToEvent(access, card.id)
-  //       .then(() => {
-  //         // console.log(res);
-  //       })
-  //       .catch(() => {
-  //         handlePopupCloseClick();
-  //         setIsPopupErrorOpen(true);
-  //       });
-  //     handleChangeAppoitnCalendar(card, false);
-  //     handlePopupCloseClick();
-  //   }
-  // }
-
   // popupError
   function handlePopupErrorClose() {
     // if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
@@ -415,28 +179,6 @@ function App({
   }
 
   // Questions =============================================================================
-  const [questionsData, setQuestionsData] = useState([]); //+
-  const [questionsTagsData, setQuestionsTagsData] = useState([]); //+
-  function handleQuestionsInit() {
-    api
-      .getQuestionsCards()
-      .then((res) => {
-        setQuestionsData(res.data.questionsCards);
-      })
-      .catch((err) => console.log(err));
-
-    api
-      .getQuestionsTags()
-      .then((res) => {
-        setQuestionsTagsData(res.data.questionsTags);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handlerSubmitQuestionsForm(data) {
-    // todo обращение к АПИ
-    console.log(data);
-  }
 
   // whereToGo ===============================================================================
   const [whereToGoCardsData, setWhereToGoCardsData] = useState([]); //+
@@ -571,10 +313,10 @@ function App({
               <title>Ответы на вопросы</title>
             </Helmet>
             <Questions
-              onQuestionsInit={handleQuestionsInit}
-              questionsData={questionsData}
-              questionsTagsData={questionsTagsData}
-              onSubmit={handlerSubmitQuestionsForm}
+            // onQuestionsInit={handleQuestionsInit}
+            // questionsData={questionsData}
+            // questionsTagsData={questionsTagsData}
+            // onSubmit={handlerSubmitQuestionsForm}
             />
           </Route>
 

@@ -3,6 +3,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import toGetFreeSeatsText from '../utils/toGetFreeSeatsText';
 import {
   monthText,
@@ -40,6 +41,8 @@ function PopupCalendarDescription({
   setCalendarDataRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
+  mainPageCalendarCardRedux,
+  setMainPageCalendarCardRedux,
 }) {
   const monthOfMeeting = monthText(clickedCalendarCardRedux);
   const dayNameOfMeeting = dayName(clickedCalendarCardRedux);
@@ -48,6 +51,8 @@ function PopupCalendarDescription({
   const minuteStartOfMeeting = minuteStart(clickedCalendarCardRedux);
   const hourEndOfMeeting = hourEnd(clickedCalendarCardRedux);
   const minuteEndOfMeeting = minuteEnd(clickedCalendarCardRedux);
+
+  const history = useHistory();
 
   const freeSeats =
     clickedCalendarCardRedux.remainSeats ||
@@ -73,11 +78,23 @@ function PopupCalendarDescription({
       });
     // handleChangeAppoitnCalendarRedux(card, false);
 
-    const newCardsArray = calendarDataRedux.slice(0);
-    const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
-    newCardsArray[ind].booked = false;
-    setCalendarDataRedux(newCardsArray);
+    if (history.location.pathname === '/') {
+      const newCard = { ...mainPageCalendarCardRedux };
+      newCard.booked = false;
+      setMainPageCalendarCardRedux(newCard);
+    } else {
+      const newCardsArray = calendarDataRedux.slice(0);
+      const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+      newCardsArray[ind].booked = false;
+      setCalendarDataRedux(newCardsArray);
+    }
     setIsPopupCalendarDescriptionOpenRedux(false);
+
+    // const newCardsArray = calendarDataRedux.slice(0);
+    // const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+    // newCardsArray[ind].booked = false;
+    // setCalendarDataRedux(newCardsArray);
+    // setIsPopupCalendarDescriptionOpenRedux(false);
   }
 
   function appoint(access) {
@@ -91,10 +108,22 @@ function PopupCalendarDescription({
         setIsPopupErrorOpenRedux(true);
       });
 
-    const newCardsArray = calendarDataRedux.slice(0);
-    const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
-    newCardsArray[ind].booked = true;
-    setCalendarDataRedux(newCardsArray);
+    // const newCardsArray = calendarDataRedux.slice(0);
+    // const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+    // newCardsArray[ind].booked = true;
+    // setCalendarDataRedux(newCardsArray);
+
+    if (history.location.pathname === '/') {
+      const newCard = { ...mainPageCalendarCardRedux };
+      newCard.booked = true;
+      setMainPageCalendarCardRedux(newCard);
+    } else {
+      const newCardsArray = calendarDataRedux.slice(0);
+      const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
+      newCardsArray[ind].booked = true;
+      setCalendarDataRedux(newCardsArray);
+    }
+
     setIsPopupCalendarDescriptionOpenRedux(false);
     setIsPopupCalendarDoneOpenRedux(true);
   }

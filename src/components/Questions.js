@@ -1,13 +1,30 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { CurrentContext } from '../contexts/CurrentContext';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { CurrentContext } from '../contexts/CurrentContext';
 import scrollToUp from '../hooks/scrollToUp';
 import { useFormWithValidation } from '../hooks/useForm';
 
 import QuestionCard from './QuestionCard';
 
-export default function Questions({ onQuestionsInit, questionsData, questionsTagsData, onSubmit }) {
+import { setQuestionsDataRedux, setQuestionsTagsDataRedux } from '../redux/actions';
+
+import api from '../utils/api/api';
+
+function Questions({
+  // onQuestionsInit,
+  // questionsData,
+  // questionsTagsData,
+  // onSubmit
+  questionsDataRedux,
+  questionsTagsDataRedux,
+  setQuestionsDataRedux,
+  setQuestionsTagsDataRedux,
+  isLoggedInRedux,
+}) {
   // перемотка в начало страницы
   scrollToUp();
 
@@ -15,27 +32,39 @@ export default function Questions({ onQuestionsInit, questionsData, questionsTag
 
   // загрузка данных
   React.useEffect(() => {
-    onQuestionsInit();
+    api
+      .getQuestionsCards()
+      .then((res) => {
+        setQuestionsDataRedux(res.data.questionsCards);
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .getQuestionsTags()
+      .then((res) => {
+        setQuestionsTagsDataRedux(res.data.questionsTags);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
-  const context = React.useContext(CurrentContext);
+  // const context = React.useContext(CurrentContext);
   const [tagChecked, setTagChecked] = useState('Все');
-  const [questionsFitered, setQuestionsFitered] = useState([]);
+  const [questionsFitered, setQuestionsFiltered] = useState([]);
 
   React.useEffect(() => {
-    setQuestionsFitered(questionsData);
+    setQuestionsFiltered(questionsDataRedux);
     setTagChecked('Все');
-  }, [questionsData]);
+  }, [questionsDataRedux]);
 
   function handleTagClick(e) {
     setTagChecked(e.target.id);
     if (e.target.id === 'Все') {
-      setQuestionsFitered(questionsData);
+      setQuestionsFiltered(questionsDataRedux);
     } else {
-      const newArray = questionsData.filter((item) =>
+      const newArray = questionsDataRedux.filter((item) =>
         item.tag.toLowerCase().includes(e.target.id.toLowerCase()),
       );
-      setQuestionsFitered(newArray);
+      setQuestionsFiltered(newArray);
     }
   }
 
@@ -43,6 +72,11 @@ export default function Questions({ onQuestionsInit, questionsData, questionsTag
     resetForm();
     setIsValid(false);
   }, []);
+
+  function onSubmit(data) {
+    // todo запрос к апи
+    console.log(data);
+  }
 
   function handlerSubmit(e) {
     e.preventDefault();
@@ -69,7 +103,7 @@ export default function Questions({ onQuestionsInit, questionsData, questionsTag
                 Все
               </button>
             </li>
-            {questionsTagsData.map((item) => (
+            {questionsTagsDataRedux.map((item) => (
               <li className="tags__list-item" key={item}>
                 <button
                   className={`button tags__button ${item === tagChecked && 'tags__button_active'}`}
@@ -91,7 +125,7 @@ export default function Questions({ onQuestionsInit, questionsData, questionsTag
         ))}
       </section>
 
-      {context.isLoggedIn && tagChecked === 'Все' && (
+      {isLoggedInRedux && tagChecked === 'Все' && (
         <section className="add-question page__section">
           <h2 className="section-title add-question__title">
             Если вы не нашли ответ на свой вопрос — напишите нам, и мы включим его в список
@@ -124,15 +158,35 @@ export default function Questions({ onQuestionsInit, questionsData, questionsTag
 }
 
 Questions.defaultProps = {
-  onQuestionsInit: undefined,
-  questionsData: [],
-  questionsTagsData: [],
-  onSubmit: undefined,
+  // onQuestionsInit: undefined,
+  // questionsData: [],
+  // questionsTagsData: [],
+  // onSubmit: undefined,
 };
 
 Questions.propTypes = {
-  onQuestionsInit: PropTypes.func,
-  questionsData: PropTypes.instanceOf(Array),
-  questionsTagsData: PropTypes.instanceOf(Array),
-  onSubmit: PropTypes.func,
+  // onQuestionsInit: PropTypes.func,
+  // questionsData: PropTypes.instanceOf(Array),
+  // questionsTagsData: PropTypes.instanceOf(Array),
+  // onSubmit: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({
+  questionsDataRedux: state.questions.questionsData,
+  questionsTagsDataRedux: state.questions.questionsTagsData,
+  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
+  // currentCityIdRedux: state.app.currentCityId,
+  // currentCityRedux: state.app.currentCity,
+  isLoggedInRedux: state.app.isLoggedIn,
+});
+
+const mapDispatchToProps = {
+  // setDeleteStoryPopupOpenRedux,
+  setQuestionsDataRedux,
+  setQuestionsTagsDataRedux,
+  // setCityChoicePopupOpenRedux,
+  // setIsStoryFormRedactOpenRedux,
+  // setIsLoggedInRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

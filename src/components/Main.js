@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,14 +19,32 @@ import BlockQuestion from './BlockQuestion';
 import BlockLead from './BlockLead';
 import CalendarCard from './CalendarCard';
 
+import api from '../utils/api/api';
+
+import { setMainPageDataRedux, setMainPageCalendarCardRedux } from '../redux/actions';
+
 function Main({
   onOpenCalendarDescriptionPopup,
   onAppointCalendarCardClick,
   mainPageDataRedux,
   mainPageCalendarCardRedux,
   isLoggedInRedux,
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
 }) {
   // const context = React.useContext(CurrentContext);
+  React.useEffect(() => {
+    const access = localStorage.getItem('access');
+    api
+      .getMainPageInfo(access)
+      .then((response) => {
+        setMainPageDataRedux(response.data);
+        setMainPageCalendarCardRedux(response.data.event);
+      })
+      .catch((err) => {
+        console.log(`Ошибка при получении данных с сервера: ${err}`);
+      });
+  }, []);
 
   const mainPageData = mainPageDataRedux;
   const mainPageCalendarCard = mainPageCalendarCardRedux;
@@ -90,4 +110,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Main);
+const mapDispatchToProps = {
+  setMainPageDataRedux,
+  setMainPageCalendarCardRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
