@@ -41,8 +41,6 @@ PopupError.propTypes = {
 
 const mapStateToProps = (state) => ({
   popupErrorTextRedux: state.app.popupErrorText,
-  // questionsTagsDataRedux: state.questions.questionsTagsData,
-  // isLoggedInRedux: state.app.isLoggedIn,
 });
 
 const mapDispatchToProps = {

@@ -9,12 +9,7 @@ import { year, monthNumber, dayNumber } from '../utils/toGetDate';
 
 import imageOfNarrative1 from '../images/personal-area/lk.png';
 
-import {
-  setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
-} from '../redux/actions';
+import { setProfileNarrativesCardsRedux } from '../redux/actions';
 
 function StoryFormOnEdit({
   card,
@@ -221,31 +216,20 @@ function StoryFormOnEdit({
 
 StoryFormOnEdit.defaultProps = {
   card: {},
-  // onChangeNarrative: undefined,
   setEditClicked: undefined,
 };
 
 StoryFormOnEdit.propTypes = {
   card: PropTypes.instanceOf(Object),
-  // onChangeNarrative: PropTypes.func,
   setEditClicked: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
-  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
-  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityIdRedux: state.app.currentCityId,
-  // currentCityRedux: state.app.currentCity,
-  // isLoggedInRedux: state.app.isLoggedIn,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
   setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoryFormOnEdit);

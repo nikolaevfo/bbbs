@@ -17,16 +17,12 @@ import {
 } from '../utils/toGetDate';
 
 import {
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
-  setIsPopupCalendarDoneOpenRedux,
-  setPopupCalendarWichWasOpenRedux,
   //
   setMainPageCalendarCardRedux,
 } from '../redux/actions';
@@ -36,30 +32,15 @@ import api from '../utils/api/api';
 function CalendarCard({
   card,
   id,
-  // onOpenCalendarDescriptionPopup,
-  // onAppointCalendarCardClick,
   //
   calendarDataRedux,
-  monthListRedux,
-  isPopupCalendarDescriptionOpenRedux,
-  clickedCalendarCardRedux,
-  isPopupCalendarConfirmOpenRedux,
-  isPopupCalendarDoneOpenRedux,
-  isPopupErrorOpenRedux,
-  currentCityIdRedux,
-  currentUserRedux,
-  isLoggedInRedux,
   //
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
-  setIsPopupCalendarDoneOpenRedux,
-  setPopupCalendarWichWasOpenRedux,
   //
   mainPageCalendarCardRedux,
   setMainPageCalendarCardRedux,
@@ -86,12 +67,10 @@ function CalendarCard({
   }
 
   function handleOpenCalendarCardClick() {
-    // onOpenCalendarDescriptionPopup(card);
     setIsPopupCalendarDescriptionOpenRedux(true);
     setClickedCalendarCardRedux(card);
   }
   function handleAppointCalendarCardClick() {
-    // onAppointCalendarCardClick(card);
     const access = localStorage.getItem('access');
     setPopupErrorTextRedux('Что-то пошло не так, попробуйте записаться снова');
     if (!card.booked) {
@@ -106,7 +85,6 @@ function CalendarCard({
         .catch(() => {
           setIsPopupErrorOpenRedux(true);
         });
-      // handleChangeAppoitnCalendarRedux(card, false);
 
       if (history.location.pathname === '/') {
         const newCard = { ...mainPageCalendarCardRedux };
@@ -172,51 +150,26 @@ function CalendarCard({
 CalendarCard.defaultProps = {
   card: {},
   id: undefined,
-  // onOpenCalendarDescriptionPopup: undefined,
-  // onAppointCalendarCardClick: undefined,
 };
 
 CalendarCard.propTypes = {
   card: PropTypes.instanceOf(Object),
   id: PropTypes.number,
-  // onOpenCalendarDescriptionPopup: PropTypes.func,
-  // onAppointCalendarCardClick: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   calendarDataRedux: state.calendar.calendarData,
-  monthListRedux: state.calendar.monthList,
-  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
-  clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
-  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
-  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
-  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityRedux: state.app.currentCity,
-  currentCityIdRedux: state.app.currentCityId,
-  currentUserRedux: state.app.currentUser,
-  isLoggedInRedux: state.app.isLoggedIn,
   //
   mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
-  // setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
-  setIsPopupCalendarDoneOpenRedux,
-  setPopupCalendarWichWasOpenRedux,
   //
   setMainPageCalendarCardRedux,
 };

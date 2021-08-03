@@ -55,14 +55,10 @@ function PopupDeleteStory({
 
 PopupDeleteStory.defaultProps = {
   isOpen: false,
-  // onClose: undefined,
-  // onDeleteProfileStory: undefined,
 };
 
 PopupDeleteStory.propTypes = {
   isOpen: PropTypes.bool,
-  // onClose: PropTypes.func,
-  // onDeleteProfileStory: PropTypes.func,
 };
 
 // eslint-disable-next-line arrow-body-style

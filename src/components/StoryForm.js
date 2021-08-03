@@ -7,18 +7,9 @@ import { connect } from 'react-redux';
 
 import ImageUploader from './ImageUploader';
 
-import {
-  setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  setIsStoryFormRedactOpenRedux,
-} from '../redux/actions';
-
-// import imageOfNarrative1 from '../images/personal-area/lk.png';
+import { setProfileNarrativesCardsRedux, setIsStoryFormRedactOpenRedux } from '../redux/actions';
 
 function StoryForm({
-  // profileNarrativesCards,
-  // onAddNarrative,
   setIsStoryFormRedactOpenRedux,
   profileNarrativesCardsRedux,
   setProfileNarrativesCardsRedux,
@@ -207,32 +198,16 @@ function StoryForm({
   );
 }
 
-StoryForm.defaultProps = {
-  // profileNarrativesCards: [],
-  // onAddNarrative: undefined,
-  // onDeleteClick: undefined,
-};
+StoryForm.defaultProps = {};
 
-StoryForm.propTypes = {
-  // profileNarrativesCards: PropTypes.instanceOf(Array),
-  // onAddNarrative: PropTypes.func,
-  // onDeleteClick: PropTypes.func,
-};
+StoryForm.propTypes = {};
 
 const mapStateToProps = (state) => ({
   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
-  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
-  isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityIdRedux: state.app.currentCityId,
-  // currentCityRedux: state.app.currentCity,
-  // isLoggedInRedux: state.app.isLoggedIn,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
   setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
   setIsStoryFormRedactOpenRedux,
 };
 

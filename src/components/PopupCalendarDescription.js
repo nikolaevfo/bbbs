@@ -16,14 +16,10 @@ import {
 } from '../utils/toGetDate';
 
 import {
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
   setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
-  setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
   //
@@ -33,16 +29,16 @@ import {
 import api from '../utils/api/api';
 
 function PopupCalendarDescription({
-  // clickedCalendarCard,
-  // onCloseClick,
-  // onSubmitAppointCalendarClick,
   clickedCalendarCardRedux,
   calendarDataRedux,
+  mainPageCalendarCardRedux,
   setCalendarDataRedux,
   setIsPopupCalendarDescriptionOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
-  mainPageCalendarCardRedux,
   setMainPageCalendarCardRedux,
+  setIsPopupErrorOpenRedux,
+  setPopupErrorTextRedux,
+  setPopupCalendarWichWasOpenRedux,
 }) {
   const monthOfMeeting = monthText(clickedCalendarCardRedux);
   const dayNameOfMeeting = dayName(clickedCalendarCardRedux);
@@ -89,12 +85,6 @@ function PopupCalendarDescription({
       setCalendarDataRedux(newCardsArray);
     }
     setIsPopupCalendarDescriptionOpenRedux(false);
-
-    // const newCardsArray = calendarDataRedux.slice(0);
-    // const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
-    // newCardsArray[ind].booked = false;
-    // setCalendarDataRedux(newCardsArray);
-    // setIsPopupCalendarDescriptionOpenRedux(false);
   }
 
   function appoint(access) {
@@ -107,11 +97,6 @@ function PopupCalendarDescription({
         setIsPopupCalendarDescriptionOpenRedux(false);
         setIsPopupErrorOpenRedux(true);
       });
-
-    // const newCardsArray = calendarDataRedux.slice(0);
-    // const ind = newCardsArray.indexOf(clickedCalendarCardRedux);
-    // newCardsArray[ind].booked = true;
-    // setCalendarDataRedux(newCardsArray);
 
     if (history.location.pathname === '/') {
       const newCard = { ...mainPageCalendarCardRedux };
@@ -140,7 +125,6 @@ function PopupCalendarDescription({
     }
   }
   return (
-    // <div className="popup popup_type_description popup_opened">
     <form className="popup__container popup__container_type_calendar">
       <button
         className="popup__close popup__cancel"
@@ -192,54 +176,25 @@ function PopupCalendarDescription({
         </div>
       </div>
     </form>
-    // </div>
   );
 }
 
-PopupCalendarDescription.defaultProps = {
-  // clickedCalendarCard: {},
-  // onCloseClick: undefined,
-  // onSubmitAppointCalendarClick: undefined,
-};
+PopupCalendarDescription.defaultProps = {};
 
-PopupCalendarDescription.propTypes = {
-  // clickedCalendarCard: PropTypes.instanceOf(Object),
-  // onCloseClick: PropTypes.func,
-  // onSubmitAppointCalendarClick: PropTypes.func,
-};
+PopupCalendarDescription.propTypes = {};
 
 const mapStateToProps = (state) => ({
   calendarDataRedux: state.calendar.calendarData,
-  monthListRedux: state.calendar.monthList,
-  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
   clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
-  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
-  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
-  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityRedux: state.app.currentCity,
-  currentCityIdRedux: state.app.currentCityId,
-  currentUserRedux: state.app.currentUser,
-  isLoggedInRedux: state.app.isLoggedIn,
   //
   mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
-  // setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
   setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
-  setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
   //

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { useHistory, NavLink } from 'react-router-dom';
+import isBackScroll from '../utils/isBackScroll';
 
 function Header() {
   const [headerClasses, setHeaderClasses] = useState({
@@ -309,28 +310,8 @@ function Header() {
   );
 }
 
-Header.propTypes = {
-  // headerClasses: PropTypes.shape({
-  //   header: PropTypes.string,
-  //   menuBurger: PropTypes.string,
-  //   menuListSWrap: PropTypes.string,
-  //   menuListSocial: PropTypes.string,
-  //   headerOuted: PropTypes.string,
-  // }),
-  // handleMenuButton: PropTypes.func,
-  // onCloseBurgerMenu: PropTypes.func,
-};
+Header.propTypes = {};
 
-Header.defaultProps = {
-  // headerClasses: {
-  //   header: '',
-  //   menuBurger: '',
-  //   menuListSWrap: 'menu__lists-wrap_hidden',
-  //   menuListSocial: 'menu__list_hidden',
-  //   headerOuted: '',
-  // },
-  // handleMenuButton: () => {},
-  // onCloseBurgerMenu: () => {},
-};
+Header.defaultProps = {};
 
 export default Header;

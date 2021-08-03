@@ -3,48 +3,21 @@ import PropTypes from 'prop-types';
 import PostedStory from './PostedStory';
 import StoryFormOnEdit from './StoryFormOnEdit';
 
-function PostedStoryEditing({
-  // onDeleteClick,
-  card,
-  // onChangeNarrative,
-}) {
+function PostedStoryEditing({ card }) {
   const [isEditClicked, setEditClicked] = React.useState(false);
 
   if (isEditClicked) {
-    return (
-      <StoryFormOnEdit
-        card={card}
-        // onChangeNarrative={onChangeNarrative}
-        setEditClicked={setEditClicked}
-        // mainText={mainText}
-        // setMainText={setMainText}
-        // place={place}
-        // setPlace={setPlace}
-      />
-    );
+    return <StoryFormOnEdit card={card} setEditClicked={setEditClicked} />;
   }
-  return (
-    <PostedStory
-      // onDeleteClick={onDeleteClick}
-      isEditClicked={isEditClicked}
-      setEditClicked={setEditClicked}
-      card={card}
-      // mainText={card}
-      // place={place}
-    />
-  );
+  return <PostedStory isEditClicked={isEditClicked} setEditClicked={setEditClicked} card={card} />;
 }
 
 export default PostedStoryEditing;
 
 PostedStoryEditing.defaultProps = {
-  // onDeleteClick: undefined,
-  // onChangeNarrative: undefined,
   card: {},
 };
 
 PostedStoryEditing.propTypes = {
-  // onDeleteClick: PropTypes.func,
-  // onChangeNarrative: PropTypes.func,
   card: PropTypes.instanceOf(Object),
 };

@@ -2,8 +2,8 @@
 /* eslint-disable import/named */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Modal from 'react-modal';
 
@@ -27,8 +27,6 @@ import {
   //
   setIsPopupWhereToGoOpenRedux,
 } from '../redux/actions';
-
-import isBackScroll from '../utils/isBackScroll';
 
 import { CurrentContext } from '../contexts/CurrentContext';
 
@@ -90,65 +88,6 @@ function App({
 
   const currentCityId = currentCityIdRedux;
 
-  // header======================================================================================
-  // const [headerClasses, setHeaderClasses] = useState({
-  //   header: '',
-  //   menuBurger: '',
-  //   menuListSWrap: 'menu__lists-wrap_hidden',
-  //   menuListSocial: 'menu__list_hidden',
-  //   headerOuted: '',
-  // });
-  // // переключение классов мобильной версии меню
-  // function handleMenuButton() {
-  //   if (headerClasses.header === '') {
-  //     setHeaderClasses({
-  //       ...headerClasses,
-  //       header: 'header_displayed',
-  //       menuBurger: 'menu__burger_active',
-  //       menuListSWrap: '',
-  //       menuListSocial: '',
-  //     });
-  //   } else {
-  //     setHeaderClasses({
-  //       ...headerClasses,
-  //       header: '',
-  //       menuBurger: '',
-  //       menuListSWrap: 'menu__lists-wrap_hidden',
-  //       menuListSocial: 'menu__list_hidden',
-  //     });
-  //   }
-  // }
-  // function handleCloseBurgerMenu() {
-  //   setHeaderClasses({
-  //     ...headerClasses,
-  //     header: '',
-  //     menuBurger: '',
-  //     menuListSWrap: 'menu__lists-wrap_hidden',
-  //     menuListSocial: 'menu__list_hidden',
-  //   });
-  // }
-  // // реализация появления меню при обратном скролле
-  // const handleScroll = () => {
-  //   if (isBackScroll()) {
-  //     setHeaderClasses({
-  //       ...headerClasses,
-  //       headerOuted: 'header_outed',
-  //     });
-  //   } else {
-  //     setHeaderClasses({
-  //       ...headerClasses,
-  //       headerOuted: '',
-  //     });
-  //   }
-  // };
-  // React.useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-  // header
-
   // signin=================================================================================
   function handelAppInit() {
     setIsPopupSigninOpenRedux(!localStorage.getItem('access'));
@@ -184,11 +123,7 @@ function App({
   return (
     <CurrentContext.Provider value={{}}>
       <div className="page">
-        <Header
-        // headerClasses={headerClasses}
-        // handleMenuButton={handleMenuButton}
-        // onCloseBurgerMenu={handleCloseBurgerMenu}
-        />
+        <Header />
         <Switch>
           <Route exact path="/">
             <Helmet>

@@ -11,7 +11,6 @@ import {
 } from '../redux/actions';
 
 function PostedStory({
-  // onDeleteClick,
   isEditClicked,
   setEditClicked,
   card,
@@ -115,30 +114,16 @@ function PostedStory({
 }
 
 PostedStory.defaultProps = {
-  // onDeleteClick: undefined,
   isEditClicked: undefined,
   setEditClicked: undefined,
   card: {},
-  // mainText: undefined,
-  // place: undefined,
 };
 
 PostedStory.propTypes = {
-  // onDeleteClick: PropTypes.func,
   isEditClicked: PropTypes.bool,
   setEditClicked: PropTypes.func,
   card: PropTypes.instanceOf(Object),
-  // mainText: PropTypes.string,
-  // place: PropTypes.string,
 };
-
-// eslint-disable-next-line arrow-body-style
-// const mapStateToProps = (state) => {
-//   return {
-//     isPopupSigninOpenRedux: state.app.isPopupSigninOpen,
-//     mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
-//   };
-// };
 
 const mapDispatchToProps = {
   setDeleteStoryPopupOpenRedux,

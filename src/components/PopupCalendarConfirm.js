@@ -15,13 +15,9 @@ import {
 } from '../utils/toGetDate';
 
 import {
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
-  setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
@@ -32,27 +28,12 @@ import {
 import api from '../utils/api/api';
 
 function PopupCalendarConfirm({
-  // clickedCalendarCard,
-  // onSubmitAppointCalendarClick,
-  // onCloseClick,
   calendarDataRedux,
-  monthListRedux,
-  isPopupCalendarDescriptionOpenRedux,
   clickedCalendarCardRedux,
-  isPopupCalendarConfirmOpenRedux,
-  isPopupCalendarDoneOpenRedux,
-  isPopupErrorOpenRedux,
-  currentCityIdRedux,
-  currentUserRedux,
-  isLoggedInRedux,
   //
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
-  setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,
@@ -134,49 +115,21 @@ function PopupCalendarConfirm({
   );
 }
 
-PopupCalendarConfirm.defaultProps = {
-  // clickedCalendarCard: {},
-  // onSubmitAppointCalendarClick: undefined,
-  // onCloseClick: undefined,
-  // onCloseClick: undefined,
-  // onSubmit: undefined,
-  // isFormValid: true,
-  // handleChange: undefined,
-};
+PopupCalendarConfirm.defaultProps = {};
 
-PopupCalendarConfirm.propTypes = {
-  // clickedCalendarCard: PropTypes.instanceOf(Object),
-  // onSubmitAppointCalendarClick: PropTypes.func,
-  // onCloseClick: PropTypes.func,
-  // onCloseClick: PropTypes.func,
-  // onSubmit: PropTypes.func,
-  // isFormValid: PropTypes.bool,
-  // handleChange: PropTypes.func,
-};
+PopupCalendarConfirm.propTypes = {};
 
 const mapStateToProps = (state) => ({
   calendarDataRedux: state.calendar.calendarData,
-  monthListRedux: state.calendar.monthList,
-  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
   clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
-  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
-  currentCityIdRedux: state.app.currentCityId,
-  currentUserRedux: state.app.currentUser,
-  isLoggedInRedux: state.app.isLoggedIn,
   //
   mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
-  setIsLoggedInRedux,
   setPopupErrorTextRedux,
   setIsPopupErrorOpenRedux,
   setCalendarDataRedux,
-  setMonthListRedux,
-  setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
   setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
   setPopupCalendarWichWasOpenRedux,

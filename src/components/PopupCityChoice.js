@@ -2,28 +2,19 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 // import PropTypes from 'prop-types';
-// import { NavLink, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
-  // setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,
 } from '../redux/actions';
 
 function PopupCityChoice({
-  // onClose,
-  // onChangeCurrentCityId,
-  // onChangeCurrentCity,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,
 }) {
-  // const location = useLocation();
-  // const currentPath = location.pathname;
-
   function handleCityClick(e) {
     // onChangeCurrentCityId(e.target.id);
     localStorage.setItem('cityId', JSON.stringify(e.target.id));
@@ -35,7 +26,6 @@ function PopupCityChoice({
   }
 
   return (
-    // <div className={`popup popup_type_cities cities ${isOpen ? 'popup_opened' : ''}`}>
     <div className="popup__container popup__container_type_cities">
       <h2 className="cities__title section-title">Выберите ваш город</h2>
       <ul className="cities__capitals">
@@ -108,33 +98,14 @@ function PopupCityChoice({
         </li>
       </ul>
     </div>
-    // </div>
   );
 }
 
-PopupCityChoice.defaultProps = {
-  // isOpen: false,
-  // onClose: undefined,
-  // onChangeCurrentCityId: undefined,
-  // onChangeCurrentCity: undefined,
-};
+PopupCityChoice.defaultProps = {};
 
-PopupCityChoice.propTypes = {
-  // isOpen: PropTypes.bool,
-  // onClose: PropTypes.func,
-  // onChangeCurrentCityId: PropTypes.func,
-  // onChangeCurrentCity: PropTypes.func,
-};
-
-// const mapStateToProps = (state) => ({
-//   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
-//   currentCityIdRedux: state.app.currentCityId,
-// });
+PopupCityChoice.propTypes = {};
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
-  // setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
   setCityChoicePopupOpenRedux,
   setCurrentCityIdRedux,
   setCurrentCityRedux,

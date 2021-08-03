@@ -68,15 +68,7 @@ function PopupSignin({
     setCityChoicePopupOpenRedux(true);
   }
 
-  // function handlerSubmitForm(e) {
-  //   e.preventDefault();
-  //   onSubmit({
-  //     login: values.login,
-  //     password: values.password,
-  //   });
-  // }
   return (
-    // <div className="popup popup_type_sign-in popup_opened">
     <form
       className="popup__container popup__container_type_sign-in"
       onSubmit={handlePopupCalendarSigninLoggedIn}
@@ -120,7 +112,6 @@ function PopupSignin({
         Войти
       </button>
     </form>
-    // </div>
   );
 }
 
@@ -133,12 +124,6 @@ PopupSignin.propTypes = {
   // onCloseClick: PropTypes.func,
   // onSubmit: PropTypes.func,
 };
-
-// const mapStateToProps = (state) => ({
-//   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
-//   currentCityIdRedux: state.app.currentCityId,
-//   currentCityRedux: state.app.currentCity,
-// });
 
 const mapDispatchToProps = {
   setIsPopupSigninOpenRedux,

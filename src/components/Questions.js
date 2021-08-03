@@ -1,10 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
-// import { CurrentContext } from '../contexts/CurrentContext';
 import scrollToUp from '../hooks/scrollToUp';
 import { useFormWithValidation } from '../hooks/useForm';
 
@@ -15,10 +13,6 @@ import { setQuestionsDataRedux, setQuestionsTagsDataRedux } from '../redux/actio
 import api from '../utils/api/api';
 
 function Questions({
-  // onQuestionsInit,
-  // questionsData,
-  // questionsTagsData,
-  // onSubmit
   questionsDataRedux,
   questionsTagsDataRedux,
   setQuestionsDataRedux,
@@ -157,19 +151,9 @@ function Questions({
   );
 }
 
-Questions.defaultProps = {
-  // onQuestionsInit: undefined,
-  // questionsData: [],
-  // questionsTagsData: [],
-  // onSubmit: undefined,
-};
+Questions.defaultProps = {};
 
-Questions.propTypes = {
-  // onQuestionsInit: PropTypes.func,
-  // questionsData: PropTypes.instanceOf(Array),
-  // questionsTagsData: PropTypes.instanceOf(Array),
-  // onSubmit: PropTypes.func,
-};
+Questions.propTypes = {};
 
 const mapStateToProps = (state) => ({
   questionsDataRedux: state.questions.questionsData,

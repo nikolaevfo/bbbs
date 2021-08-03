@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import StoryForm from './StoryForm';
 import PostedStoryEditing from './PostedStoryEditing';
 import ProfileCalendarCard from './ProfileCalendarCard';
-// import { CurrentContext } from '../contexts/CurrentContext';
 
 import api from '../utils/api/api';
 
@@ -20,28 +19,18 @@ import {
 } from '../redux/actions';
 
 function Profile({
-  // onDeleteStoryClick,
-  // onCityChoiceClick,
-  // onProfileInit,
-  // profileNarrativesCards,
-  // onAddNarrative,
-  // onChangeNarrative,
-  // profileCalendarCards,
-  // currentCity,
-  // onSignOut,
   profileNarrativesCardsRedux,
-  setProfileNarrativesCardsRedux,
-  setProfileCalendarCardsRedux,
   profileCalendarCardsRedux,
   currentCityIdRedux,
   currentCityRedux,
-  setCityChoicePopupOpenRedux,
   isLoggedInRedux,
-  setIsStoryFormRedactOpenRedux,
   isStoryFormRedactOpenRedux,
+  setProfileNarrativesCardsRedux,
+  setProfileCalendarCardsRedux,
+  setCityChoicePopupOpenRedux,
+  setIsStoryFormRedactOpenRedux,
   setIsLoggedInRedux,
 }) {
-  // const context = React.useContext(CurrentContext);
   const isLoggedIn = isLoggedInRedux;
 
   // загрузка данных
@@ -62,8 +51,6 @@ function Profile({
       })
       .catch((err) => console.log(err));
   }, []);
-
-  // const [showStoryForm, setShowStoryForm] = useState(false);
 
   function handleCityChoiceClick() {
     setCityChoicePopupOpenRedux(true);
@@ -131,49 +118,18 @@ function Profile({
             <p className="caption personal-area__meeting-caption">Добавить встречу</p>
           </div>
         )}
-        {isStoryFormRedactOpenRedux && (
-          <StoryForm
-          // profileNarrativesCards={profileNarrativesCards}
-          // onAddNarrative={onAddNarrative}
-          // onDeleteClick={() => setIsStoryFormRedactOpenRedux(false)}
-          />
-        )}
+        {isStoryFormRedactOpenRedux && <StoryForm />}
         {profileNarrativesCardsRedux.map((item) => (
-          <PostedStoryEditing
-            key={item.id}
-            // onDeleteClick={onDeleteStoryClick}
-            card={item}
-            // onChangeNarrative={onChangeNarrative}
-          />
+          <PostedStoryEditing key={item.id} card={item} />
         ))}
       </div>
     </section>
   );
 }
 
-Profile.defaultProps = {
-  // onDeleteStoryClick: undefined,
-  // onCityChoiceClick: undefined,
-  // onProfileInit: undefined,
-  // profileNarrativesCards: [],
-  // onAddNarrative: undefined,
-  // onChangeNarrative: undefined,
-  // profileCalendarCards: [],
-  // currentCity: '',
-  // onSignOut: undefined,
-};
+Profile.defaultProps = {};
 
-Profile.propTypes = {
-  // onDeleteStoryClick: PropTypes.func,
-  // onCityChoiceClick: PropTypes.func,
-  // onProfileInit: PropTypes.func,
-  // profileNarrativesCards: PropTypes.instanceOf(Array),
-  // onAddNarrative: PropTypes.func,
-  // onChangeNarrative: PropTypes.func,
-  // profileCalendarCards: PropTypes.instanceOf(Array),
-  // currentCity: PropTypes.string,
-  // onSignOut: PropTypes.func,
-};
+Profile.propTypes = {};
 
 const mapStateToProps = (state) => ({
   profileNarrativesCardsRedux: state.profile.profileNarrativesCards,
@@ -185,7 +141,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
   setProfileNarrativesCardsRedux,
   setProfileCalendarCardsRedux,
   setCityChoicePopupOpenRedux,

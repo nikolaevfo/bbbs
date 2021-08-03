@@ -12,27 +12,9 @@ import {
   minuteEnd,
 } from '../utils/toGetDate';
 
-import {
-  setIsLoggedInRedux,
-  setPopupErrorTextRedux,
-  setIsPopupErrorOpenRedux,
-  setCalendarDataRedux,
-  setMonthListRedux,
-  setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
-  setIsPopupCalendarConfirmOpenRedux,
-  setIsPopupCalendarDoneOpenRedux,
-  setPopupCalendarWichWasOpenRedux,
-  //
-  setMainPageCalendarCardRedux,
-} from '../redux/actions';
+import { setIsPopupCalendarDoneOpenRedux } from '../redux/actions';
 
-function PopupCalendarDone({
-  // clickedCalendarCard,
-  // onCloseClick
-  clickedCalendarCardRedux,
-  setIsPopupCalendarDoneOpenRedux,
-}) {
+function PopupCalendarDone({ clickedCalendarCardRedux, setIsPopupCalendarDoneOpenRedux }) {
   const monthOfMeeting = monthTextPadeg(clickedCalendarCardRedux);
   const dayNumberOfMeeting = dayNumber(clickedCalendarCardRedux);
   const hourStartOfMeeting = hourStart(clickedCalendarCardRedux);
@@ -81,41 +63,11 @@ PopupCalendarDone.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  calendarDataRedux: state.calendar.calendarData,
-  monthListRedux: state.calendar.monthList,
-  isPopupCalendarDescriptionOpenRedux: state.calendar.isPopupCalendarDescriptionOpen,
   clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
-  isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
-  isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-  isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
-  // profileCalendarCardsRedux: state.profile.profileCalendarCards,
-  // isStoryFormRedactOpenRedux: state.profile.isStoryFormRedactOpen,
-  // currentCityRedux: state.app.currentCity,
-  currentCityIdRedux: state.app.currentCityId,
-  currentUserRedux: state.app.currentUser,
-  isLoggedInRedux: state.app.isLoggedIn,
-  //
-  mainPageCalendarCardRedux: state.mainPage.mainPageCalendarCard,
 });
 
 const mapDispatchToProps = {
-  // setDeleteStoryPopupOpenRedux,
-  // setProfileNarrativesCardsRedux,
-  // setProfileCalendarCardsRedux,
-  // setCityChoicePopupOpenRedux,
-  // setIsStoryFormRedactOpenRedux,
-  setIsLoggedInRedux,
-  setPopupErrorTextRedux,
-  setIsPopupErrorOpenRedux,
-  setCalendarDataRedux,
-  setMonthListRedux,
-  setIsPopupCalendarDescriptionOpenRedux,
-  setClickedCalendarCardRedux,
-  setIsPopupCalendarConfirmOpenRedux,
   setIsPopupCalendarDoneOpenRedux,
-  setPopupCalendarWichWasOpenRedux,
-  //
-  setMainPageCalendarCardRedux,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PopupCalendarDone);

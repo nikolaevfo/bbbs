@@ -10,11 +10,7 @@ import { useFormWithValidation } from '../hooks/useForm';
 
 import { setIsPopupWhereToGoOpenRedux } from '../redux/actions';
 
-function PopupWhereToGo({
-  // onCloseClick,
-  // onSubmit,
-  setIsPopupWhereToGoOpenRedux,
-}) {
+function PopupWhereToGo({ setIsPopupWhereToGoOpenRedux }) {
   const { values, handleChange, isValid, resetForm, setIsValid, errors } = useFormWithValidation();
   const [popupWhereToGoImage, setPopupWhereToGoImage] = React.useState([]);
 

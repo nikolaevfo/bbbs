@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
-// import { CurrentContext } from '../contexts/CurrentContext';
 
 import WhereToGoCard from './WhereToGoCard';
 import scrollToUp from '../hooks/scrollToUp';
@@ -23,7 +22,6 @@ function WhereToGo({
   setIsPopupWhereToGoOpenRedux,
   whereToGoCardsDataRedux,
   whereToGoTagsDataRedux,
-  // isPopupWhereToGoOpenRedux,
   isLoggedInRedux,
 }) {
   // перемотка в начало страницы
@@ -166,24 +164,13 @@ function WhereToGo({
   );
 }
 
-WhereToGo.defaultProps = {
-  // onWhereToGoInit: undefined,
-  // whereToGoCardsData: [],
-  // whereToGoTagsData: [],
-  // onPopupOpen: undefined,
-};
+WhereToGo.defaultProps = {};
 
-WhereToGo.propTypes = {
-  // onWhereToGoInit: PropTypes.func,
-  // whereToGoCardsData: PropTypes.instanceOf(Array),
-  // whereToGoTagsData: PropTypes.instanceOf(Array),
-  // onPopupOpen: PropTypes.func,
-};
+WhereToGo.propTypes = {};
 
 const mapStateToProps = (state) => ({
   whereToGoCardsDataRedux: state.place.whereToGoCardsData,
   whereToGoTagsDataRedux: state.place.whereToGoTagsData,
-  // isPopupWhereToGoOpenRedux: state.place.isPopupWhereToGoOpen,
   isLoggedInRedux: state.app.isLoggedIn,
 });
 
