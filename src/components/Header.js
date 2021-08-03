@@ -1,39 +1,96 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+// import PropTypes from 'prop-types';
 import { useHistory, NavLink } from 'react-router-dom';
 
-function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
+function Header() {
+  const [headerClasses, setHeaderClasses] = useState({
+    header: '',
+    menuBurger: '',
+    menuListSWrap: 'menu__lists-wrap_hidden',
+    menuListSocial: 'menu__list_hidden',
+    headerOuted: '',
+  });
+  // переключение классов мобильной версии меню
+  function handleMenuButton() {
+    if (headerClasses.header === '') {
+      setHeaderClasses({
+        ...headerClasses,
+        header: 'header_displayed',
+        menuBurger: 'menu__burger_active',
+        menuListSWrap: '',
+        menuListSocial: '',
+      });
+    } else {
+      setHeaderClasses({
+        ...headerClasses,
+        header: '',
+        menuBurger: '',
+        menuListSWrap: 'menu__lists-wrap_hidden',
+        menuListSocial: 'menu__list_hidden',
+      });
+    }
+  }
+  function handleCloseBurgerMenu() {
+    setHeaderClasses({
+      ...headerClasses,
+      header: '',
+      menuBurger: '',
+      menuListSWrap: 'menu__lists-wrap_hidden',
+      menuListSocial: 'menu__list_hidden',
+    });
+  }
+  // реализация появления меню при обратном скролле
+  const handleScroll = () => {
+    if (isBackScroll()) {
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: 'header_outed',
+      });
+    } else {
+      setHeaderClasses({
+        ...headerClasses,
+        headerOuted: '',
+      });
+    }
+  };
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const history = useHistory();
 
   function handleProfileButton() {
-    onCloseBurgerMenu();
+    handleCloseBurgerMenu();
     history.push('/profile');
   }
   return (
     <header className={`header page__section ${headerClasses.headerOuted} ${headerClasses.header}`}>
       <nav className="menu">
-        <NavLink to="/" className="menu__logo" onClick={onCloseBurgerMenu}>
+        <NavLink to="/" className="menu__logo" onClick={handleCloseBurgerMenu}>
           наставники.про
         </NavLink>
         <div className={`menu__lists-wrap ${headerClasses.menuListSWrap}`}>
           <ul className="menu__list">
             <li className="menu__list-item">
-              <NavLink to="/calendar" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/calendar" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Календарь
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/place" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/place" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Куда пойти
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/questions" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/questions" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Вопросы
               </NavLink>
             </li>
             <li className="menu__list-item menu__dropdown-item">
-              <NavLink to="/read-and-watch" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/read-and-watch" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Читать и смотреть
               </NavLink>
               <ul className="menu__dropdown-list">
@@ -41,7 +98,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                   <NavLink
                     to="/dictionary"
                     className="link menu__dropdown-link"
-                    onClick={onCloseBurgerMenu}
+                    onClick={handleCloseBurgerMenu}
                   >
                     Справочник
                   </NavLink>
@@ -50,7 +107,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                   <NavLink
                     to="/video"
                     className="link menu__dropdown-link"
-                    onClick={onCloseBurgerMenu}
+                    onClick={handleCloseBurgerMenu}
                   >
                     Видео
                   </NavLink>
@@ -59,7 +116,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                   <NavLink
                     to="/articles"
                     className="link menu__dropdown-link"
-                    onClick={onCloseBurgerMenu}
+                    onClick={handleCloseBurgerMenu}
                   >
                     Статьи
                   </NavLink>
@@ -68,7 +125,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                   <NavLink
                     to="/films"
                     className="link menu__dropdown-link"
-                    onClick={onCloseBurgerMenu}
+                    onClick={handleCloseBurgerMenu}
                   >
                     Фильмы
                   </NavLink>
@@ -77,7 +134,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                   <NavLink
                     to="/books"
                     className="link menu__dropdown-link"
-                    onClick={onCloseBurgerMenu}
+                    onClick={handleCloseBurgerMenu}
                   >
                     Книги
                   </NavLink>
@@ -85,12 +142,12 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
               </ul>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/rights" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/rights" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Права детей
               </NavLink>
             </li>
             <li className="menu__list-item">
-              <NavLink to="/stories" className="menu__link" onClick={onCloseBurgerMenu}>
+              <NavLink to="/stories" className="menu__link" onClick={handleCloseBurgerMenu}>
                 Истории
               </NavLink>
             </li>
@@ -102,7 +159,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={onCloseBurgerMenu}
+                onClick={handleCloseBurgerMenu}
               >
                 facebook
               </NavLink>
@@ -113,7 +170,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={onCloseBurgerMenu}
+                onClick={handleCloseBurgerMenu}
               >
                 vkontakte
               </NavLink>
@@ -124,7 +181,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={onCloseBurgerMenu}
+                onClick={handleCloseBurgerMenu}
               >
                 instagram
               </NavLink>
@@ -135,7 +192,7 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                 className="menu__link"
                 target="_blank"
                 rel="noreferrer"
-                onClick={onCloseBurgerMenu}
+                onClick={handleCloseBurgerMenu}
               >
                 youtube
               </NavLink>
@@ -173,14 +230,14 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                     <NavLink
                       to="/article"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       Причины подростковой агрессии
                     </NavLink>
                     <NavLink
                       to="/article"
                       className="link search__link"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       статьи
                     </NavLink>
@@ -189,11 +246,15 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                     <NavLink
                       to="/video"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       Агрессивное поведение детей-сирот
                     </NavLink>
-                    <NavLink to="/video" className="link search__link" onClick={onCloseBurgerMenu}>
+                    <NavLink
+                      to="/video"
+                      className="link search__link"
+                      onClick={handleCloseBurgerMenu}
+                    >
                       видео
                     </NavLink>
                   </li>
@@ -201,14 +262,14 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                     <NavLink
                       to="/questions"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       Что делать если ваш младший агрессивно себя ведет, решил закрыть пару?
                     </NavLink>
                     <NavLink
                       to="/questions"
                       className="link search__link"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       вопросы
                     </NavLink>
@@ -217,11 +278,15 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
                     <NavLink
                       to="/books"
                       className="search__title-link section-title section-title_clickable"
-                      onClick={onCloseBurgerMenu}
+                      onClick={handleCloseBurgerMenu}
                     >
                       Как реагировать на агрессивное поведения ребенка
                     </NavLink>
-                    <NavLink to="/books" className="link search__link" onClick={onCloseBurgerMenu}>
+                    <NavLink
+                      to="/books"
+                      className="link search__link"
+                      onClick={handleCloseBurgerMenu}
+                    >
                       книги
                     </NavLink>
                   </li>
@@ -245,27 +310,27 @@ function Header({ headerClasses, handleMenuButton, onCloseBurgerMenu }) {
 }
 
 Header.propTypes = {
-  headerClasses: PropTypes.shape({
-    header: PropTypes.string,
-    menuBurger: PropTypes.string,
-    menuListSWrap: PropTypes.string,
-    menuListSocial: PropTypes.string,
-    headerOuted: PropTypes.string,
-  }),
-  handleMenuButton: PropTypes.func,
-  onCloseBurgerMenu: PropTypes.func,
+  // headerClasses: PropTypes.shape({
+  //   header: PropTypes.string,
+  //   menuBurger: PropTypes.string,
+  //   menuListSWrap: PropTypes.string,
+  //   menuListSocial: PropTypes.string,
+  //   headerOuted: PropTypes.string,
+  // }),
+  // handleMenuButton: PropTypes.func,
+  // onCloseBurgerMenu: PropTypes.func,
 };
 
 Header.defaultProps = {
-  headerClasses: {
-    header: '',
-    menuBurger: '',
-    menuListSWrap: 'menu__lists-wrap_hidden',
-    menuListSocial: 'menu__list_hidden',
-    headerOuted: '',
-  },
-  handleMenuButton: () => {},
-  onCloseBurgerMenu: () => {},
+  // headerClasses: {
+  //   header: '',
+  //   menuBurger: '',
+  //   menuListSWrap: 'menu__lists-wrap_hidden',
+  //   menuListSocial: 'menu__list_hidden',
+  //   headerOuted: '',
+  // },
+  // handleMenuButton: () => {},
+  // onCloseBurgerMenu: () => {},
 };
 
 export default Header;

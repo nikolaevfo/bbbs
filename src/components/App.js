@@ -28,13 +28,9 @@ import {
   setIsPopupWhereToGoOpenRedux,
 } from '../redux/actions';
 
-// import api from '../utils/api/api';
-
 import isBackScroll from '../utils/isBackScroll';
-// import toGetMonthListShorter from '../utils/toGetMonthListShorter';
 
 import { CurrentContext } from '../contexts/CurrentContext';
-// import { IsLoggedInContext } from '../contexts/IsLoggedInContext';
 
 import Header from './Header';
 import Main from './Main';
@@ -76,10 +72,6 @@ function App({
   setCurrentUserRedux,
   isPopupErrorOpenRedux,
   setIsPopupErrorOpenRedux,
-  // main
-  setMainPageDataRedux,
-  setMainPageCalendarCardRedux,
-  mainPageCalendarCardRedux,
   // profile
   isDeleteStoryPopupOpenRedux,
   //
@@ -99,78 +91,63 @@ function App({
   const currentCityId = currentCityIdRedux;
 
   // header======================================================================================
-  const [headerClasses, setHeaderClasses] = useState({
-    header: '',
-    menuBurger: '',
-    menuListSWrap: 'menu__lists-wrap_hidden',
-    menuListSocial: 'menu__list_hidden',
-    headerOuted: '',
-  });
-  // переключение классов мобильной версии меню
-  function handleMenuButton() {
-    if (headerClasses.header === '') {
-      setHeaderClasses({
-        ...headerClasses,
-        header: 'header_displayed',
-        menuBurger: 'menu__burger_active',
-        menuListSWrap: '',
-        menuListSocial: '',
-      });
-    } else {
-      setHeaderClasses({
-        ...headerClasses,
-        header: '',
-        menuBurger: '',
-        menuListSWrap: 'menu__lists-wrap_hidden',
-        menuListSocial: 'menu__list_hidden',
-      });
-    }
-  }
-  function handleCloseBurgerMenu() {
-    setHeaderClasses({
-      ...headerClasses,
-      header: '',
-      menuBurger: '',
-      menuListSWrap: 'menu__lists-wrap_hidden',
-      menuListSocial: 'menu__list_hidden',
-    });
-  }
-  // реализация появления меню при обратном скролле
-  const handleScroll = () => {
-    if (isBackScroll()) {
-      setHeaderClasses({
-        ...headerClasses,
-        headerOuted: 'header_outed',
-      });
-    } else {
-      setHeaderClasses({
-        ...headerClasses,
-        headerOuted: '',
-      });
-    }
-  };
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // const [headerClasses, setHeaderClasses] = useState({
+  //   header: '',
+  //   menuBurger: '',
+  //   menuListSWrap: 'menu__lists-wrap_hidden',
+  //   menuListSocial: 'menu__list_hidden',
+  //   headerOuted: '',
+  // });
+  // // переключение классов мобильной версии меню
+  // function handleMenuButton() {
+  //   if (headerClasses.header === '') {
+  //     setHeaderClasses({
+  //       ...headerClasses,
+  //       header: 'header_displayed',
+  //       menuBurger: 'menu__burger_active',
+  //       menuListSWrap: '',
+  //       menuListSocial: '',
+  //     });
+  //   } else {
+  //     setHeaderClasses({
+  //       ...headerClasses,
+  //       header: '',
+  //       menuBurger: '',
+  //       menuListSWrap: 'menu__lists-wrap_hidden',
+  //       menuListSocial: 'menu__list_hidden',
+  //     });
+  //   }
+  // }
+  // function handleCloseBurgerMenu() {
+  //   setHeaderClasses({
+  //     ...headerClasses,
+  //     header: '',
+  //     menuBurger: '',
+  //     menuListSWrap: 'menu__lists-wrap_hidden',
+  //     menuListSocial: 'menu__list_hidden',
+  //   });
+  // }
+  // // реализация появления меню при обратном скролле
+  // const handleScroll = () => {
+  //   if (isBackScroll()) {
+  //     setHeaderClasses({
+  //       ...headerClasses,
+  //       headerOuted: 'header_outed',
+  //     });
+  //   } else {
+  //     setHeaderClasses({
+  //       ...headerClasses,
+  //       headerOuted: '',
+  //     });
+  //   }
+  // };
+  // React.useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
   // header
-
-  // popupError
-  function handlePopupErrorClose() {
-    // if (popupCalendarWichWasOpen === 'isPopupCalendarDescriptionOpen') {
-    //   setIsPopupErrorOpen(false);
-    //   setIsPopupCalendarDescriptionOpen(true);
-    // } else if (popupCalendarWichWasOpen === 'isPopupCalendarConfirmOpen') {
-    //   setIsPopupErrorOpen(false);
-    //   setIsPopupCalendarConfirmOpen(true);
-    // } else if (popupCalendarWichWasOpen === 'isPopupSigninOpen') {
-    //   setIsPopupErrorOpen(false);
-    //   setIsPopupSigninOpenRedux(true);
-    // }
-    // setIsPopupErrorOpen(false);
-  }
 
   // signin=================================================================================
   function handelAppInit() {
@@ -208,9 +185,9 @@ function App({
     <CurrentContext.Provider value={{}}>
       <div className="page">
         <Header
-          headerClasses={headerClasses}
-          handleMenuButton={handleMenuButton}
-          onCloseBurgerMenu={handleCloseBurgerMenu}
+        // headerClasses={headerClasses}
+        // handleMenuButton={handleMenuButton}
+        // onCloseBurgerMenu={handleCloseBurgerMenu}
         />
         <Switch>
           <Route exact path="/">
@@ -406,7 +383,6 @@ const mapStateToProps = (state) => {
     clickedCalendarCardRedux: state.calendar.clickedCalendarCard,
     isPopupCalendarConfirmOpenRedux: state.calendar.isPopupCalendarConfirmOpen,
     isPopupCalendarDoneOpenRedux: state.calendar.isPopupCalendarDoneOpen,
-    // isPopupErrorOpenRedux: state.calendar.isPopupErrorOpen,
     //
     isPopupWhereToGoOpenRedux: state.place.isPopupWhereToGoOpen,
   };
