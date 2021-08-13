@@ -40,13 +40,18 @@
   justify-content: center;
   align-self: auto;
   text-align: center;
-  flex: 1;
+  // flex: 1;
+  
   text-decoration: none;
+  height: 420px;
 }
 
 @include atDesktop1440 {
   .rights {
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  }
+  .rights__link{
+    height: 370px;
   }
 }
 

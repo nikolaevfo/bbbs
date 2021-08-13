@@ -38,9 +38,15 @@
   &_rigrh {
     background-image: url('../../images/svg/arrow-right.svg');
   }
+  &_rigrh-active {
+    background-image: url('../../images/svg/arrow-right-active.svg');
+  }
 
   &_left {
     background-image: url('../../images/svg/arrow-left.svg');
+  }
+  &_left-active {
+    background-image: url('../../images/svg/arrow-left-active.svg');
   }
 }
 
@@ -58,26 +64,35 @@
   }
 } */
 
+.preview__slider-wrapper{
+  overflow: hidden;
+}
+
 .preview__row {
+  position: relative;
   margin-top: 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
+  transition: .3s;
+  // max-height: 370px;
   /* display: grid;
   grid-template-columns: repeat(auto-fit, 420px);
   grid-template-rows: 1fr 1px;
   gap: 30px; */
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // overflow-x: scroll;
+  // scroll-snap-type: x mandatory;
+  // scrollbar-width: none;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 .preview__card {
-  min-width: 420px;
+  width: 420px;
   margin-left: 30px;
+  height: 100%;
+  flex-shrink: 0;
 
   &:first-of-type {
     margin-left: 0;
@@ -86,7 +101,7 @@
 
 @include atDesktop1440 {
   .preview__card {
-    min-width: 370px;
+    width: 370px;
   }
 }
 

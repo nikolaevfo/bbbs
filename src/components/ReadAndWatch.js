@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import scrollToUp from '../hooks/scrollToUp';
+import ReadAndWatchSlider from './ReadAndWatchSlider';
 
 function ReadAndWatch() {
   // перемотка в начало страницы
@@ -8,6 +9,8 @@ function ReadAndWatch() {
 
   return (
     <main className="main">
+      <ReadAndWatchSlider text="Справочник" link="/dictionary" />
+
       <section className="rights preview page__section">
         <div className="preview__title-wrap">
           <NavLink to="/dictionary" className="link">
