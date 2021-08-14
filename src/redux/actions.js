@@ -20,7 +20,6 @@ import {
   SET_IS_POPUP_WHERE_TO_GO_OPEN,
   SET_MAIN_PAGE_CALENDAR_CARD,
   SET_MAIN_PAGE_DATA,
-  // SET_POPUP_CALENDAR_ERROR_TEXT,
   SET_POPUP_CALENDAR_WICH_WAS_OPEN,
   SET_PROFILE_CALENDAR_CARDS,
   SET_PROFILE_NARRATIVES_CARDS,
@@ -29,6 +28,7 @@ import {
   SET_WHERE_TO_GO_CARDS_DATA,
   SET_WHERE_TO_GO_TAGS_DATA,
   SET_IS_STORY_FORM_REDACT_OPEN,
+  SET_READ_AND_WATCH_DATA,
 } from './types';
 
 // APP ========================================================================
@@ -171,12 +171,6 @@ export function setIsPopupCalendarDoneOpenRedux(data) {
     payload: data,
   };
 }
-// export function setPopupErrorTextRedux(data) {
-//   return {
-//     type: SET_POPUP_CALENDAR_ERROR_TEXT,
-//     payload: data,
-//   };
-// }
 export function setPopupCalendarWichWasOpenRedux(data) {
   return {
     type: SET_POPUP_CALENDAR_WICH_WAS_OPEN,
@@ -214,6 +208,14 @@ export function setQuestionsDataRedux(data) {
 export function setQuestionsTagsDataRedux(data) {
   return {
     type: SET_QUESTIONS_TAGS_DATA,
+    payload: data,
+  };
+}
+
+// read and watch =====================================================================
+export function setReadAndWatchDataRedux(data) {
+  return {
+    type: SET_READ_AND_WATCH_DATA,
     payload: data,
   };
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function ReadAndWatchSliderCardDictionary() {
+function ReadAndWatchSliderCardGuide() {
   return (
     <article className="preview__card">
       <div className="card rights__card">
@@ -18,4 +18,4 @@ function ReadAndWatchSliderCardDictionary() {
   );
 }
 
-export default ReadAndWatchSliderCardDictionary;
+export default ReadAndWatchSliderCardGuide;

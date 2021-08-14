@@ -1,17 +1,36 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 import ReadAndWatchSlider from './ReadAndWatchSlider';
 
-function ReadAndWatch() {
+import api from '../utils/api/api';
+
+import { setReadAndWatchDataRedux } from '../redux/actions';
+
+function ReadAndWatch({ setReadAndWatchDataRedux }) {
   // перемотка в начало страницы
   scrollToUp();
 
+  // загрузка данных
+  React.useEffect(() => {
+    const access = localStorage.getItem('access');
+    api
+      .getReadAndWatchData(access)
+      .then((res) => {
+        setReadAndWatchDataRedux(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <main className="main">
-      <ReadAndWatchSlider text="Справочник" link="/dictionary" />
+      <ReadAndWatchSlider link="/dictionary" />
 
-      <section className="rights preview page__section">
+      <section className="preview page__section">
         <div className="preview__title-wrap">
           <NavLink to="/dictionary" className="link">
             <h1 className="chapter-title chapter-title_clickable">Справочник</h1>
@@ -1005,4 +1024,12 @@ function ReadAndWatch() {
   );
 }
 
-export default ReadAndWatch;
+const mapStateToProps = (state) => ({
+  readAndWatchDataRedux: state.readAndWatch.readAndWatchData,
+});
+
+const mapDispatchToProps = {
+  setReadAndWatchDataRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReadAndWatch);

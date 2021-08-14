@@ -4,6 +4,7 @@ import questionsTagsList from './questionsTagsApiData';
 import whereToGoCardsList from './whereToGoApiData';
 import whereToGoTagsList from './whereToGoTagsApiData';
 import profileNarrativesCards from './profileNarrativesApiData';
+import readAndWatchData from './readAndWatchApiData';
 import MockedMainPageData from './mainPageApiData';
 
 // import loginMock from './handleMocks';
@@ -202,6 +203,27 @@ class Api {
 
     return axios
       .get(`${this.baseUrl}/profile/narratives/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  // read and watch ==========================================================
+  getReadAndWatchData(access) {
+    mock
+      .onGet(`${this.baseUrl}/read-and-watch`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access}`,
+        },
+      })
+      .reply(200, readAndWatchData);
+
+    return axios
+      .get(`${this.baseUrl}/read-and-watch`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,

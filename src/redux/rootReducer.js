@@ -6,6 +6,7 @@ import { profileReducer } from './profileReducer';
 import { calendarReducer } from './calendarReducer';
 import { placeReducer } from './placeReducer';
 import { questionsReducer } from './questionsReducer';
+import { readAndWatchReducer } from './readAndWatchReducer';
 
 export const rootReducer = combineReducers({
   app: appReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
   calendar: calendarReducer,
   place: placeReducer,
   questions: questionsReducer,
+  readAndWatch: readAndWatchReducer,
 });
