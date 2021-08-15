@@ -4,15 +4,52 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ReadAndWatchSliderCardGuide from './ReadAndWatchSliderCardGuide';
 
-function ReadAndWatchSlider({ readAndWatchDataRedux, link }) {
+function ReadAndWatchSlider({ data, link }) {
   const trackSliderRef = React.useRef();
   const [isBtnNextActive, setIsBtnNextActive] = React.useState(true);
   const [isBtnPrevActive, setIsBtnPrevActive] = React.useState(false);
-  const [position, setPosition] = React.useState(0);
 
-  // let position = 0;
+  const [imgQuantity, setImgQuantity] = React.useState(0);
+  const [sliderImgWidth, setSliderImgWidth] = React.useState(420);
+  const [imgOnPage, setImgOnPage] = React.useState(3);
+  const [position, setPosition] = React.useState(0);
+  const [sliderStep, setSliderStep] = React.useState(450);
+  const [sliderLength, setSliderLength] = React.useState([]);
+
+  const sliderGap = 30;
+
+  React.useEffect(() => {
+    if (data) {
+      setImgQuantity(data.cards.length);
+      console.log(`imgQuantity1 ${data.cards.length}`);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (document.documentElement.clientWidth < 1024) {
+      setSliderImgWidth(290);
+      setImgOnPage(1);
+    } else if (document.documentElement.clientWidth < 1440) {
+      setSliderImgWidth(370);
+      setImgOnPage(2);
+    }
+  }, [imgQuantity]);
+
+  React.useEffect(() => {
+    setSliderStep(sliderImgWidth + sliderGap);
+  }, [sliderImgWidth]);
+
+  React.useEffect(() => {
+    // console.log(`imgQuantity ${data.cards.length}`);
+    console.log(`setSliderStep ${sliderStep}`);
+    console.log(`imgOnPage ${imgOnPage}`);
+    setSliderLength(sliderStep * (imgQuantity - imgOnPage));
+  }, [sliderStep, imgQuantity]);
+
   function checkArrowIsActive(pos) {
-    if (pos === -2000) {
+    console.log(sliderLength);
+    console.log(pos);
+    if (pos === -sliderLength) {
       setIsBtnNextActive(false);
     } else {
       setIsBtnNextActive(true);
@@ -27,24 +64,22 @@ function ReadAndWatchSlider({ readAndWatchDataRedux, link }) {
 
   function handleBtnNext() {
     const currentPosition = position;
-    setPosition(currentPosition - 400);
-    trackSliderRef.current.style.transform = `translateX(${currentPosition - 400}px)`;
-    checkArrowIsActive(currentPosition - 400);
+    setPosition(currentPosition - sliderStep);
+    trackSliderRef.current.style.transform = `translateX(${currentPosition - sliderStep}px)`;
+    checkArrowIsActive(currentPosition - sliderStep);
   }
   function handleBtnPrev() {
     const currentPosition = position;
-    setPosition(currentPosition + 400);
-    trackSliderRef.current.style.transform = `translateX(${currentPosition + 400}px)`;
-    checkArrowIsActive(currentPosition + 400);
+    setPosition(currentPosition + sliderStep);
+    trackSliderRef.current.style.transform = `translateX(${currentPosition + sliderStep}px)`;
+    checkArrowIsActive(currentPosition + sliderStep);
   }
   return (
     <>
       <section className="preview page__section">
         <div className="preview__title-wrap">
           <NavLink to={link} className="link">
-            <h1 className="chapter-title chapter-title_clickable">
-              {readAndWatchDataRedux.guide && readAndWatchDataRedux.guide.title}
-            </h1>
+            <h1 className="chapter-title chapter-title_clickable">{data && data.title}</h1>
           </NavLink>
           <div className="preview__bottons">
             <button
@@ -69,10 +104,8 @@ function ReadAndWatchSlider({ readAndWatchDataRedux, link }) {
         </div>
         <div className="preview__slider-wrapper">
           <div className="preview__row" ref={trackSliderRef}>
-            {readAndWatchDataRedux.guide &&
-              readAndWatchDataRedux.guide.cards.map((item) => (
-                <ReadAndWatchSliderCardGuide data={item} key={item.id} />
-              ))}
+            {data &&
+              data.cards.map((item) => <ReadAndWatchSliderCardGuide data={item} key={item.id} />)}
           </div>
         </div>
       </section>

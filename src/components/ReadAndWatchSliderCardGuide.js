@@ -1,19 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function ReadAndWatchSliderCardGuide() {
+function ReadAndWatchSliderCardGuide({ data }) {
   return (
     <article className="preview__card">
       <div className="card rights__card">
         <a href="article.html" className="rights__link">
-          <img
-            src="../images/catalog/catalog-hulk-boys.jpg"
-            alt="Психологические особенности детей-сирот"
-            className="catalog-card__image"
-          />
+          <img src={data.img} alt={data.altImg} className="catalog-card__image" />
         </a>
       </div>
-      <h2 className="section-title catalog-card__title">Психологические особенности детей-сирот</h2>
+      <h2 className="section-title catalog-card__title">{data.title}</h2>
     </article>
   );
 }

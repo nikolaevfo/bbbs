@@ -75,6 +75,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   transition: .3s;
+  // overflow: hidden;
   // max-height: 370px;
   /* display: grid;
   grid-template-columns: repeat(auto-fit, 420px);
@@ -107,7 +108,7 @@
 
 @include atDesktop1024 {
   .preview {
-    padding-top: 50px;
+    padding-top: 60px;
   }
 
   .preview__title-wrap {

@@ -1,7 +1,8 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 import ReadAndWatchSlider from './ReadAndWatchSlider';
@@ -10,7 +11,7 @@ import api from '../utils/api/api';
 
 import { setReadAndWatchDataRedux } from '../redux/actions';
 
-function ReadAndWatch({ setReadAndWatchDataRedux }) {
+function ReadAndWatch({ readAndWatchDataRedux, setReadAndWatchDataRedux }) {
   // перемотка в начало страницы
   scrollToUp();
 
@@ -26,10 +27,12 @@ function ReadAndWatch({ setReadAndWatchDataRedux }) {
       .catch((err) => console.log(err));
   }, []);
 
+  const guideData = readAndWatchDataRedux.guide;
+
   return (
     <main className="main">
-      <ReadAndWatchSlider link="/dictionary" />
-
+      <ReadAndWatchSlider data={guideData} link="/dictionary" />
+      {/*
       <section className="preview page__section">
         <div className="preview__title-wrap">
           <NavLink to="/dictionary" className="link">
@@ -1019,7 +1022,7 @@ function ReadAndWatch({ setReadAndWatchDataRedux }) {
             </div>
           </article>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
