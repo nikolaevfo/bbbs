@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ReadAndWatchSliderCardGuide from './ReadAndWatchSliderCardGuide';
 import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
+import ReadAndWatchSliderCardArticles from './ReadAndWatchSliderCardArticles';
 
 function ReadAndWatchSlider({ data, link }) {
   const trackSliderRef = React.useRef();
@@ -84,9 +85,9 @@ function ReadAndWatchSlider({ data, link }) {
     if (link === '/video') {
       return <ReadAndWatchSliderCardVideo data={item} key={item.id} />;
     }
-    // if (link === '/articles') {
-    //   return <ReadAndWatchSliderCardVideo />;
-    // }
+    if (link === '/articles') {
+      return <ReadAndWatchSliderCardArticles data={item} key={item.id} />;
+    }
   }
   return (
     <>

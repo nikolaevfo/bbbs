@@ -29,11 +29,13 @@ function ReadAndWatch({ readAndWatchDataRedux, setReadAndWatchDataRedux }) {
 
   const guideData = readAndWatchDataRedux.guide;
   const videoData = readAndWatchDataRedux.video;
+  const articlesData = readAndWatchDataRedux.articles;
 
   return (
     <main className="main">
       <ReadAndWatchSlider data={guideData} link="/dictionary" />
       <ReadAndWatchSlider data={videoData} link="/video" />
+      <ReadAndWatchSlider data={articlesData} link="/articles" />
       {/*
       <section className="preview page__section">
         <div className="preview__title-wrap">
