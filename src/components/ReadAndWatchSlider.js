@@ -28,10 +28,10 @@ function ReadAndWatchSlider({ data, link }) {
   }, [data]);
 
   React.useEffect(() => {
-    if (document.documentElement.clientWidth < 1024) {
+    if (document.documentElement.clientWidth < 1100) {
       setSliderImgWidth(290);
       setImgOnPage(1);
-    } else if (document.documentElement.clientWidth < 1440) {
+    } else if (document.documentElement.clientWidth < 1450) {
       setSliderImgWidth(370);
       setImgOnPage(2);
     }

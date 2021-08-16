@@ -131,13 +131,13 @@
   }
 
   .preview__card {
-    min-width: 290px;
+    width: 290px;
   }
 }
 
 @include atTablet {
   .preview {
-    padding-top: 30px;
+    padding-top: 60px;
   }
 
   .preview__title-wrap {
