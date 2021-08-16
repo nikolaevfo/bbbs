@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ReadAndWatchSliderCardGuide from './ReadAndWatchSliderCardGuide';
+import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
 
 function ReadAndWatchSlider({ data, link }) {
   const trackSliderRef = React.useRef();
@@ -74,6 +76,18 @@ function ReadAndWatchSlider({ data, link }) {
     trackSliderRef.current.style.transform = `translateX(${currentPosition + sliderStep}px)`;
     checkArrowIsActive(currentPosition + sliderStep);
   }
+
+  function Greeting({ item }) {
+    if (link === '/dictionary') {
+      return <ReadAndWatchSliderCardGuide data={item} key={item.id} />;
+    }
+    if (link === '/video') {
+      return <ReadAndWatchSliderCardVideo data={item} key={item.id} />;
+    }
+    // if (link === '/articles') {
+    //   return <ReadAndWatchSliderCardVideo />;
+    // }
+  }
   return (
     <>
       <section className="preview page__section">
@@ -104,8 +118,7 @@ function ReadAndWatchSlider({ data, link }) {
         </div>
         <div className="preview__slider-wrapper">
           <div className="preview__row" ref={trackSliderRef}>
-            {data &&
-              data.cards.map((item) => <ReadAndWatchSliderCardGuide data={item} key={item.id} />)}
+            {data && data.cards.map((item) => <Greeting item={item} />)}
           </div>
         </div>
       </section>

@@ -40,6 +40,59 @@ const readAndWatchData = {
       },
     ],
   },
+  video: {
+    title: 'Видео',
+    cards: [
+      {
+        id: 1,
+        img: '../images/video/video-ex-1.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Меняется смысл – меняется жизнь',
+        caption: 'Прямой эфир с актрисой театра и кино Эмилией Спивак',
+      },
+      {
+        id: 2,
+        img: '../images/video/video-ex-2.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Что в силах волонтера-наставника?',
+        caption: 'Иван Рустаев, волонтер-наставник',
+      },
+      {
+        id: 3,
+        img: '../images/video/video-ex-3.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Творчество, наставничество, дети',
+        caption: 'Виктория Ямина, Виктория Ямина, волонтеры',
+      },
+      {
+        id: 4,
+        img: '../images/video/video-ex-4.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Дружба – меняет мир',
+        caption: 'Прямой эфир с актрисой театра и кино Эмилией Спивак',
+      },
+      {
+        id: 5,
+        img: '../images/video/video-ex-1.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Меняется смысл – меняется жизнь',
+        caption: 'Прямой эфир с актрисой театра и кино Эмилией Спивак',
+      },
+      {
+        id: 6,
+        img: '../images/video/video-ex-2.png',
+        altImg: 'Превью видео',
+        duration: '4:37',
+        title: 'Меняется смысл – меняется жизнь',
+        caption: 'Иван Рустаев, волонтер-наставник',
+      },
+    ],
+  },
 };
 
 export default readAndWatchData;
