@@ -32,6 +32,15 @@
     }
   }
 
+  &_type_books{
+    &:nth-child(2n+1) .card .book_color{
+      background-color: $pink;
+    }
+    &:nth-child(2n+2) .card .book_color{
+      background-color: $lightBlue;
+    }
+  }
+
   &_type_identical {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 520px;

@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 import ReadAndWatchSliderCardGuide from './ReadAndWatchSliderCardGuide';
 import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
 import ReadAndWatchSliderCardArticles from './ReadAndWatchSliderCardArticles';
+import ReadAndWatchSliderCardFilms from './ReadAndWatchSliderCardFilms';
+import ReadAndWatchSliderCardBooks from './ReadAndWatchSliderCardBooks';
 
 function ReadAndWatchSlider({ data, link }) {
   const trackSliderRef = React.useRef();
@@ -87,6 +89,12 @@ function ReadAndWatchSlider({ data, link }) {
     }
     if (link === '/articles') {
       return <ReadAndWatchSliderCardArticles data={item} key={item.id} />;
+    }
+    if (link === '/films') {
+      return <ReadAndWatchSliderCardFilms data={item} key={item.id} />;
+    }
+    if (link === '/books') {
+      return <ReadAndWatchSliderCardBooks data={item} key={item.id} />;
     }
   }
   return (
