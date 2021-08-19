@@ -6,6 +6,7 @@ import whereToGoTagsList from './whereToGoTagsApiData';
 import profileNarrativesCards from './profileNarrativesApiData';
 import readAndWatchData from './readAndWatchApiData';
 import MockedMainPageData from './mainPageApiData';
+import dictionaryData from './dictionaryData';
 
 // import loginMock from './handleMocks';
 
@@ -227,6 +228,27 @@ class Api {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access}`,
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  // dictionary ==========================================================
+  getDictionaryData() {
+    mock
+      .onGet(`${this.baseUrl}/dictionary`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
+        },
+      })
+      .reply(200, dictionaryData);
+
+    return axios
+      .get(`${this.baseUrl}/dictionary`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
         },
       })
       .then(this.checkResponse);

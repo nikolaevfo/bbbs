@@ -98,6 +98,20 @@
   &:first-of-type {
     margin-left: 0;
   }
+
+  &_type_dictionary{
+    &:nth-child(3n+1) .card{
+      border-radius: 3px;
+    }
+
+    &:nth-child(3n+2) .card{
+      border-radius: 100%;
+    }
+
+    &:nth-child(3n+3) .card{
+      border-radius: 300px 300px 3px 3px;
+    }
+  }
 }
 
 @include atDesktop1440 {

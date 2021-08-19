@@ -93,3 +93,6 @@ export const SET_QUESTIONS_TAGS_DATA = 'QUESTIONS/SET_QUESTIONS_TAGS_DATA';
 
 // read and watch ==================================================================================
 export const SET_READ_AND_WATCH_DATA = 'READ_AND_WATCH/SET_READ_AND_WATCH_DATA';
+
+// DICTIONARY ==================================================================================
+export const SET_DICTIONARY_DATA = 'DICTIONARY/SET_DICTIONARY_DATA';

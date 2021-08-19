@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-function ReadAndWatchSliderCardGuide({ data }) {
+function ReadAndWatchSliderCardDictionary({ data }) {
   return (
-    <article className="preview__card">
+    <article className="preview__card preview__card_type_dictionary">
       <div className="card rights__card">
         <a href="article.html" className="rights__link">
           <img src={data.img} alt={data.altImg} className="catalog-card__image" />
@@ -14,4 +14,4 @@ function ReadAndWatchSliderCardGuide({ data }) {
   );
 }
 
-export default ReadAndWatchSliderCardGuide;
+export default ReadAndWatchSliderCardDictionary;

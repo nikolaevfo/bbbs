@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import ReadAndWatchSliderCardGuide from './ReadAndWatchSliderCardGuide';
+import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
 import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
 import ReadAndWatchSliderCardArticles from './ReadAndWatchSliderCardArticles';
 import ReadAndWatchSliderCardFilms from './ReadAndWatchSliderCardFilms';
@@ -82,7 +82,7 @@ function ReadAndWatchSlider({ data, link }) {
 
   function Greeting({ item }) {
     if (link === '/dictionary') {
-      return <ReadAndWatchSliderCardGuide data={item} key={item.id} />;
+      return <ReadAndWatchSliderCardDictionary data={item} key={item.id} />;
     }
     if (link === '/video') {
       return <ReadAndWatchSliderCardVideo data={item} key={item.id} />;

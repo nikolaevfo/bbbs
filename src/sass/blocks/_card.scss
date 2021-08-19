@@ -62,30 +62,30 @@
     padding-bottom: 30px;
   }
 
-  &_form_square {
-    border-radius: 3px;
-    &::before {
-      content: '';
-      padding-bottom: 100%;
-    }
-  }
+  // &_form_square {
+  //   border-radius: 3px;
+  //   &::before {
+  //     content: '';
+  //     padding-bottom: 100%;
+  //   }
+  // }
 
   // разделение по формам
-  &_form_circle {
-    border-radius: 100%;
-    &::before {
-      content: '';
-      padding-bottom: 100%;
-    }
-  }
+  // &_form_circle {
+  //   border-radius: 100%;
+  //   &::before {
+  //     content: '';
+  //     padding-bottom: 100%;
+  //   }
+  // }
 
-  &_form_arch {
-    border-radius: 300px 300px 3px 3px;
-    &::before {
-      content: '';
-      padding-bottom: 100%;
-    }
-  }
+  // &_form_arch {
+  //   border-radius: 300px 300px 3px 3px;
+  //   &::before {
+  //     content: '';
+  //     padding-bottom: 100%;
+  //   }
+  // }
 }
 
 // обертки

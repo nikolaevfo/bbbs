@@ -29,6 +29,7 @@ import {
   SET_WHERE_TO_GO_TAGS_DATA,
   SET_IS_STORY_FORM_REDACT_OPEN,
   SET_READ_AND_WATCH_DATA,
+  SET_DICTIONARY_DATA,
 } from './types';
 
 // APP ========================================================================
@@ -216,6 +217,14 @@ export function setQuestionsTagsDataRedux(data) {
 export function setReadAndWatchDataRedux(data) {
   return {
     type: SET_READ_AND_WATCH_DATA,
+    payload: data,
+  };
+}
+
+// DICTIONARY =====================================================================
+export function setDictionaryDataRedux(data) {
+  return {
+    type: SET_DICTIONARY_DATA,
     payload: data,
   };
 }

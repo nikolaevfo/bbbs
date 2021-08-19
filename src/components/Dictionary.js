@@ -1,9 +1,32 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 
-function Dictionary() {
+import api from '../utils/api/api';
+
+import { setDictionaryDataRedux } from '../redux/actions';
+import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
+
+function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
   // перемотка в начало страницы
   scrollToUp();
+
+  // загрузка данных
+  React.useEffect(() => {
+    // const access = localStorage.getItem('access');
+    api
+      .getDictionaryData()
+      .then((res) => {
+        setDictionaryDataRedux(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(dictionaryDataRedux);
 
   return (
     <main className="main">
@@ -17,11 +40,15 @@ function Dictionary() {
       </section>
 
       <section className="rights page__section">
+        {dictionaryDataRedux.map((item) => (
+          <ReadAndWatchSliderCardDictionary data={item} key={item.id} />
+        ))}
+
         <div className="rights__line rights__line_stage_first" />
         <div className="rights__line rights__line_stage_second" />
         <div className="rights__line rights__line_stage_third" />
 
-        <div className="catalog-card card-pagination card-pagination_type_shapes">
+        {/* <div className="catalog-card card-pagination card-pagination_type_shapes">
           <div className="card card_form_square rights__card">
             <a href="./article.html" className="rights__link">
               <img
@@ -237,7 +264,7 @@ function Dictionary() {
             </a>
           </div>
           <h2 className="section-title catalog-card__title">Социальная адаптация</h2>
-        </div>
+        </div> */}
       </section>
 
       <section className="pagination page__section">
@@ -286,4 +313,12 @@ function Dictionary() {
   );
 }
 
-export default Dictionary;
+const mapStateToProps = (state) => ({
+  dictionaryDataRedux: state.dictionary.dictionaryData,
+});
+
+const mapDispatchToProps = {
+  setDictionaryDataRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dictionary);
