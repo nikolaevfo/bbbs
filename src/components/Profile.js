@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-console */
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';

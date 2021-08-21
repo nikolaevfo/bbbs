@@ -1,5 +1,6 @@
 /* eslint-disable import/named */
 /* eslint-disable no-shadow */
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React from 'react';
 // import PropTypes from 'prop-types';

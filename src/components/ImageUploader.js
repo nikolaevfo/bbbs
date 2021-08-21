@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 /* eslint import/no-unresolved: [2, { ignore: ['react-images-uploading'] }] */

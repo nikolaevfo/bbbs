@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */

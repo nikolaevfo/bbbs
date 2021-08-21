@@ -1,8 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 
@@ -10,6 +12,24 @@ import api from '../utils/api/api';
 
 import { setDictionaryDataRedux } from '../redux/actions';
 import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
+
+function CommentList({ data }) {
+  // const commentNodes = data.map((data, index) => (
+  //   <ReadAndWatchSliderCardDictionary data={data} key={index} />
+  // ));
+  // console.log(commentNodes);
+
+  return (
+    <div id="project-comments" className="commentList rights page__section">
+      {data.map((data, index) => (
+        <ReadAndWatchSliderCardDictionary data={data} key={index} />
+      ))}
+      <div className="rights__line rights__line_stage_first" />
+      <div className="rights__line rights__line_stage_second" />
+      <div className="rights__line rights__line_stage_third" />
+    </div>
+  );
+}
 
 function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
   // перемотка в начало страницы
@@ -26,7 +46,17 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(dictionaryDataRedux);
+  const [data, setData] = React.useState([]);
+  const [offset, setOffset] = React.useState(0);
+  const [perPage, setPerPage] = React.useState(10);
+  const [pageCount, setPageCount] = React.useState(0);
+  function handlePageClick() {
+    //  let selected = data.selected;
+    //  let offset = Math.ceil(selected * this.props.perPage);
+    //  this.setState({ offset: offset }, () => {
+    //    this.loadCommentsFromServer();
+    //  });
+  }
 
   return (
     <main className="main">
@@ -39,16 +69,32 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
         </p>
       </section>
 
-      <section className="rights page__section">
+      <div className="commentBox">
+        <CommentList data={dictionaryDataRedux} />
+        <ReactPaginate
+          previousLabel="previous"
+          nextLabel="next"
+          breakLabel="..."
+          breakClassName="break-me"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName="pagination"
+          activeClassName="active"
+        />
+      </div>
+
+      {/* <section className="rights page__section">
         {dictionaryDataRedux.map((item) => (
           <ReadAndWatchSliderCardDictionary data={item} key={item.id} />
-        ))}
+        ))} 
 
         <div className="rights__line rights__line_stage_first" />
         <div className="rights__line rights__line_stage_second" />
         <div className="rights__line rights__line_stage_third" />
 
-        {/* <div className="catalog-card card-pagination card-pagination_type_shapes">
+        <div className="catalog-card card-pagination card-pagination_type_shapes">
           <div className="card card_form_square rights__card">
             <a href="./article.html" className="rights__link">
               <img
@@ -264,8 +310,8 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
             </a>
           </div>
           <h2 className="section-title catalog-card__title">Социальная адаптация</h2>
-        </div> */}
-      </section>
+        </div>
+      </section> */}
 
       <section className="pagination page__section">
         <nav className="pagination__nav" aria-label="Навигация по страницам">

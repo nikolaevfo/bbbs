@@ -90,7 +90,7 @@
 }
 
 .preview__card {
-  width: 420px;
+  max-width: 420px;
   margin-left: 30px;
   height: 100%;
   flex-shrink: 0;
@@ -116,7 +116,7 @@
 
 @include atDesktop1440 {
   .preview__card {
-    width: 370px;
+    max-width: 370px;
   }
 }
 
@@ -145,7 +145,7 @@
   }
 
   .preview__card {
-    width: 290px;
+    max-width: 290px;
   }
 }
 
