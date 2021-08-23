@@ -47,19 +47,19 @@
   visibility: visible;
 
   &_direct_left{
-    background: url('../../images/svg/arrow-left.svg');
+    background: url('../../images/svg/arrow-left.svg') 0 0/cover no-repeat;
   }
 
   &_direct_left:hover{
-    background: url('../../images/svg/arrow-left-active.svg');
+    background: url('../../images/svg/arrow-left-active.svg') 0 0/cover no-repeat;
   }
 
   &_direct_right{
-    background: url('../../images/svg/arrow-right-grey.svg');
+    background: url('../../images/svg/arrow-right-grey.svg') 0 0/cover no-repeat;
   }
 
   &_direct_right:hover{
-    background: url('../../images/svg/arrow-right-active.svg');
+    background: url('../../images/svg/arrow-right-active.svg') 0 0/cover no-repeat;
   }
 
   &_disabled{

@@ -40,12 +40,25 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
       })
       .catch((err) => console.log(err));
   }, []);
-
   const [perPage, setPerPage] = React.useState(16);
   const [pageCount, setPageCount] = React.useState(1);
   const [paginateData, setPaginateData] = React.useState([]);
-  const [selectedPage, setSelectedPage] = React.useState(1);
+  // const [selectedPage, setSelectedPage] = React.useState(1);
   const [gridClasses, setGridClasses] = React.useState('rights');
+  const [gridColumns, setGridColumns] = React.useState(4);
+
+  React.useEffect(() => {
+    if (window.innerWidth <= 767) {
+      setPerPage(4);
+      setGridColumns(1);
+    } else if (window.innerWidth <= 1199) {
+      setPerPage(4);
+      setGridColumns(2);
+    } else if (window.innerWidth <= 1639) {
+      setPerPage(12);
+      setGridColumns(3);
+    }
+  }, []);
 
   React.useEffect(() => {
     setPaginateData(dictionaryDataRedux.slice(0, perPage));
@@ -54,16 +67,16 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
 
   function handlePageClick(data) {
     const { selected } = data;
-    setSelectedPage(data.selected);
+    // setSelectedPage(data.selected);
     const offset = selected * perPage;
     setPaginateData(dictionaryDataRedux.slice(offset, offset + perPage));
     // window.scrollTo(0, 0);
     if (Number(data.selected + 1) === pageCount) {
-      if (dictionaryDataRedux.length % perPage <= 4) {
+      if (dictionaryDataRedux.length % perPage <= gridColumns) {
         setGridClasses('rights rights_rows_one');
-      } else if (dictionaryDataRedux.length % perPage <= 8) {
+      } else if (dictionaryDataRedux.length % perPage <= gridColumns * 2) {
         setGridClasses('rights rights_rows_two');
-      } else if (dictionaryDataRedux.length % perPage <= 12) {
+      } else if (dictionaryDataRedux.length % perPage <= gridColumns * 3) {
         setGridClasses('rights rights_rows_three');
       } else {
         setGridClasses('rights');
@@ -92,7 +105,7 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
               previousLabel=""
               nextLabel=""
               breakLabel="..."
-              breakClassName="break-me"
+              breakClassName="pagination__list-item"
               pageCount={pageCount}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}

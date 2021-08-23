@@ -1,6 +1,7 @@
 .rights {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  // grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-template-rows: 1fr [first-line] 1px 1fr [second-line] 1px 1fr [third-line] 1px 1fr;
   gap: 80px 30px;
 
@@ -16,6 +17,8 @@
 }
 
 .rights__card {
+  // max-width: 420px;
+  width: 100%;
   flex-direction: row;
   align-items: unset;
   padding: 0;
@@ -45,6 +48,7 @@
 }
 
 .rights__link {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,13 +60,23 @@
   height: 420px;
 }
 
-@include atDesktop1440 {
+@include atDesktop1639 {
   .rights {
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    // grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   }
   .rights__link{
     height: 370px;
   }
+  .rights__card {
+    max-width: 370px;
+  }
+}
+
+@include atDesktop1440 {
+  // .rights__card {
+  //   max-width: 370px;
+  // }
 }
 
 @include atDesktop1199 {
