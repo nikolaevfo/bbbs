@@ -13,14 +13,9 @@ import api from '../utils/api/api';
 import { setDictionaryDataRedux } from '../redux/actions';
 import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
 
-function CommentList({ data }) {
-  // const commentNodes = data.map((data, index) => (
-  //   <ReadAndWatchSliderCardDictionary data={data} key={index} />
-  // ));
-  // console.log(commentNodes);
-
+function CommentList({ data, classOfGrid }) {
   return (
-    <div id="project-comments" className="commentList rights page__section">
+    <div id="project-comments" className={`commentList ${classOfGrid} page__section`}>
       {data.map((data, index) => (
         <ReadAndWatchSliderCardDictionary data={data} key={index} />
       ))}
@@ -46,16 +41,36 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
       .catch((err) => console.log(err));
   }, []);
 
-  const [data, setData] = React.useState([]);
-  const [offset, setOffset] = React.useState(0);
-  const [perPage, setPerPage] = React.useState(10);
-  const [pageCount, setPageCount] = React.useState(0);
-  function handlePageClick() {
-    //  let selected = data.selected;
-    //  let offset = Math.ceil(selected * this.props.perPage);
-    //  this.setState({ offset: offset }, () => {
-    //    this.loadCommentsFromServer();
-    //  });
+  const [perPage, setPerPage] = React.useState(16);
+  const [pageCount, setPageCount] = React.useState(1);
+  const [paginateData, setPaginateData] = React.useState([]);
+  const [selectedPage, setSelectedPage] = React.useState(1);
+  const [gridClasses, setGridClasses] = React.useState('rights');
+
+  React.useEffect(() => {
+    setPaginateData(dictionaryDataRedux.slice(0, perPage));
+    setPageCount(Math.ceil(dictionaryDataRedux.length / perPage));
+  }, [dictionaryDataRedux]);
+
+  function handlePageClick(data) {
+    const { selected } = data;
+    setSelectedPage(data.selected);
+    const offset = selected * perPage;
+    setPaginateData(dictionaryDataRedux.slice(offset, offset + perPage));
+    // window.scrollTo(0, 0);
+    if (Number(data.selected + 1) === pageCount) {
+      if (dictionaryDataRedux.length % perPage <= 4) {
+        setGridClasses('rights rights_rows_one');
+      } else if (dictionaryDataRedux.length % perPage <= 8) {
+        setGridClasses('rights rights_rows_two');
+      } else if (dictionaryDataRedux.length % perPage <= 12) {
+        setGridClasses('rights rights_rows_three');
+      } else {
+        setGridClasses('rights');
+      }
+    } else {
+      setGridClasses('rights');
+    }
   }
 
   return (
@@ -70,25 +85,34 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
       </section>
 
       <div className="commentBox">
-        <CommentList data={dictionaryDataRedux} />
-        <ReactPaginate
-          previousLabel="previous"
-          nextLabel="next"
-          breakLabel="..."
-          breakClassName="break-me"
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName="pagination"
-          activeClassName="active"
-        />
+        <CommentList data={paginateData} classOfGrid={gridClasses} />
+        <section className="pagination page__section">
+          <nav className="pagination__nav" aria-label="Навигация по страницам">
+            <ReactPaginate
+              previousLabel=""
+              nextLabel=""
+              breakLabel="..."
+              breakClassName="break-me"
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName="pagination__list"
+              activeClassName="pagination__link_active"
+              pageClassName="pagination__list-item section-title"
+              pageLinkClassName="pagination__link"
+              previousLinkClassName="pagination__arrow pagination__arrow_direct_left"
+              nextLinkClassName="pagination__arrow pagination__arrow_direct_right"
+              disabledClassName="pagination__arrow pagination__arrow_disabled"
+            />
+          </nav>
+        </section>
       </div>
 
       {/* <section className="rights page__section">
         {dictionaryDataRedux.map((item) => (
           <ReadAndWatchSliderCardDictionary data={item} key={item.id} />
-        ))} 
+        ))}
 
         <div className="rights__line rights__line_stage_first" />
         <div className="rights__line rights__line_stage_second" />
@@ -313,7 +337,7 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
         </div>
       </section> */}
 
-      <section className="pagination page__section">
+      {/* <section className="pagination page__section">
         <nav className="pagination__nav" aria-label="Навигация по страницам">
           <ul className="pagination__list">
             <li className="pagination__list-item section-title">
@@ -354,7 +378,7 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
             className="pagination__arrow"
           />
         </nav>
-      </section>
+      </section> */}
     </main>
   );
 }

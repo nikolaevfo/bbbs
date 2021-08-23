@@ -13,6 +13,7 @@
 }
 
 .pagination__list-item {
+  cursor: pointer;
   margin-right: 30px;
 
   &:last-of-type {
@@ -36,10 +37,35 @@
 }
 
 .pagination__arrow {
+  display: inline-block;
   width: 30px;
   height: 30px;
-  margin-left: 55px;
+  margin: 0 35px;
   cursor: pointer;
+  transition: 0.3s;
+  opacity: 1;
+  visibility: visible;
+
+  &_direct_left{
+    background: url('../../images/svg/arrow-left.svg');
+  }
+
+  &_direct_left:hover{
+    background: url('../../images/svg/arrow-left-active.svg');
+  }
+
+  &_direct_right{
+    background: url('../../images/svg/arrow-right-grey.svg');
+  }
+
+  &_direct_right:hover{
+    background: url('../../images/svg/arrow-right-active.svg');
+  }
+
+  &_disabled{
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @include atDesktop1024 {
