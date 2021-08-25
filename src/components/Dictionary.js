@@ -46,15 +46,19 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
   // const [selectedPage, setSelectedPage] = React.useState(1);
   const [gridClasses, setGridClasses] = React.useState('rights');
   const [gridColumns, setGridColumns] = React.useState(4);
+  const [marginPagesDisplayed, setMarginPagesDisplayed] = React.useState(2);
+  const [pageRangeDisplayed, setPageRangeDisplayed] = React.useState(5);
 
   React.useEffect(() => {
-    if (window.innerWidth <= 767) {
+    if (window.innerWidth <= 1100) {
       setPerPage(4);
       setGridColumns(1);
-    } else if (window.innerWidth <= 1199) {
+      setMarginPagesDisplayed(1);
+      setPageRangeDisplayed(3);
+    } else if (window.innerWidth <= 1450) {
       setPerPage(4);
       setGridColumns(2);
-    } else if (window.innerWidth <= 1639) {
+    } else if (window.innerWidth <= 1919) {
       setPerPage(12);
       setGridColumns(3);
     }
@@ -107,8 +111,8 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
               breakLabel="..."
               breakClassName="pagination__list-item"
               pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
+              marginPagesDisplayed={marginPagesDisplayed}
+              pageRangeDisplayed={pageRangeDisplayed}
               onPageChange={handlePageClick}
               containerClassName="pagination__list"
               activeClassName="pagination__link_active"

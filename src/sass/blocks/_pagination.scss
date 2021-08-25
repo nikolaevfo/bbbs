@@ -76,9 +76,9 @@
   .pagination__list-item {
     margin-right: 20px;
 
-    &:nth-child(5) {
-      display: none;
-    }
+    // &:nth-child(5) {
+    //   display: none;
+    // }
   }
 
   .pagination__link {
@@ -101,11 +101,16 @@
     padding-top: 30px;
   }
 
-  .pagination__nav {
-    justify-content: flex-end;
+  // .pagination__nav {
+  //   justify-content: center;
+  // }
+
+  .pagination__list-item {
+    margin-right: 10px;
   }
 
-  .pagination__arrow {
-    margin-left: 20px;
+  .pagination__arrow{
+    margin: 0 10px;
   }
+
 }
