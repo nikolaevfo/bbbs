@@ -4,7 +4,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 
@@ -12,19 +11,20 @@ import api from '../utils/api/api';
 
 import { setDictionaryDataRedux } from '../redux/actions';
 import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
+import Pagination from './Pagination';
 
-function CommentList({ data, classOfGrid }) {
-  return (
-    <div id="project-comments" className={`commentList ${classOfGrid} page__section`}>
-      {data.map((data, index) => (
-        <ReadAndWatchSliderCardDictionary data={data} key={index} />
-      ))}
-      <div className="rights__line rights__line_stage_first" />
-      <div className="rights__line rights__line_stage_second" />
-      <div className="rights__line rights__line_stage_third" />
-    </div>
-  );
-}
+// function CommentList({ data, classOfGrid }) {
+//   return (
+//     <div id="project-comments" className={`commentList ${classOfGrid} page__section`}>
+//       {data.map((data, index) => (
+//         <ReadAndWatchSliderCardDictionary data={data} key={index} />
+//       ))}
+//       <div className="rights__line rights__line_stage_first" />
+//       <div className="rights__line rights__line_stage_second" />
+//       <div className="rights__line rights__line_stage_third" />
+//     </div>
+//   );
+// }
 
 function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
   // перемотка в начало страницы
@@ -40,55 +40,56 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
       })
       .catch((err) => console.log(err));
   }, []);
-  const [perPage, setPerPage] = React.useState(16);
-  const [pageCount, setPageCount] = React.useState(1);
-  const [paginateData, setPaginateData] = React.useState([]);
-  // const [selectedPage, setSelectedPage] = React.useState(1);
-  const [gridClasses, setGridClasses] = React.useState('rights');
-  const [gridColumns, setGridColumns] = React.useState(4);
-  const [marginPagesDisplayed, setMarginPagesDisplayed] = React.useState(2);
-  const [pageRangeDisplayed, setPageRangeDisplayed] = React.useState(5);
 
-  React.useEffect(() => {
-    if (window.innerWidth <= 1100) {
-      setPerPage(4);
-      setGridColumns(1);
-      setMarginPagesDisplayed(1);
-      setPageRangeDisplayed(3);
-    } else if (window.innerWidth <= 1450) {
-      setPerPage(4);
-      setGridColumns(2);
-    } else if (window.innerWidth <= 1919) {
-      setPerPage(12);
-      setGridColumns(3);
-    }
-  }, []);
+  // const [perPage, setPerPage] = React.useState(16);
+  // const [pageCount, setPageCount] = React.useState(1);
+  // const [paginateData, setPaginateData] = React.useState([]);
+  // // const [selectedPage, setSelectedPage] = React.useState(1);
+  // const [gridClasses, setGridClasses] = React.useState('rights');
+  // const [gridColumns, setGridColumns] = React.useState(4);
+  // const [marginPagesDisplayed, setMarginPagesDisplayed] = React.useState(2);
+  // const [pageRangeDisplayed, setPageRangeDisplayed] = React.useState(5);
 
-  React.useEffect(() => {
-    setPaginateData(dictionaryDataRedux.slice(0, perPage));
-    setPageCount(Math.ceil(dictionaryDataRedux.length / perPage));
-  }, [dictionaryDataRedux]);
+  // React.useEffect(() => {
+  //   if (window.innerWidth <= 1100) {
+  //     setPerPage(4);
+  //     setGridColumns(1);
+  //     setMarginPagesDisplayed(1);
+  //     setPageRangeDisplayed(3);
+  //   } else if (window.innerWidth <= 1450) {
+  //     setPerPage(4);
+  //     setGridColumns(2);
+  //   } else if (window.innerWidth <= 1919) {
+  //     setPerPage(12);
+  //     setGridColumns(3);
+  //   }
+  // }, []);
 
-  function handlePageClick(data) {
-    const { selected } = data;
-    // setSelectedPage(data.selected);
-    const offset = selected * perPage;
-    setPaginateData(dictionaryDataRedux.slice(offset, offset + perPage));
-    // window.scrollTo(0, 0);
-    if (Number(data.selected + 1) === pageCount) {
-      if (dictionaryDataRedux.length % perPage <= gridColumns) {
-        setGridClasses('rights rights_rows_one');
-      } else if (dictionaryDataRedux.length % perPage <= gridColumns * 2) {
-        setGridClasses('rights rights_rows_two');
-      } else if (dictionaryDataRedux.length % perPage <= gridColumns * 3) {
-        setGridClasses('rights rights_rows_three');
-      } else {
-        setGridClasses('rights');
-      }
-    } else {
-      setGridClasses('rights');
-    }
-  }
+  // React.useEffect(() => {
+  //   setPaginateData(dictionaryDataRedux.slice(0, perPage));
+  //   setPageCount(Math.ceil(dictionaryDataRedux.length / perPage));
+  // }, [dictionaryDataRedux]);
+
+  // function handlePageClick(data) {
+  //   const { selected } = data;
+  //   // setSelectedPage(data.selected);
+  //   const offset = selected * perPage;
+  //   setPaginateData(dictionaryDataRedux.slice(offset, offset + perPage));
+  //   // window.scrollTo(0, 0);
+  //   if (Number(data.selected + 1) === pageCount) {
+  //     if (dictionaryDataRedux.length % perPage <= gridColumns) {
+  //       setGridClasses('rights rights_rows_one');
+  //     } else if (dictionaryDataRedux.length % perPage <= gridColumns * 2) {
+  //       setGridClasses('rights rights_rows_two');
+  //     } else if (dictionaryDataRedux.length % perPage <= gridColumns * 3) {
+  //       setGridClasses('rights rights_rows_three');
+  //     } else {
+  //       setGridClasses('rights');
+  //     }
+  //   } else {
+  //     setGridClasses('rights');
+  //   }
+  // }
 
   return (
     <main className="main">
@@ -100,8 +101,12 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
           себе о&nbsp;чем-то.
         </p>
       </section>
+      <Pagination
+        paginatorData={dictionaryDataRedux}
+        CardComponent={ReadAndWatchSliderCardDictionary}
+      />
 
-      <div className="commentBox">
+      {/* <div className="commentBox">
         <CommentList data={paginateData} classOfGrid={gridClasses} />
         <section className="pagination page__section">
           <nav className="pagination__nav" aria-label="Навигация по страницам">
@@ -124,7 +129,7 @@ function Dictionary({ dictionaryDataRedux, setDictionaryDataRedux }) {
             />
           </nav>
         </section>
-      </div>
+      </div> */}
 
       {/* <section className="rights page__section">
         {dictionaryDataRedux.map((item) => (
