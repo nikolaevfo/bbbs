@@ -7,6 +7,7 @@ import profileNarrativesCards from './profileNarrativesApiData';
 import readAndWatchData from './readAndWatchApiData';
 import MockedMainPageData from './mainPageApiData';
 import dictionaryData from './dictionaryData';
+import videoData from './videoData';
 
 // import loginMock from './handleMocks';
 
@@ -246,6 +247,27 @@ class Api {
 
     return axios
       .get(`${this.baseUrl}/dictionary`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  // video ==========================================================
+  getVideoData() {
+    mock
+      .onGet(`${this.baseUrl}/video`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
+        },
+      })
+      .reply(200, videoData);
+
+    return axios
+      .get(`${this.baseUrl}/video`, {
         headers: {
           'Content-Type': 'application/json',
           // Authorization: `Bearer ${access}`,

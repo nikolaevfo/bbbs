@@ -1,9 +1,30 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 
-function Video() {
+import api from '../utils/api/api';
+
+import { setVideoDataRedux } from '../redux/actions';
+import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
+import Pagination from './Pagination';
+
+function Video({ videoDataRedux, setVideoDataRedux }) {
   // перемотка в начало страницы
   scrollToUp();
+
+  // загрузка данных
+  React.useEffect(() => {
+    // const access = localStorage.getItem('access');
+    api
+      .getVideoData()
+      .then((res) => {
+        setVideoDataRedux(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <main className="main">
@@ -66,8 +87,10 @@ function Video() {
         </article>
       </section>
 
+      <Pagination paginatorData={videoDataRedux} CardComponent={ReadAndWatchSliderCardVideo} />
+
       <section className="cards-grid cards-grid_content_small-cards page__section">
-        <article className="card card_content_video card-pagination">
+        {/* <article className="card card_content_video card-pagination">
           <div className="video">
             <img src="./images/video/video-ex-1.png" alt="Превью видео" className="video__img" />
           </div>
@@ -329,10 +352,10 @@ function Video() {
               смотреть видео
             </a>
           </div>
-        </article>
+        </article> */}
       </section>
 
-      <section className="pagination page__section">
+      {/* <section className="pagination page__section">
         <nav className="pagination__nav" aria-label="Навигация по страницам">
           <ul className="pagination__list">
             <li className="pagination__list-item section-title">
@@ -373,9 +396,17 @@ function Video() {
             className="pagination__arrow"
           />
         </nav>
-      </section>
+      </section> */}
     </main>
   );
 }
 
-export default Video;
+const mapStateToProps = (state) => ({
+  videoDataRedux: state.video.videoData,
+});
+
+const mapDispatchToProps = {
+  setVideoDataRedux,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Video);

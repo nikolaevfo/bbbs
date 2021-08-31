@@ -30,6 +30,7 @@ import {
   SET_IS_STORY_FORM_REDACT_OPEN,
   SET_READ_AND_WATCH_DATA,
   SET_DICTIONARY_DATA,
+  SET_VIDEO_DATA,
 } from './types';
 
 // APP ========================================================================
@@ -225,6 +226,14 @@ export function setReadAndWatchDataRedux(data) {
 export function setDictionaryDataRedux(data) {
   return {
     type: SET_DICTIONARY_DATA,
+    payload: data,
+  };
+}
+
+// VIDEO =====================================================================
+export function setVideoDataRedux(data) {
+  return {
+    type: SET_VIDEO_DATA,
     payload: data,
   };
 }

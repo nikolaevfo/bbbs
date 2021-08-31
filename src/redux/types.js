@@ -96,3 +96,6 @@ export const SET_READ_AND_WATCH_DATA = 'READ_AND_WATCH/SET_READ_AND_WATCH_DATA';
 
 // DICTIONARY ==================================================================================
 export const SET_DICTIONARY_DATA = 'DICTIONARY/SET_DICTIONARY_DATA';
+
+// VIDEO ==================================================================================
+export const SET_VIDEO_DATA = 'VIDEO/SET_VIDEO_DATA';
