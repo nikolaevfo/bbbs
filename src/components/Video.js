@@ -70,24 +70,30 @@ function Video({ videoDataRedux, setVideoDataRedux }) {
         <article className="card-container card-container_type_main-video">
           <div className="card card_color_yellow card_content_video-preview">
             <div className="card__title-wrap">
-              <h2 className="section-title card__title">Эфир с выпускником нашей программы</h2>
-              <p className="caption card__title-caption">Иван Рустаев, выпускник программы</p>
+              <h2 className="section-title card__title">{videoDataRedux.mainCard.title}</h2>
+              <p className="caption card__title-caption">{videoDataRedux.mainCard.caption}</p>
             </div>
-            <a href="/" className="link card__link link_action_open-video">
+            <a
+              href={videoDataRedux.mainCard.link}
+              className="link card__link link_action_open-video"
+            >
               смотреть видео
             </a>
           </div>
           <div className="card card_content_video video">
             <img
-              src="./images/video/video-main.jpg"
-              alt="Превью видео"
+              src={videoDataRedux.mainCard.img}
+              alt={videoDataRedux.mainCard.altImg}
               className="video__img video__img_position_main-video"
             />
           </div>
         </article>
       </section>
 
-      <Pagination paginatorData={videoDataRedux} CardComponent={ReadAndWatchSliderCardVideo} />
+      <Pagination
+        paginatorData={videoDataRedux.cards}
+        CardComponent={ReadAndWatchSliderCardVideo}
+      />
 
       <section className="cards-grid cards-grid_content_small-cards page__section">
         {/* <article className="card card_content_video card-pagination">
