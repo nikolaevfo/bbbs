@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import scrollToUp from '../hooks/scrollToUp';
 
@@ -10,8 +10,12 @@ import api from '../utils/api/api';
 import { setVideoDataRedux } from '../redux/actions';
 import ReadAndWatchSliderCardVideo from './ReadAndWatchSliderCardVideo';
 import Pagination from './Pagination';
+import TagsFiltering from './TagsFiltering';
 
 function Video({ videoDataRedux, setVideoDataRedux }) {
+  const [mainCard, setMainCard] = useState([]);
+  const [cardsWithoutMainCard, setCardsWithoutMainCard] = useState([]);
+  const [cardsFitered, setCardsFitered] = useState([]);
   // перемотка в начало страницы
   scrollToUp();
 
@@ -26,12 +30,35 @@ function Video({ videoDataRedux, setVideoDataRedux }) {
       .catch((err) => console.log(err));
   }, []);
 
+  React.useEffect(() => {
+    setMainCard(videoDataRedux.cards && videoDataRedux.cards.find((item) => item.choosingByMentor));
+  }, [videoDataRedux]);
+
+  React.useEffect(() => {
+    const newArray =
+      videoDataRedux.cards && videoDataRedux.cards.filter((item) => item.id !== mainCard.id);
+    setCardsWithoutMainCard(newArray);
+  }, [mainCard]);
+
+  function handleFilteredState(cards) {
+    setCardsFitered(cards);
+  }
+
+  React.useEffect(() => {
+    handleFilteredState(cardsWithoutMainCard);
+  }, [cardsWithoutMainCard]);
+
   return (
     <main className="main">
       <section className="lead page__section">
         <h1 className="main-title">Видео</h1>
         <div className="tags">
-          <ul className="tags__list">
+          <TagsFiltering
+            tags={videoDataRedux.tags}
+            handleFilteredState={handleFilteredState}
+            cardsWithoutMainCard={cardsWithoutMainCard}
+          />
+          {/* <ul className="tags__list">
             <li className="tags__list-item">
               <button className="button tags__button tags__button_active" type="button">
                 Все
@@ -62,7 +89,7 @@ function Video({ videoDataRedux, setVideoDataRedux }) {
                 Медиа о нас
               </button>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </section>
 
@@ -70,30 +97,24 @@ function Video({ videoDataRedux, setVideoDataRedux }) {
         <article className="card-container card-container_type_main-video">
           <div className="card card_color_yellow card_content_video-preview">
             <div className="card__title-wrap">
-              <h2 className="section-title card__title">{videoDataRedux.mainCard.title}</h2>
-              <p className="caption card__title-caption">{videoDataRedux.mainCard.caption}</p>
+              <h2 className="section-title card__title">{mainCard && mainCard.title}</h2>
+              <p className="caption card__title-caption">{mainCard && mainCard.caption}</p>
             </div>
-            <a
-              href={videoDataRedux.mainCard.link}
-              className="link card__link link_action_open-video"
-            >
+            <a href={mainCard.link} className="link card__link link_action_open-video">
               смотреть видео
             </a>
           </div>
           <div className="card card_content_video video">
             <img
-              src={videoDataRedux.mainCard.img}
-              alt={videoDataRedux.mainCard.altImg}
+              src={mainCard && mainCard.img}
+              alt={mainCard && mainCard.altImg}
               className="video__img video__img_position_main-video"
             />
           </div>
         </article>
       </section>
 
-      <Pagination
-        paginatorData={videoDataRedux.cards}
-        CardComponent={ReadAndWatchSliderCardVideo}
-      />
+      <Pagination paginatorData={cardsFitered} CardComponent={ReadAndWatchSliderCardVideo} />
 
       <section className="cards-grid cards-grid_content_small-cards page__section">
         {/* <article className="card card_content_video card-pagination">
