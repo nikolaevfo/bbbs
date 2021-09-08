@@ -47,7 +47,7 @@ function Pagination({ paginatorData, CardComponent }) {
   }, []);
 
   React.useEffect(() => {
-    setPaginateData(paginatorData.slice(0, perPage));
+    setPaginateData(paginatorData && paginatorData.slice(0, perPage));
     setPageCount(Math.ceil(paginatorData.length / perPage));
   }, [paginatorData]);
 

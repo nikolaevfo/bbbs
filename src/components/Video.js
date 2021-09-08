@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -100,7 +101,7 @@ function Video({ videoDataRedux, setVideoDataRedux }) {
               <h2 className="section-title card__title">{mainCard && mainCard.title}</h2>
               <p className="caption card__title-caption">{mainCard && mainCard.caption}</p>
             </div>
-            <a href={mainCard.link} className="link card__link link_action_open-video">
+            <a href={mainCard && mainCard.link} className="link card__link link_action_open-video">
               смотреть видео
             </a>
           </div>
