@@ -9,6 +9,7 @@ import { questionsReducer } from './questionsReducer';
 import { readAndWatchReducer } from './readAndWatchReducer';
 import { dictionaryReducer } from './dictionaryReducer';
 import { videoReducer } from './videoReducer';
+import { articlesReducer } from './articlesReducer';
 
 export const rootReducer = combineReducers({
   app: appReducer,
@@ -20,4 +21,5 @@ export const rootReducer = combineReducers({
   readAndWatch: readAndWatchReducer,
   dictionary: dictionaryReducer,
   video: videoReducer,
+  articles: articlesReducer,
 });

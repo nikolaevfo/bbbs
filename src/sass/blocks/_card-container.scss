@@ -16,7 +16,7 @@
   }
 
   &_type_article {
-    grid-template-rows: 224px 222px;
+    // grid-template-rows: 224px 222px;
 
     &:nth-child(4n+1) .card_color{
       background-color: $yellow;

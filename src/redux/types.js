@@ -99,3 +99,6 @@ export const SET_DICTIONARY_DATA = 'DICTIONARY/SET_DICTIONARY_DATA';
 
 // VIDEO ==================================================================================
 export const SET_VIDEO_DATA = 'VIDEO/SET_VIDEO_DATA';
+
+// ARTICLES ==================================================================================
+export const SET_ARTICLES_DATA = 'ARTICLES/SET_ARTICLES_DATA';

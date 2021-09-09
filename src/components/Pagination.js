@@ -6,8 +6,6 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 
-import ReadAndWatchSliderCardDictionary from './ReadAndWatchSliderCardDictionary';
-
 function CommentList({ data, classOfGrid, CardComponent }) {
   return (
     <div id="project-comments" className={`commentList ${classOfGrid} page__section`}>
@@ -37,7 +35,7 @@ function Pagination({ paginatorData, CardComponent }) {
       setGridColumns(1);
       setMarginPagesDisplayed(1);
       setPageRangeDisplayed(3);
-    } else if (window.innerWidth <= 1450) {
+    } else if (window.innerWidth <= 1365) {
       setPerPage(4);
       setGridColumns(2);
     } else if (window.innerWidth <= 1919) {

@@ -71,7 +71,7 @@
   }
 }
 
-@include atDesktop1440 {
+@include atDesktop1366 {
    .rights {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr [first-line] 1px 1fr;
