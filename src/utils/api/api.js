@@ -9,6 +9,7 @@ import MockedMainPageData from './mainPageApiData';
 import dictionaryData from './dictionaryData';
 import videoData from './videoData';
 import articlesData from './articlesData';
+import filmsData from './filmsData';
 
 // import loginMock from './handleMocks';
 
@@ -290,6 +291,27 @@ class Api {
 
     return axios
       .get(`${this.baseUrl}/articles`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
+        },
+      })
+      .then(this.checkResponse);
+  }
+
+  // video ==========================================================
+  getFlimsData() {
+    mock
+      .onGet(`${this.baseUrl}/films`, {
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization: `Bearer ${access}`,
+        },
+      })
+      .reply(200, filmsData);
+
+    return axios
+      .get(`${this.baseUrl}/films`, {
         headers: {
           'Content-Type': 'application/json',
           // Authorization: `Bearer ${access}`,

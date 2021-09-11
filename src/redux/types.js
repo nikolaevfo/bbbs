@@ -102,3 +102,6 @@ export const SET_VIDEO_DATA = 'VIDEO/SET_VIDEO_DATA';
 
 // ARTICLES ==================================================================================
 export const SET_ARTICLES_DATA = 'ARTICLES/SET_ARTICLES_DATA';
+
+// FILMS ==================================================================================
+export const SET_FILMS_DATA = 'FILMS/SET_FILMS_DATA';

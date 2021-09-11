@@ -9,9 +9,7 @@ import ReactPaginate from 'react-paginate';
 function CommentList({ data, classOfGrid, CardComponent }) {
   return (
     <div id="project-comments" className={`commentList ${classOfGrid} page__section`}>
-      {data.map((data, index) => (
-        <CardComponent data={data} key={index} />
-      ))}
+      {data && data.map((data, index) => <CardComponent data={data} key={index} />)}
       <div className="rights__line rights__line_stage_first" />
       <div className="rights__line rights__line_stage_second" />
       <div className="rights__line rights__line_stage_third" />
@@ -46,7 +44,7 @@ function Pagination({ paginatorData, CardComponent }) {
 
   React.useEffect(() => {
     setPaginateData(paginatorData && paginatorData.slice(0, perPage));
-    setPageCount(Math.ceil(paginatorData.length / perPage));
+    setPageCount(Math.ceil(paginatorData && paginatorData.length / perPage));
   }, [paginatorData]);
 
   function handlePageClick(data) {

@@ -32,6 +32,7 @@ import {
   SET_DICTIONARY_DATA,
   SET_VIDEO_DATA,
   SET_ARTICLES_DATA,
+  SET_FILMS_DATA,
 } from './types';
 
 // APP ========================================================================
@@ -243,6 +244,14 @@ export function setVideoDataRedux(data) {
 export function setArticlesDataRedux(data) {
   return {
     type: SET_ARTICLES_DATA,
+    payload: data,
+  };
+}
+
+// FLIMS =====================================================================
+export function setFilmsDataRedux(data) {
+  return {
+    type: SET_FILMS_DATA,
     payload: data,
   };
 }
