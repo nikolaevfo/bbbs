@@ -300,7 +300,7 @@ class Api {
   }
 
   // video ==========================================================
-  getFlimsData() {
+  getFilmsData() {
     mock
       .onGet(`${this.baseUrl}/films`, {
         headers: {

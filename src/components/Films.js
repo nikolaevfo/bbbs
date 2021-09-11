@@ -11,7 +11,7 @@ import { setFilmsDataRedux } from '../redux/actions';
 import TagsFiltering from './TagsFiltering';
 import Pagination from './Pagination';
 
-import ReadAndWatchSliderCardFilmsWithCaption from './ReadAndWatchSliderCardFilmsWithCaption';
+import ReadAndWatchSliderCardFilms from './ReadAndWatchSliderCardFilms';
 
 function Films({ filmsDataRedux, setFilmsDataRedux }) {
   const [cardsFitered, setCardsFitered] = useState([]);
@@ -22,7 +22,7 @@ function Films({ filmsDataRedux, setFilmsDataRedux }) {
   React.useEffect(() => {
     // const access = localStorage.getItem('access');
     api
-      .getVideoData()
+      .getFilmsData()
       .then((res) => {
         setFilmsDataRedux(res.data);
       })
@@ -34,8 +34,9 @@ function Films({ filmsDataRedux, setFilmsDataRedux }) {
   }
 
   React.useEffect(() => {
+    console.log(filmsDataRedux.cards);
     handleFilteredState(filmsDataRedux.cards);
-  }, []);
+  }, [filmsDataRedux]);
 
   return (
     <main className="main">
@@ -50,10 +51,7 @@ function Films({ filmsDataRedux, setFilmsDataRedux }) {
         </div>
       </section>
 
-      <Pagination
-        paginatorData={cardsFitered}
-        CardComponent={ReadAndWatchSliderCardFilmsWithCaption}
-      />
+      <Pagination paginatorData={cardsFitered} CardComponent={ReadAndWatchSliderCardFilms} />
     </main>
   );
 }
